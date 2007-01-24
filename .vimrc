@@ -23,7 +23,7 @@ set virtualedit=block
 set nobackup nowritebackup
 " 2 path separators == use abspath in filename for uniqueness
 " (see :help 'directory' ) 
-set directory=$TEMP\\\\
+set directory=/tmp//
 " colors/fonts
 set nohlsearch
 filetype plugin on
@@ -40,6 +40,9 @@ set whichwrap=b,s,<,>,h,l,~,[,] " these movements permit line wrapping
 set nu " line numbers
 set laststatus=2 " always show status
 set stl=%F\ %h%m%r
+
+
+" Helpers for some VCS systems
 fu! DoSvnDiff()
     let s:thispath = expand('%:t')
     new
@@ -47,6 +50,17 @@ fu! DoSvnDiff()
     set ft=diff
 endfu
 command! SvnDiff call DoSvnDiff()
+
+fu! DoHgDiff()
+    let s:thispath = expand('%:t')
+    new
+    exe ':0r!hg diff "'.s:thispath.'" | dos2unix'
+    set ft=diff
+endfu
+command! HgDiff call DoHgDiff()
+
+
+
 
 fu! Copyabspath()
     let @+ = expand('%:p')
@@ -167,7 +181,7 @@ fu! DoTacBP()
     redraw
 
     if s:loader == 'xmlfile'
-        exe "norm /{Press s\<Cr>v/}\<Cr>"
+        exe "norm /{Press s\<Cr>zAv/}\<Cr>"
     endif
 
 
