@@ -25,8 +25,8 @@ function! GetDiffFold(lnum)
     let line = getline(a:lnum)
     let nextline = getline(a:lnum+1)
 
-    let filemark = '\(^Index: \|^Property changes on: \|diff -r \)'
-    let sectionmark = '^@@ .* @@$'
+    let filemark = '\(^Index: \|^Property changes on: \|^diff -r \)'
+    let sectionmark = '^@@ .* @@'
 
     " end file folds on the line before the next filename
     if nextline =~ filemark
