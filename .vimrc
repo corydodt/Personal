@@ -38,8 +38,6 @@ set visualbell
 set backspace=eol,indent,start
 set whichwrap=b,s,<,>,h,l,~,[,] " these movements permit line wrapping
 set nu " line numbers
-set columns=88 " extra space for line numbers
-set lines=48
 set laststatus=2 " always show status
 set stl=%F\ %h%m%r
 fu! DoSvnDiff()
