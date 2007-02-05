@@ -27,6 +27,10 @@ function! GetDiffFold(lnum)
 
     let filemark = '\(^Index: \|^Property changes on: \|^diff -r \)'
     let sectionmark = '^@@ .* @@'
+ 
+    let commentmark = '^[^+ -]'    
+
+    let svndiffdecoration = '^========*$'
 
     " end file folds on the line before the next filename
     if nextline =~ filemark
@@ -45,6 +49,12 @@ function! GetDiffFold(lnum)
     " begin a file fold at the filename marker
     if line =~ filemark
         return "1"
+    endif
+
+    " this has to be evaluated last -- any line that is not a diff line or other
+    " marker is some kind of comment.
+    if line =~ commentmark && line !~ svndiffdecoration
+        return "0"
     endif
 
     return "="
