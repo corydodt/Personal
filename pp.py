@@ -1,6 +1,4 @@
-#!python24.dll
-import site
-
+#!/usr/bin/env python
 import sys
 import os
 
