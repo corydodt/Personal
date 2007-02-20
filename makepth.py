@@ -8,6 +8,17 @@ directory).
 import sys, os.path
 from distutils import sysconfig
 
+def usage():
+    sys.stderr.write(
+"""makepth: Write a .pth file to the stdlib, using the given directory.
+If the directory contains a Python package, the filename of the .pth
+file can be inferred from that.  Otherwise, pass the name of the .pth
+file explicitly as the second argument.
+
+Usage: makepth <directory> [filename.pth]
+""")
+
+
 def run(argv=None):
     if argv is None:
         argv = sys.argv
@@ -15,13 +26,21 @@ def run(argv=None):
     dirname = sys.argv[1]
     if len(sys.argv) > 2:
         pthfile = sys.argv[2]
+        if os.path.isdir(pthfile):
+            usage()
+            sys.stderr.write(
+"""** When giving the .pth filename explicitly, it must be the second argument.
+** The second argument you gave, %s, is a directory.
+""" % (pthfile,))
+            return 1
     else:
         try:
             pthfile = guessPthFilename(dirname)
         except NoUsefulGuess:
+            usage()
             sys.stderr.write(
-"Please give a filename.pth argument, couldn't guess the dirname\n")
-            sys.exit(1)
+"** Please give a filename.pth argument, couldn't guess the dirname\n")
+            return 1
 
     LIBDEST = sysconfig.get_config_var('LIBDEST')
 
@@ -32,6 +51,7 @@ def run(argv=None):
     file(abspth, 'w').write(absdirname + '\n')
 
     print "Updated %s to contain %s" % (pthfile, absdirname)
+    return 0
 
 
 class NoUsefulGuess(Exception):
@@ -48,4 +68,4 @@ def guessPthFilename(dr):
 
 
 if __name__ == '__main__':
-    run()
+    sys.exit(run())
