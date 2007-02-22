@@ -1,0 +1,306 @@
+The Friendly Native installation system
+---------------------------------------
+Cory Dodt <corydodt@yahoo.com>
+
+
+"I hate packaging; that's what Debian developers are for."
+
+Requirements
+------------
+
+* Create packages that install and uninstall software completely and without
+  reboot on any platform
+* Don't interfere with or complicate the standard way of distributing the
+  software
+  - e.g. Python should be able to use distutils
+  - files for the system should be separate from the files for other
+    packaging methods
+* Integrate with (don't replace) the standard build systems for a platform
+* Produce packages for each of 6 platforms:
+  - Win32
+  - OS X
+  - Mozilla
+  - Vanilla Linux (valinna)
+  - Deb-based Linux
+  - RPM-based Linux
+* For all of the above platforms, create a cross-platform package system so
+  all 6 packages can be built on the same box, anywhere
+* Provide API to document and include dependencies in packages
+* Produce Network and CD (ISO) distributions
+* Use Python as the scripting language
+* Integrate with bug tracking and other software-lifecycle tasks
+* Simple API that requires the developer to specify the following:
+  - Data and binary files built from your source
+  - Documentation from your source
+  - Packages your binaries depend on
+  - Development packages your source needs before starting build
+  - Up to 10 event scripts (pre- and post-build, pre- and post-package,
+  	           pre- and post-unpack, pre- and post-delete,
+		   pre- and post-upgrade)
+* l10n/i18n install text using gnu gettext
+* GUI assistant that can read and write batch-compatible scripts using a
+  fillable form
+
+What It's Not
+-------------
+* A Build System
+FN does not do the "Build Targets" task itself.  It merely runs the process
+specified in setup.fn.py, checks the return code, and then continues.
+
+* A Software Packaging Policy
+FN does not care whether your software is documented, follows naming
+conventions, shares source code, or is even functional, unlike systems like
+Debian.   While following a policy does help your software perform better in
+the context of a complete system, FN provides only the tools needed to put
+your software on a user's system and make it available to the user.  FN 
+provides a framework to build packages that participate in a policy system
+like Debian's, but it does not check that your software obeys the policies.
+
+* A Distribution Method
+FN does not share files over a network or burn CDs; what it can do is build
+packages ready for publication over a standard channel.  For example, it can
+build .deb files complete with the Release, Packages.gz and Sources.gz files
+necessary to put up an apt archive.
+
+* A Dependency Tracker
+The philosophy of FN is that packages should be atomic; they should include
+all of their own dependencies and should not be dependencies of any other
+system.  With 2 of the supported platforms (RPM and DEB), FN automatically
+places the dependency information specified in setup.fn.py into the package's
+metadata, but FN does not itself manage those dependencies; rpm and dpkg
+respectively will do that.
+
+Challenges
+----------
+* The required multi-platform packager (fnpackage) depends on ports of
+  several pieces of software to non-native platforms:
+  - Debian devscripts to OS X, Win32
+  - RPM to OS X, Win32
+  - Something to build OS X compatible CDs
+* The API must be a wrapper for 6 different ways of
+  - Describing dependencies
+  - Identifying different kinds of files (binary, data, doco, userconfig,
+    userdata, launcher, uninstaller)
+  - Creating Launchers and scripting the 10 different install-cycle events
+
+
+The Five (and a 1/2) Stages of Software Distribution
+----------------------------------------------------
+
+In the OSS world, when software packaging is mentioned, a few things come to
+mind: automake, RPM, Debian dev-scripts, distutils.  In the world of Windows,
+Installshield, Windows Install Service, and sometimes Inno Setup or Nullsoft
+Installer come to mind.  Each of these is a partial solution to the problem
+of making the software you write accessible to everybody at once.  There are
+5 separate tasks involved in making your source code into a runnable piece of
+software on someone else's computer, no matter what programming language you
+use or what OS you target.  The tasks are: building targets from your Source
+Code (SC), packaging thetargets, distributing the packages, managing upgrades
+to your software on someone else's computer, and uninstalling your software
+cleanly and safely when the user requests it.
+
+Task 1: Building Targets
+------  -------- -------
+Building targets is taking a collection of SC and data files and arranging
+and compiling them into executable files that represent the runtime in its
+final(1) form.  This is a highly OS- and language-dependent task;
+nevertheless, generalized tools exist for this purpose.  For example, C
+programs are compiled to native executables, share or static objects using
+gcc; Java programs are compiled to .class or .jar collections of bytecode
+using javac, etc.  Some languages, such as Perl and Python, are interpreted
+in SC form and thus do not require an explicit(2) compilation step, yet even
+for these languages there exist targets to be built.  For example, programs
+that use GNU gettext for localization must run msgfmt to produce data files;
+perldoc and epydoc may be run to extract API documentation for libraries;
+end-user documentation may require a transformation step such as running it
+through LaTeX or Docbook XSLT.  A makefile system (such as the archetypal GNU
+make) is sometimes used to manage this process, making it repeatable even
+when a number of complex tasks are involved.
+    The end result of build targets is a collection of files; what those
+files represent depends on many variables.  Nevertheless, every program of
+significant length has to perform some modulo of this task.
+
+(1) as determined by the author
+(2) Python programs may have an implicit compilation step at runtime
+
+Task 2: Packaging
+------  ---------
+This is the process of collecting the targets into an installable form.
+Packaging is slightly less implementation-language-specific than building
+targets, but packages must conform to the standards of a particular operating
+system, thus the packaging task is very OS-specific.  This step is confusing
+to some developers, and the end result of this step is highly inconsistent
+between projects, even projects targetted at the same platform.  This is
+because many developers don't like to think about packaging, and even those
+that are willing don't quite get what the responsibilities of a package are.
+This is the last step the developer has a chance to insert SC into;
+after this, all programs will be run by some other system.  Don't take this
+to mean you can't have code that runs later, only that something else will be
+responsible for launching it.  More on this in the section on Events.
+    The concrete end result of packaging will vary depending on OS, although
+in many cases it is a single executable file, capable of unpacking other
+files from itself when run.
+
+Programs like rpm and debuild can perform tasks 1 and 2, although they
+usually require a fair amount of developer hand-holding to function, and they
+are specific to their native platform (RPM and DEB respectively).
+
+Task 3: Distribution
+------  ------------
+This is the process of placing your package on media a user can access, such
+as a website or CD-ROM; also unpacking the files, creating configuration data
+and launchers, setting system variables needed to run the program, and
+providing system metadata (such as the program's name and version) for parts
+of the system that query package information or launch uninstallers.  It
+also involves, where applicable, restricting access to your software based on
+arbitrary criteria.  For example, you may require that a user agree to a
+license before the software begins to install or download.
+
+Task 4: Upgrade Management
+------  ------------------
+In addition to covering all the tasks of distribution, this task is the
+process that shuts down the runtime, patches or replaces files in the
+existing installation, and then optionally restarts the runtime when the
+upgrade is complete.  It is also the task of making sure the new version
+can find and use existing configuration information (possibly by running a
+conversion process) in the new version.
+
+Task 5: Uninstallation
+------  --------------
+Uninstallation is the process of shutting down the runtime and removing all
+files, launchers, system variables and system metadata from the user's
+system; also, configuration data when requested by the user.
+
+Task 5 1/2: Package Source Code
+----------  ------- ------ ----
+...
+
+Events
+------
+Packaging of software need never be a hard task; it's one that is not
+technically challenging on any platform, which is the reason that developers
+are so uninterested in it.  It is, however, a process of managing many
+details visible to the end-user.  With an inclusive, cross-platform package
+system, a developer can simply tick off the 5 tasks above one at a time,
+writing scripts that will perform them for any OS.  These scripts are called
+event handlers, and the times that they run are called events.
+   I list here 10 distinct events which can be hooked (associated with code
+to run) in Friendly Native.
+
+1-Pre-Build
+-----------
+This is the event that occurs before the software has even been compiled.  It
+may be hooked with code that checks that build dependencies exist, or to
+perform SC control: Verify that changes have been committed before a build
+begins, download updates from the source control system (SCS), etc.
+
+Build
+-----
+After pre-build scripts have run, setup.fn.py kicks off the configured
+build process.
+
+2-Post-Build
+------------
+This happens after task 1 completes successfully, and targets have been
+built.  This hook is ideal for running unit and system tests.  
+*This hook is not available when building packages with rpm or dev-scripts,
+because Build and Package happen in the same step.*
+
+3-Pre-Package
+-------------
+This happens before fnpackage runs to build the package.  FN automatically
+verifies that all the files about to be packaged are available and that all
+the packaging software needed is available; use this hook
+for other miscellaneous tasks.  For example, . . .
+*This hook is not available when building packages with rpm or dev-scripts,
+because Build and Package happen in the same step.*
+
+Package
+-------
+After pre-package scripts have run, Friendly Native kicks off fnpackage to
+produce the package, unless rpms or debs are being built.
+
+4-Post-Package
+--------------
+This happens when fnpackage completes successfully.  Use this hook to prepare
+for the Distribution task.  This could mean building an ISO image for burning
+to a CD, preparing an apt-archive, or just placing files in the directory
+tree of a website.
+
+5-Pre-Unpack
+------------
+This happens before the package starts to copy files to the filesystem.  It
+is available so the package can scout the territory, and request that the
+user shut down processes that will interfere with unpacking. FN automatically
+determines whether an upgrade or new install is taking place.  If an upgrade
+is taking place, pre-upgrade is the next event that runs.
+*For Debian and Redhat packages, this script is run by the rpm or deb
+itself.*
+
+Unpack
+------
+Files are copied from the media into the filesystem.
+
+6-Post-Unpack
+-------------
+This event occurs when unpack completes successfully.  It can be hooked to
+start the program's runtime.  If an upgrade is taking place, post-upgrade is
+the next event that runs.
+*For Debian and Redhat packages, this script is run by the rpm or deb
+itself.*
+
+7-Pre-Delete
+------------
+This event occurs before files are removed from the filesystem during an
+uninstall; it is also the first event to occur before an upgrade.  Hook this
+event to shut down the runtime on platforms where you cannot replace a
+program currently being executed.
+*For Debian and Redhat packages, this script is run by the rpm or deb
+itself.*
+
+Delete
+------
+Files are deleted from the filesystem.
+
+8-Post-Delete
+-------------
+This occurs when a delete completes successfully.  It may be hooked to
+display information to the user about what took place, to point to user
+data files still found in the filesystem for example.  Friendly Native will
+automatically try to present a report here about how many files and
+directories where removed.
+*For Debian and Redhat packages, this script is run by the rpm or deb
+itself.*
+
+9-Pre-Upgrade
+-------------
+This event occurs before a install takes place on a system that already
+contains an earlier version of the software.  It may be used for
+miscellaneous tasks that must be done to make sure the transition from an
+older version to a newer one is seamless, such as converting configuration
+files to the new version.
+*For Debian and Redhat packages, this script is run by the rpm or deb
+itself.*
+
+Upgrade?
+--------
+There is no upgrade process; unpack is the same process, except for the
+events which precede and follow it.
+
+10-Post-Upgrade
+---------------
+This happens after post-unpack completes successfully.  It may be hooked to
+present a message to the user about upgrade problems, such as describing the
+impact of configuration settings that could not be converted from the old
+version to the new one.
+*For Debian and Redhat packages, this script is run by the rpm or deb
+itself.*
+
+
+
+Developer Tutorial
+------------------
+* decide what platforms for which to build packages
+* create config file setup.fn.py
+* create an events/ directory and add up to 10 event handlers
+* run setup.fn.py
