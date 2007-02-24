@@ -1,6 +1,6 @@
 from twisted.web import microdom
 
-from nevow import static, rend, loaders
+from nevow import static, rend, loaders, tags as T
 
 from tsw import RESOURCE
 
@@ -12,26 +12,23 @@ class TheSoftWorldHtml(rend.Page):
     def __init__(self, path, registry, *a, **kw):
         self.path = path
         self.registry = registry
+        doc = microdom.parse(self.path)
+        self.content = doc.getElementsByTagName('body')[0].childNodes
+        _title = doc.getElementsByTagName('title')
+        if len(_title) >= 1:
+            self.titleNodes = _title[0].childNodes
+        else:
+            self.titleNodes = None
         rend.Page.__init__(self, *a, **kw)
 
-    def render_everything(self, ctx, data):
-        return ctx.tag
+    def render_title(self, ctx, data):
+        if self.titleNodes is None:
+            return ctx.tag
+        return T.title[self.titleNodes]
 
-    def render_contentMain(self, ctx, data):
-        """
-        Pull everything out of the body of the static file
-        and fill contentMain with it.
-        """
-        doc = microdom.parse(self.path)
-        nodes = doc.getElementsByTagName('body')[0].childNodes
-        title = doc.getElementsByTagName('title')
-        if len(title) >= 1:
-            titleNodes = title[0].childNodes
-        else:
-            titleNodes = ''
-        ctx.tag.fillSlots('contentMain', nodes)
-        ctx.tag.fillSlots('title', titleNodes)
-                
+
+    def render_everything(self, ctx, data):
+        ctx.tag.fillSlots('contentMain', self.content)
         return ctx.tag
 
 class TheSoftWorldPage(static.File):
@@ -39,7 +36,7 @@ class TheSoftWorldPage(static.File):
     Root page
     """
     processors = {'.tsw': TheSoftWorldHtml}
-    indexNames = ['index.tsw'].extend(static.File.indexNames)
+    indexNames = ['index.tsw'] + list(static.File.indexNames)
 
 def root(directory):
     return TheSoftWorldPage(directory)

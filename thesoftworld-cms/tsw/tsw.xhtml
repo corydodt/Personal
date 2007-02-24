@@ -6,7 +6,7 @@
 <n:invisible n:render="everything">
   <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
-    <title>The Soft World<n:slot name="title" /></title>
+    <title n:render="title">The Soft World</title>
     <link href="/static/thesoftworld.css" type="text/css" rel="stylesheet" />
     <script src="/static/curvyCorners/rounded_corners_lite.inc.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -35,7 +35,7 @@ html, body, .content-main{height: 100%}
   
   </head>
   <body>
-    <div class="content-main" n:render="contentMain">
+    <div class="content-main">
       <div class="padding-box">
         <n:slot name="contentMain" />
       </div>
