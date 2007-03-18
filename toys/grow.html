@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type" />
+<title>grow cube
+</title>
+
+<style type="text/css">
+input[type=button][name] { width: 40px; height: 40px; background-repeat: no-repeat; }
+input[type=button][name=bone] { background-image: url(bone.png); }
+input[type=button][name=ball] { background-image: url(ball.png); }
+input[type=button][name=water] { background-image: url(water.png); }
+input[type=button][name=tube] { background-image: url(tube.png); }
+input[type=button][name=spring] { background-image: url(spring.png); }
+input[type=button][name=plants] { background-image: url(plants.png); }
+input[type=button][name=man] { background-image: url(man.png); }
+input[type=button][name=fire] { background-image: url(fire.png); }
+input[type=button][name=bucket] { background-image: url(bucket.png); }
+input[type=button][name=bowl] { background-image: url(bowl.png); }
+.one_game { border-style: dotted; padding: 1em; margin: 3pt; background-color:
+  #ddd; font-size: 8pt; font-family: sans-serif; }
+._try { margin: 3pt; }
+.close { font-weight: bold; color: red; font-family: sans-serif; }
+
+</style>
+
+<script type="text/javascript" language="javascript">
+function findLastRow()
+{
+  var rows = document.getElementsByTagName('div');
+  for (var i=rows.length-1; i>-1; i--)
+  {
+    var div = rows[i];
+    if (div.getAttribute('class') == 'one_game')
+    return div;
+  }
+}
+
+function addTry(img_url)
+{
+  var lastrow = findLastRow();
+
+  id1 = counterNext();
+  id2 = counterNext();
+
+  var img = document.createElement('img');
+  img.setAttribute('src', img_url);
+  img.setAttribute('class', '_try');
+  lastrow.appendChild(img);
+
+  var input = document.createElement('input');
+  input.setAttribute('type', 'edit');
+  input.setAttribute('style', 'width: 3ex');
+  input.setAttribute('onblur', 'doShowStatic(' + id2 + ',' + id1 + ')');
+  input.setAttribute('id', id1);
+  lastrow.appendChild(input);
+
+  var static = document.createElement('span');
+  static.setAttribute('style', 'display: none');
+  static.setAttribute('id', id2);
+  lastrow.appendChild(static);
+
+}
+
+function doShowStatic(staticid, inputid)
+{
+  /* set the static node's text, hide the input node, show the static node 
+   */
+  var input = document.getElementById(inputid + "");
+  // if there's no input value don't do anything
+  if (! input.value) return;
+  var newtext = document.createTextNode(input.value + "")
+
+  var static = document.getElementById(staticid + "");
+  var static_text = static.firstChild;
+  if (static_text)
+    static.replaceChild(newtext, static_text);
+  else
+    static.appendChild(newtext);
+  input.setAttribute('style', 'display:none');
+  static.setAttribute('style', 'display:default');
+}
+
+function counterNext()
+{
+  counter = document.getElementById('counter');
+  current = parseInt(counter.getAttribute('value'));
+  next = current + 1;
+  counter.setAttribute('value', next);
+  return next;
+}
+
+function _try(button)
+{
+  var value = button.getAttribute('name');
+  var rex = new RegExp('\\b' + value + '\\b');
+  var lastrow = findLastRow();
+  if (lastrow.hasAttribute('id'))
+  {
+    var tries = lastrow.getAttribute('id');
+
+    // if the item has already been added, do nothing
+    if (rex.test(tries)) return;
+
+    lastrow.setAttribute('id', tries + ' ' + value);
+  } else {
+    lastrow.setAttribute('id', value);
+  }
+
+  var img_url = value + '.png';
+  addTry(img_url);
+}
+
+function newgame()
+{
+  var button = document.getElementById('newgame');
+  var lastrow = findLastRow();
+  var newrow = document.createElement('div');
+  newrow.setAttribute('class', 'one_game');
+
+  var body = document.getElementsByTagName('body')[0];
+  body.insertBefore(newrow, button);
+  body.insertBefore(document.createTextNode('\n'), button);
+
+  var button = document.createElement('input');
+  button.setAttribute('class', 'close');
+  button.setAttribute('type', 'button');
+  button.setAttribute('value', 'X');
+  button.setAttribute('onclick', 'doDeleteGame(this)');
+
+  newrow.appendChild(button);
+}
+
+function doDeleteGame(button)
+{
+  game = button.parentNode;
+  body = game.parentNode;
+  body.removeChild(game);
+  if (!findLastRow())
+    newgame();
+}
+</script>
+
+</head>
+
+
+<body>
+  <input type="hidden" id="counter" value="0"></input>
+
+<form name="blah">
+<input onclick="_try(this)" name="bone" type="button">
+</input>
+<input onclick="_try(this)" name="ball" type="button">
+</input>
+<input onclick="_try(this)" name="water" type="button">
+</input>
+<input onclick="_try(this)" name="tube" type="button">
+</input>
+<input onclick="_try(this)" name="spring" type="button">
+</input>
+<input onclick="_try(this)" name="plants" type="button">
+</input>
+<input onclick="_try(this)" name="man" type="button">
+</input>
+<input onclick="_try(this)" name="fire" type="button">
+</input>
+<input onclick="_try(this)" name="bucket" type="button">
+</input>
+<input onclick="_try(this)" name="bowl" type="button">
+</input>
+
+</form>
+<div class="one_game"><input type="button" value="X" class="close" 
+  onclick="doDeleteGame(this)"/>
+</div>
+
+<input id="newgame" type="button" onclick="newgame()" value="New Game" />
+
+</body>
+</html>

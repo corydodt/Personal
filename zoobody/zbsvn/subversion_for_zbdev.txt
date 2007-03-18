@@ -1,0 +1,40 @@
+=================================
+Subversion for Zoobody Developers
+=================================
+
+We have implemented a Subversion instance on `zoobody.com` for source
+control.  In order to try it out, you need some initial setup information.
+
+For Windows |winlogo|
+=====================
+
+Windows users of Subversion will need the following information:
+
+1. `Install Subversion`__
+
+__ win32_install.html
+
+2. `Get Familiar with Working Copies`__ (TODO)
+
+__ win32_get_familiar.html
+
+
+For Unix |tux|
+==============
+
+1. `Installation on Unix`__
+
+__ unix_install.html
+
+2. `Get Familiar with Working Copies`__
+
+__ unix_get_familiar.html
+
+
+.. |tux| image:: images/tux.png
+  :height: 40
+
+.. |winlogo| image:: images/winlogo.png
+  :height: 40
+
+.. vi:ft=rst

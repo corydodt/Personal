@@ -1,0 +1,73 @@
+cross platform desktop apps w/ Python - Nathan Yergler @ Creative Commons
+
+macos, win32, linux
+
+wx initially?
+
+ccPublisher - 1 code base, 1 XML file (ant), 6 build scripts, 3 platforms, 1
+developer
+
+why wx?
+- runs on win, mac, linux
+- lots of shared code
+- native l&f
+- extensible toolkit and find support
+
+robin dunn working on osx wx issues for osaf
+
+app developed with xrc (xrced with distribution)
+. i18n for free
+. don't use gridbagsizer! bugs on win32, osx. nested gridsizers instead
+. staticbitmap paths may change. there's a workaround, add a placeholder
+  panel getting replaced
+
+packaging
+. distutils hork
+. windows and mac distutils are the suck
+. two-phase build on win/mac instead:
+  . freeze
+  . build distribution
+
+freezing:
+. py2exe on win32
+  . build multiple exe's with a single pass
+  . use windows and consoles options to set scripts
+  . any unicode, include the encodings package
+  . stuff goes in dist dir
+. py2app on osx (svn head version works well)
+  . 
+
+distribution:
+. on win32, he uses wix opensource for msi's
+  . xml-based config file for components
+  . two guids, one global (life of the app) and one for each version
+  . generating guid, env variables can be automated
+  . py2exe doesn't copy visual c++ 7 dll's
+. on py2app
+  . new bundlebuilder
+  . disk images preferred
+  . apple has a tool for that: hdiutil create -srcfolder $SOURCE $DESTNAME
+. both are forgiving
+
+
+
+cross-platform wishlist:
+. higsizer (calculate based on human interface guidelines)
+  . he's working on
+. python port/distutils task for wix
+. distutils data files that don't suck
+. variable substituion for xrc files (fix for staticbitmaps?)
+
+
+conclusion:
+. scripts, woo
+
+http://yergler.net/wiki/ynet/show/Desktop+Apps+with+Python
+
+q/a
+
+. layout on osx frustrating
+. on linux .. needs more experience. cx_freeze an option
+. automated gui testing==email to staff :-)
+
+

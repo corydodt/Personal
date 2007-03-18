@@ -1,0 +1,166 @@
+Metaphors lie!
+
+waiters must work fast.. can't spend 30 minutes talking to one
+customer
+
+the event loop is the last thing you do in your program. setup
+everything else first!
+
+math calculations sometimes need lots of time.. use thread maybe
+
+lots o platforms
+
+protocols are hard.  just use one of ours
+
+pb is for more complex systems, event notification, complex data
+types, than XML-RPC
+
+protocol instance is tied to a connection; goes away when connection
+dies
+
+use Factory to store the information about how to set up a protocol
+
+buildProtocol can return None, which refuses connection; since it
+knows about the address, you can use this to do address restrictions
+this way
+
+listenTCP can bind to a particular network interface
+
+Q: low level TCP? e.g. flags
+A: we give access to a few options (NAGLE), if you need more just dig
+in and implement a different TCP implementation which you use with our
+transports, e.g.
+
+in listenFOO, FOO is the transport.  you can use this with any
+protocol factory
+
+Q: corba SSL switching?
+A: we use pyopenssl, so you can do whatever you want that they support
+
+port object creates transport, factory creates protocol, both connect
+up with factory, port, reactor
+
+client error conditions are diff. from server; server doesn't have to
+worry about cancels, "can't connect", or timeouts
+
+ClientFactory for client protocols.  connector object goes out and
+gets a connection, opposing server Port object which listens.
+different methods handle the new failure modes
+
+reactor.connectTCP() takes timeout and factory
+
+analog for Port is Connector on client side.. otherwise it's similar
+to the server lifecycle.  Only difference is Connector is done when
+connection is made, and it goes away
+
+You probably only want to do one connector:connection:factory, and
+it's difficult to do more than one connection per client factory
+
+Transport buffers data and Transport.loseConnection() will wait until
+buffer is empty before quitting
+
+Q: how do you flush the buffer manually?
+A: can't be done yet, maybe soon
+
+dynamic lookup of methods, woot.
+
+connectionLost is where you clean up shared resources... such as
+removing yourself from the list of active users.  This would be a
+method on the PresenceFactory object
+
+----------
+Discussion (slide 47, was missing from tut notes)
+* Easily extendable via subclassing
+* Dispatch was done based on command
+* Alternative is to dispatch based on state
+* Even better, dispatch on both at once
+
+slide 48 also missing _|-code showing _needlogin_ methods
+slide 49 also missing _|
+
+----------
+Further Enhancements (missing slide 50)
+* Multiple prefixes
+* SMTP protocol has 'smtp_' prefix
+* ESMTP (subclasses SMTP) has 'smtp_' and 'esmtp_'
+* Default handlers for states (regardless of command)
+* Default handlers for commands (regardless of state)
+____________________
+
+* talk to I. about showing too much code (?)
+
+test first - think about what you want your code to do before you
+write it
+design code to be testable - you will write cleaner code
+
+testing... pretend that the protocol's sendLine function is actually
+list.append to simulate a connection
+
+you don't need to pass -m -p to trial any more
+
+Deferreds are exceptions upside-down?
+
+can't make something magically not block. (use threads) 3000000! is
+not going to not block
+
+processing with deferreds happen only with callbacks.  it just does
+whatever's in the chain as soon as a result is available.. it's a list
+of callbacks.  Using a deferred is just a way to not wait for that
+chain of events to occur
+ time
+  | doStuff()
+  | bar().addCallback(foo).addErrback()
+  | 
+  V
+
+* I.: visual representation of Deferred chain
+
+Why Failure? it's cooler than exception, works well with Deferred
+
+* I.: move slide 76 much earlier so people can see how deferreds work
+before you tell them
+
+errback handler calls failure.trap(..some kind of error..).. if it
+doesn't match (..some kind of error..) the failure instance will
+(re-)raise the exception
+
+always hand an error handler to your deferred
+
+spawnProcess on protocol instances will let you talk to stderr/out/in
+for a new process
+
+callFromThread will call a method within the main event loop, in case
+you want your thread to do something twisty
+
+twisted.internet.threads: thread pool is used to do IO, etc.
+deferToThread... adds a function to run in a thread, get back a
+deferred immediately; then you use callbacks on the deferred to munge
+the result e.g. slide 96
+
+adbapi - uses python's DB-API
+
+connectionpool.runQuery (simple select statement) , runInteraction
+(work with cursors)
+
+DNS lookups block.  SUCK!  use reactor.resolve(name) ... returns Def.
+also, we can use our own dns client in twisted.names, which can be
+installed
+
+* I.: why would you not just use reactor.resolve?
+
+if we want to send a huge file we can't simply write the whole file to
+the transport; will block, too slow.  instead use a producer.
+
+producer should be pausable; consumer is a usually transport
+
+consumer pulls, producer pushes
+
+registerProducer(self, 0) <-- i am a pull producer, just ask me for
+data; if a 1, push producer; i send until you pause me
+
+* I.: more concrete examples of deferred
+
+callLater(0,...) ..run asap (next loop)
+
+default reactor - select() loop on sockets
+

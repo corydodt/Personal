@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.5: http://docutils.sourceforge.net/" />
+<meta name="version" content="S5 1.1" />
+<title>Installation on Unix</title>
+<style type="text/css">
+
+/*
+:Author: David Goodger
+:Contact: goodger@users.sourceforge.net
+:Date: $Date: 2006-02-03 02:09:16 +0100 (Fri, 03 Feb 2006) $
+:Revision: $Revision: 4332 $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: black }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+/* Uncomment (and remove this text!) to get bold-faced definition list terms
+dl.docutils dt {
+  font-weight: bold }
+*/
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin-left: 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left {
+  clear: left }
+
+img.align-right {
+  clear: right }
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font-family: serif ;
+  font-size: 100% }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+table.docinfo {
+  margin: 2em 4em }
+
+table.docutils {
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  padding-left: 0.5em ;
+  padding-right: 0.5em ;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+</style>
+<!-- configuration parameters -->
+<meta name="defaultView" content="slideshow" />
+<meta name="controlVis" content="hidden" />
+<!-- style sheet links -->
+<script src="ui/default/slides.js" type="text/javascript"></script>
+<link rel="stylesheet" href="ui/default/slides.css"
+      type="text/css" media="projection" id="slideProj" />
+<link rel="stylesheet" href="ui/default/outline.css"
+      type="text/css" media="screen" id="outlineStyle" />
+<link rel="stylesheet" href="ui/default/print.css"
+      type="text/css" media="print" id="slidePrint" />
+<link rel="stylesheet" href="ui/default/opera.css"
+      type="text/css" media="projection" id="operaFix" />
+
+<style type="text/css">
+#currentSlide {display: none;}
+</style>
+</head>
+<body>
+<div class="layout">
+<div id="controls"></div>
+<div id="currentSlide"></div>
+<div id="header">
+
+</div>
+<div id="footer">
+<h1>Installation on Unix</h1>
+
+</div>
+</div>
+<div class="presentation">
+<div class="slide" id="slide0">
+<h1 class="title">Installation on Unix</h1>
+
+</div>
+<div class="slide" id="install-subversion-packages">
+<h1>Install Subversion Packages</h1>
+<p>On Debian/Ubuntu <img alt="debian" src="images/debian.png" style="height: 40px;" /> <img alt="ubuntu" src="images/ubuntu.png" style="height: 40px;" />:</p>
+<pre class="literal-block">
+$ sudo apt-get install subversion
+</pre>
+<p>On Fedora/Redhat <img alt="fedora" src="images/fedora.png" style="height: 40px;" /> <img alt="redhat" src="images/redhat.png" style="height: 40px;" />:</p>
+<pre class="literal-block">
+$ sudo yum install subversion
+</pre>
+<p>On other Unix flavors: I dunno, build it from source?</p>
+</div>
+<div class="slide" id="install-ssh">
+<h1>Install SSH</h1>
+<p>On Debian/Ubuntu <img alt="debian" src="images/debian.png" style="height: 40px;" /> <img alt="ubuntu" src="images/ubuntu.png" style="height: 40px;" />:</p>
+<pre class="literal-block">
+$ sudo apt-get install ssh
+</pre>
+<p>On Fedora/Redhat <img alt="fedora" src="images/fedora.png" style="height: 40px;" /> <img alt="redhat" src="images/redhat.png" style="height: 40px;" />: Should be pre-installed.</p>
+<dl class="docutils">
+<dt>Other Unix:</dt>
+<dd>??</dd>
+</dl>
+</div>
+<div class="slide" id="public-private-ssh-keypair">
+<h1>Public/Private SSH Keypair</h1>
+<img align="right" alt="images/james-cook-chest.png" class="align-right" src="images/james-cook-chest.png" />
+<p>If you already have a private key for ssh (<tt class="docutils literal"><span class="pre">.ssh/id_dsa</span></tt>), you can skip this
+step.</p>
+<pre class="literal-block">
+$ ssh-keygen -t dsa -b 1024
+</pre>
+<p>Leave the default filename, and the password may be left blank.</p>
+</div>
+<div class="slide" id="edit-your-ssh-config">
+<h1>Edit Your ssh Config</h1>
+<p>Modify your own <tt class="docutils literal"><span class="pre">.ssh/config</span></tt> file in a text editor to use your username
+whenever you connect to zoobody.com.  This will be your first initial, last name;
+for example: &quot;cdodt&quot;.</p>
+<p>You should add lines in your config file that look like this:</p>
+<pre class="literal-block">
+Host zoobody.com
+  User cdodt
+</pre>
+</div>
+<div class="slide" id="transfer-the-public-key-to-zoobody-com">
+<h1>Transfer the Public key to zoobody.com</h1>
+<p>Now transfer your public key over to zoobody.com.  Select and paste everything
+on the following lines into your shell:</p>
+<pre class="literal-block">
+ssh-keygen -y -f ~/.ssh/id_dsa | \
+    ssh zoobody.com 'mkdir -p ~/.ssh;
+                     cat &gt;&gt; ~/.ssh/authorized_keys;
+                     chmod -R u=rwX,g=,o= .ssh'
+</pre>
+<p><em>The password is the same password you were initially given for Bugzilla.</em></p>
+</div>
+<div class="slide" id="test-log-in">
+<h1>Test: Log In</h1>
+<pre class="literal-block">
+$ ssh zoobody.com
+</pre>
+<p>You should see a bash shell.</p>
+<img alt="images/pleuroploca.png" src="images/pleuroploca.png" />
+</div>
+<div class="slide" id="change-your-password">
+<h1><em>Change Your Password!</em></h1>
+<p>Do this while logged into zoobody.com:</p>
+<pre class="literal-block">
+cdodt&#64;zoobody ~
+$ passwd
+Enter the new password (minimum of 5, maximum of 8 characters).
+Please use a combination of upper and lower case letters and numbers.
+New password:
+Re-enter new password:
+Password changed.
+</pre>
+</div>
+<div class="slide" id="test-check-out-a-working-copy">
+<h1>Test: Check Out a Working Copy</h1>
+<p>Do this on your local machine.  (Log out of zbdev if you are still logged in
+to the shell.)</p>
+<pre class="literal-block">
+$ svn co svn+ssh://zoobody.com/zoobody/Zoobody/trunk Zoobody
+A    Zoobody\Cardinal
+A    Zoobody\Cardinal\TODO.txt
+A    Zoobody\Cardinal\py2exe_setup.py
+  ...
+</pre>
+<p>This will create a local directory named Zoobody, and it will check out
+everything at that URL.</p>
+<p>The Zoobody Subversion URL is:</p>
+<p><strong>svn+ssh://zoobody.com/zoobody/Zoobody/trunk</strong></p>
+</div>
+<div class="slide" id="fini">
+<h1>Fini</h1>
+<p><a class="reference" href="subversion_for_zbdev.html">Back</a></p>
+<!-- vi:ft=rst -->
+</div>
+</div>
+</body>
+</html>

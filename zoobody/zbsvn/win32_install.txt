@@ -1,0 +1,191 @@
+
+===========================
+Subversion Setup on Windows
+===========================
+
+Install the SVN Client
+----------------------
+Download the client from the Subversion website__.  The file you want will be
+whatever the most recent `.exe` file is.
+
+__ http://subversion.tigris.org/servlets/ProjectDocumentList?folderID=91&expandFolder=91&folderID=0
+
+Install it when you have finished downloading it.
+
+.. image:: images/subversion_logo.png
+
+Install the Tortoise Client
+---------------------------
+
+TortoiseSVN is an explorer extension for working with Subversion.  You can
+think of it as the "Subversion GUI".
+
+Download it from the `Sourceforge site`__.  You will want one of the `.msi`
+files.
+
+__ http://sourceforge.net/project/showfiles.php?group_id=138498&package_id=151948
+
+Check to make sure you are installing either the 64-bit version, labeled
+"x64", or the 32-bit version, as appropriate.
+
+Reboot when you are finished installing.
+
+.. image:: images/tortoisesvn_logo_hor468x64.png
+
+Install SSH Client
+------------------
+
+This document will describe the procedure for setting up with PuTTY_.
+However, SVN, as well as Tortoise, can be used with Cygwin SSH.  The
+assumption is that if you have Cygwin SSH already and prefer it, you will be
+able to follow the Unix instructions to set it up.
+
+Download and run the PuTTY installer_ to get started.
+
+.. _PuTTY: http://www.chiark.greenend.org.uk/~sgtatham/putty/
+
+.. _Installer: http://the.earth.li/~sgtatham/putty/latest/x86/putty-0.58-installer.exe
+
+Create a New PuTTY Private Key
+------------------------------
+
+.. image:: images/puttymenu_puttygen.png
+   :align: right
+
+With PuTTY installed, you will have a PuTTY menu under your Start menu.  Start
+by opening PuTTYgen, and:
+
+1. Click Generate
+
+2. Move your mouse around in the blank space until the progress bar fills
+   completely.
+
+3. Click "Save Private Key".  The default location should be your User Profile
+   directory (aka your HOME directory on Windows.)  Save it there, with the
+   name `putty.ppk`.  If it asks you to confirm saving with no password, click
+   `OK`.
+
+4. **Leave the puttygen window open.**  You will need it in a later step.
+
+Create a New PuTTY Session
+--------------------------
+
+.. image:: images/puttymenu_putty.png
+   :align: right
+
+Now launch PuTTY from the Start menu.
+
+In the "PuTTY Configuration" window that opens:
+
+1. Type in "zoobody.com" as Host Name.
+
+2. Type in "zoobody.com" under Saved Sessions.  This name is important, make
+   sure to type in exactly "zoobody.com".
+
+3. Click "Save" and see that your new `zoobody.com` session shows up in the
+   list under Saved Sessions.
+
+Set the Session to Use Your Private Key
+---------------------------------------
+
+.. image:: images/puttycategory.png
+   :align: left
+
+4. In the tree on the left, click Connction > Data.  Fill in your zoobody.com
+   shell account name for "Auto-login username".
+
+5. In the tree on the left, go down further to Connection > SSH > Auth.
+
+6. "Browse..." for your "Private key file for authentication."  Select
+   the `putty.ppk` which you created earlier.
+
+7. **Go back up to Session in the tree on the left, and click Save again.**
+   It is easy to forget to do this.
+
+Open zoobody.com . . .
+----------------------
+
+1. With your zoobody.com session still there, click Open.  You should get a
+prompt asking for your password.  Type in your password.
+
+2. You should now have a shell prompt.  Type the following::
+
+    mkdir .ssh
+    chmod 700 .ssh
+    cat >> .ssh/authorized_keys
+
+The shell will now be waiting for you to type something. . .
+
+. . . and Paste Your Public Key
+-------------------------------
+
+.. image:: images/puttygen_hl.png
+    :align: right
+
+3. Now, *bring your PuTTYgen window back up*.  Select all the text in the area
+labeled "Public key for pasting into ...", and copy it to the clipboard with
+`Control+C`.
+
+4. *Go back* to the PuTTY shell window.  Right-click, which will paste your
+clipboard.  Press `Control+D` to save it.
+
+5. Type: `chmod 600 .ssh/authorized_keys`
+
+You can now close the PuTTYgen window that you had open from before.  You can
+also close the PuTTY shell window.
+
+Test That You Can Login With No Password
+----------------------------------------
+
+Open PuTTY from the Start menu once again.
+
+.. image:: images/puttymenu_putty.png
+
+Double-click the `zoobody.com` session.
+
+You should get a shell prompt immediately, without it asking for your
+password.
+
+Test TortoiseSVN
+----------------
+
+You have now successfully configured PuTTY, so give yourself a pat on the
+back, and test it:
+
+Right click on the Desktop, and select "SVN Checkout..." We will check out
+your sandbox.  *Assuming your username is "somedeveloper", do the following*:
+
+1. In the field at the top, type in `svn+ssh://zoobody.com/zoobody/sandbox/somedeveloper`
+
+2. Add "\\somedeveloper" to the end of the second field so it reads
+`C:\\...\\Desktop\\somedeveloper`.
+
+Click OK, and say OK when it asks if you want a new directory.  If it tells
+you what revision you checked out, Subversion is installed and configured
+correctly.
+
+Appendix: Using Cygwin SSH with Tortoise
+----------------------------------------
+
+If you prefer Cygwin SSH, but you also want to use TortoiseSVN, you can:
+
+1. Right click on the Desktop
+
+2. TortoiseSVN menu > Settings
+
+3. Click Network in the tree on the left
+
+4. "Browse..." for the ssh executable, which will be `C:\\cygwin\\bin\\ssh.exe`,
+   and click OK.
+
+Like PuTTY, Cygwin SSH should be configured to use a public/private key so you
+won't get prompted for passwords every time you use Subversion.
+
+Tada
+----
+
+You are finished__.
+
+__ subversion_for_zbdev.html
+
+.. vi:ft=rst

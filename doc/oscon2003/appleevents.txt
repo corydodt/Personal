@@ -1,0 +1,106 @@
+Python Is Cool.
+
+AppleEvents is IPC
+
+apps expose verbs, objects and properties
+
+design goal==language independence
+
+"language" independence... any human language can be mapped with a
+dictionary to 4-byte codes 'odoc', 'clos', 'crel', etc. to make your
+own scripting language essentially
+
+Python OSA needs work.  can't open apple's script editor and have it
+compile python code, but python interp works
+
+red foreground on green is a bad idea
+
+------  the hard way  -------
+from Carbon import AppleEvents
+from Carbon import AE
+
+target=AE.AECreateDesc(AppleEvents.typeApplSignature, 'MACS')
+
+noop=AE.AECreateAppleEvent(
+        'ascr, 'noop', target,
+        AppleEvents.kAutoGenerateReturnID,
+        AppleEvents.kAnyTransactionID)
+
+noop.AESend(AppleEevents.kAEWaitReply,
+AppleEvents.kAENormalPriority, AppleEvents.kAEDefaultTimeout)
+
+---
+Carbon.AppleEvents == low level suck
+
+---
+(aepack,       aetools,       aetypes   )  are nicer
+ |                   |            |
+ --> conversion      |            |
+     to/from         --> events   |
+     python types                 |
+     e.g str, int                 --> apple types
+
+
+using ae*:
+
+>>> import aetools
+>>> aetools.TalkTo('MACS')
+>>> tt = _
+>>> tt.send('misc', 'actv')
+... finder activates ...
+
+------
+import aetools, aetypes, aepack
+finder=aetools.TalkTo('MACS')
+finder.send('misc', 'actv')
+
+omnigraffle=aetools.TalkTo('OGfl')
+asdesc, reply, params=omnigraffle.send(
+        'core', 'getd', {'----': aetypes.Property(
+                'pnam', fr=aetypes.SelectableItem(
+                        'docu', 1)
+                        )})
+print reply['----']
+
+--------
+
+ae modules are nice, but we want nice(r) python objects
+
+gensuitemodule - writes python code to map between english name
+(python identifier) and 4-byte codes
+
+python ide gives you Generate OSA Suite menu item under File
+gensuitemodule is in the scripts/plat-mac..need 2.3b2
+mac installer: http://homepages.cwi.nl/~jack/macpython.html#beta
+
+-------
+import iCal
+i=iCal.iCal() ## creates a custom TalkTo
+
+## create an objectspecifier specifying the first calendar (get the calendar)
+holidays=iCal.calendar(1)
+
+# "count (in) holidays each event"
+numEvents=i.count(holidays, each=iCal.event)
+
+for eventNum in range(1, numEvents+1): # indexes for counted things are 1-based
+    summarySpecifier = holidays.event(eventNum).summary
+    print i.get(summarySpecifier)
+
+----
+<iCal.iCal instance...> <---- a TalkTo
+
+Bob I. and D.P. are going to rewrite gensuitemodule from scratch and
+call it something else
+
+* hopefully the __getitem__ syntax in the new module will be 0-based
+
+future syntax:
+---------------
+library=iTunes.source['Library'] # __getitem__
+for song in library.songs: # __iter__
+    print song.location
+library.songs[1].name='SomeName' # property getter/setter, __getitem__
+
+---------
+

@@ -1,0 +1,112 @@
+Patrick O'Brien - using wx and Twisted for wireless.. 
+Q: any solution to twisted event loop integration?
+A: he hasn't looked at it yet, I explained wxsupport to him and we
+discussed different methods of avoiding it (threads, ASPN recipe that
+polls Twisted, avoid menus and modal dialogs).
+* investigate: can the new event loop be captured and used inside
+wxsupport some how?
+
+Q: Unicode in standard wxWindows?
+A: use wxString
+
+Python proxy layer turns extension modules (C, not OO) into OO
+
+Tutorial is using wx.Frame-style namespace
+
+Debugging can be tricky... gui toolkits competing in the same process
+
+Robin puts a complete wx.App in his modules for test code
+
+Use a Panel to get tab traversal
+
+* wx.gizmos.EditableListBox looks muy useful.. what else is in
+wx.gizmos?
+
+wx.gizmos.TreeListCtrl - woowoo, do the Course structure with this
+baby
+
+Scintilla doesn't run on OSX but wx.stc.StyledTextCtrl does
+
+Q: XRC WITH GIZMOS, etc. that are not in standard wxWindows
+A: Custom handlers are possible, and they will build children;
+in 2.5, non-standard controls will be easier to use with XRC,
+restructuring will happen
+
+Q: license  A: compatible with closed source and GPL
+
+Q: py2exe  A: works, may have to help it find system DLL's
+
+event handling.. MSWindows==Message based 
+Robin likes talking about events
+
+CommandEvents have an ID, Events don't
+
+evt.Skip() should be used if you deal with a low-level event such as
+EVT_LEFT_DOWN and also want EVT_BUTTON to fire (mostly used in an
+Event handler to allow a paired CommandEvent to occur)
+
+* Q: A better way to load a class's self from wxXmlResource?
+
+Mouse-heavy activity, such as drawing, use self.CaptureMouse() on a
+mousedown event and self.ReleaseMouse() on a mouseup event so that if
+the mouse moves outside the window, parts of the event still occur
+inside the window.
+
+Q: mousenter and mouseleave events? A: they exist, but on some
+platforms they are tricky to use.  Use for mouseover highlighting-type
+stuff (make a Button light up, etc.)
+
+NO_FULL_REPAINT_ON_RESIZE--don't redraw the entire window, just the
+parts that are newly exposed by the resize.  Doing image rescale using
+resize you should NOT have this set, you need to redraw the whole
+object or it looks funky.
+
+* pyalamode will do calltips.  where do they come from?
+
+Layout: DON'T DO BRUTE FORCE (pixel-by-pixel)
+Boa uses constraints? via "anchors" layer
+
+wxBoxSizer(...).Add(win, proportion, style)
+
+proportion is the number of shares of available space the Add'd
+control will get.  For example, if the minimum size for a box with
+three controls is 45 pixels each, a proportion of 2 used in an Add
+will prepare a widget for 90 pixels height.  In the same sizer, a
+control Add'd with 0 for proportion will keep its default height.
+
+When you're only using a sizer for a subset of controls, something
+*else* has to automatically do layout on resize
+
+RowColSizer - python only, works like HTML table.  You can plop a
+widget into a particular grid cell specified by Cartesian coords;
+support coming in XRC
+
+DC (device context) - drawing primitives; shapes, text, etc. May be a
+window, printer, bitmap object, whole screen, etc.
+
+Can't do menu items directly on the bar
+SetMenuBar can be called multiple times to swap bars
+
+wx.Buffered*DC - buffer all drawing to a bitmap first, then sends it to
+a window dc when EndDrawing() is called on it
+
+You can draw to a bitmap directly, and save it using various
+conversion methods, etc.
+
+OnIdle can be used with a flag to defer slow operations until e.g. a
+long-lasting resize event is done.  Using the flag you can also do
+CallAfter.
+
+Flickering during resize can be avoided with NO_FULL_REDRAW_ON_RESIZE.
+
+PyCard uses PyCrust
+PyShell is PyCrust with filling
+
+pywrap - start pycrust session and app at the same time.. namespace
+(filling) will be relevant to app that is running.. the live objects
+are in the PyCrust shell.
+
+Things to investigate: pyDispatcher (pub-sub framework); Chandler
+(PIM, feh)
+
+Tutorial NOTES: http://wxPython.org/PYCON2003/

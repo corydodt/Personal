@@ -1,0 +1,92 @@
+community advocate for mysql
+
+he's canadian
+
+access restrictions = unix permissions, http auth, etc.
+
+policies and procedures are hurt by the presence of humans
+
+donuts compromise security
+
+safety... children online.  security protects their identities
+minor theft.. stereos stolen because they both had them installed at
+the same shop
+
+honeypot: get passwords by asking people to log into your nice site
+
+-----
+
+security sucks, so protect data
+
+md5 hash to reduce amount of data stored
+
+oss helps you trust developers because of massive code review
+(requires that project be heavily used)
+
+don't store information so you can't disclose for court orders
+
+int'l laws require privacy laws. can't get customers in the EU unless
+you enforce privacy
+
+with a hash alone, an attacker can still deduce who the password
+belongs to
+
+* break relationships?  don't understand this.. 
+
+hot swap drives are easy to steal
+
+perm escalation.. suid executables, database priv escalation
+
+put external media in a heavy cabinet
+
+a system: data, network, people, departments, computers, offices...
+make a visual map
+where does the data travel to/from?
+
+think about current policies, procedurs, write them down, list which
+are effective
+
+do this periodically; use color coding to show which procedures suck
+
+weed out junk resources
+
+think about how valuable the data is to someone who wants to exploit
+them
+
+don't change everything at once, people won't obey
+
+get external review of your security procedures
+
+public/private key story:
+box with 2 hasps. alice puts her padlock on the box, sends it to bob,
+bob puts his padlock on the box, sends it back to alice, alice removes
+her padlock, sends it back to bob, bob removes his padlock and opens
+the box.  the box has always been locked until bob opened it at the
+end.  what's inside the box might be a copy of alice's key
+
+book available in the bookshop on translucent databases
+
+quantization= turning large chunk of data into smaller components
+
+decoy data.  send e.g. 10 data blocks for every 1 real block.  
+some data has to be used, can't be kept secret.  e.g., email
+database.  need a compromise?   poison the database with addresses
+that are false and alert you, like a watermark
+introduce spelling errors to poison documents
+
+session cookie - sequential number; unique id is tied to session
+cookie in a temp table
+
+ask for a passphrase from the user.  hash(cc holder, ccn, cc expiry,
+cc confirm code, passphrase).  This is the credentials
+
+INSERT order (credentials, unique_id, address, ...)
+
+as soon as order is approved, clear out cc data
+
+problem: any problem that occurs after the transaction will require
+the user to log back in
+
+destroy unique numbers asap
+
+http://zak.fooassociates.com/translucent.sxi

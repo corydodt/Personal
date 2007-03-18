@@ -1,0 +1,36 @@
+chandler items "parcels" - ted leung
+
+componentized so you can turn one kind of item into another
+at the "real calendar" point
+chandler parcels that can get data from e.g. del.icio.us and flickr
+
+- katie ??
+chandler is "data driven" - so extending means adding a new data type
+a d
+
+xml . new event type, new controller, python code to implement the controller
+
+<BlockEvent itsName="NewDeliciousEvent">
+ ...
+</BlockEvent>
+
+<Kind itsName="deliciousPost">
+    <superKinds> (inheritance)
+    <classes> to assoc with python code
+    <displayName>..
+    <Attribute>s...
+</Kind>
+
+implement getDeliciousPosts. some API code to get data and stuff, commit it to
+the repo
+
+lots O XML - they know it sucks
+
+demo - cool pickchoors
+get source code from CVS, go to wiki
+
+
+q: can you use the Twisted APIs to implement an IRC bot or other protocol? a:
+yes. twisted is cool.
+
+

@@ -1,0 +1,53 @@
+a-a-p inspired by compiling vim on windows (vim comes with 19)
+
+"ahp"
+
+"aheedah"
+
+all GPL
+
+Makefile was the starting point - makefiles use shell, not portable
+
+:rule %.foo: x/%.bar
+      commands ...
+
+top-level operations in recipes are executed first, then operations in
+target blocks
+
+... pipes ...
+
+tree of recipes...
+:include is for common settings
+:child is for sub-projects
+:execute is to build a sub-project... easy way to pass variables back
+and forth
+
+aap variables are just strings
+
+* ask him why aap clean is telling me 'directory not empty'
+
+** aap can fetch files for you... consider using variants and fetch to
+build uTidyLib
+
+http auth may not work
+
+remote install
+aap PREFIX=scp://me@foo.sf.net install
+copies the program to the PREFIX directory
+
+aap installing build deps
+can't find scp?  aap will go get it from a global aap-specific ports
+system
+
+aap can commit, etc.
+
+predictable builds! signatures instead of timestamps, signature for
+the build commands themselves
+
+autoconf is the ass
+use aap configure ... runs all systems, no template generation
+required, keep feature selection in a file... not working yet (next
+version)
+
+q: scons vs. a-a-p
+A: scons is more purely python... aap is more internet focused

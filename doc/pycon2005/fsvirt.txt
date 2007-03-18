@@ -1,0 +1,21 @@
+filesystem virtualization - christopher gillett
+
+marketing analytics - recommendations about advertising direction
+
+problem : store files efficiently. lots of non-technical users accessing data
+all over the place
+- small dev staff, budget
+- integrate into existing environment with no work
+
+CFS = user space app, developed with staff of 1
+parallel db mgmt = mysql/python
+performance? few seconds per transaction, suite runs for hours. realtime apps
+that open lots of files might not work well in there
+
+"virtualization": map multiple disparate filesystems into monolithic view so
+apps, scripts don't need to worry about physical location of files
+
+common dir structure across all participating fs's
+
+had to work cleanly w/ unix scripts
+

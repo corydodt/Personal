@@ -1,0 +1,37 @@
+Mike Sallib - indexing patents
+
+Patents suck!
+- own lots of patents
+- look for patterns that prove sw patents are different
+- send to legislators
+
+
+Getting patents
+- full text for 20 years for $30k
+- patent stealing @ MIT
+40GB database of compressed patent data
+- text searching
+
+Xapian.. OSS text indexer in C++ w/ bindings
+- 1xwriter many reader
+- many kinds of queries
+- tagged documents for searching metadata
+
+Xapwrap = wrapper helper for Python
+- locking - safety - unicode support - auto flatteners - auto uid mapping -
+  tokenizing - improved err handling - i18n stemming - ...
+
+Xapian locks index dirs
+- don't specify what process has the lock
+- do smarter locking if locking program crashed
+
+xapwrap does Date tokens normalized to iso8601
+
+xapwrap acquires uid's for items you index
+. helps automatic index synchronization/voltron indexes
+
+Xapian is fast, small indexes, multiple index grouping voltron
+Xapian without xapwrap has problems, unbounded operation times (async
+unfriendly), uids munged when grouping indexes, write your own tokenizer
+
+Lucene in pure python was slow

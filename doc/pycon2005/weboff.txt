@@ -1,0 +1,38 @@
+Weboff
+
+Michele Levesque
+
+Brian learned Java and PHP (loser) but liked Python (rox0r)
+
+Hockey!
+
+too many frameworks
+want to avoid pushing people to Java and PHP with too many options
+"Ruby on Rails"
+- mixed reviews
+- why is it good?
+
+Webware, Quixote, CherryPy, Twisted, Zope, Karigell, CGI (control)
+
+
+Michelle's Methodology
+- test new user's perspective (not perfect code)
+- blog
+- commit to public repo
+
+Webware: middlekit (persistence), webkit (requests), *?kit
+++es: widgets
+
+Durus - quick to hook up to persistence
+        no session concept?
+
+Quixote- cleaner code at the end, steep learning
+
+CherryPy- python/templates.
+    templates: <py-for="user in users">
+    better persistence
+
+Twisted- awesome for Practical Internet Groupware
+    Twisted + Nevow + Atop
+
+

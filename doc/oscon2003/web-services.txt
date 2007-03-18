@@ -1,0 +1,63 @@
+GSI
+
+2 services types
+SOAP.py and ZSI
+both are RPC
+ZSI more complicated but flexible.. thus ZSI was chosen
+
+http://pywebsvcs.sf.net/
+
+What's missing from Python for this
+1) automation - e.g. mapping complex types to python objects (code
+generation), stub generation from WSDL defs
+2) Hosting environment
+3) Security??  message-level, route SOAP messages not transport-level
+   standards e.g. WS-Secure conversation (setting up secure context)
+4) Perf analysis
+
+Things they're making:
+-=-=-=-=-
+wsdl2python code generator
+automatically generate client stub and server skeleton
+XML canonicalization? - finding an equivalence between xml documents
+(identical node tree)
+encryption
+WS-Secure conversation implementation
+-- shared secret between 2 endpoints
+Kerberos, TLS
+Q: similar to SPKI?
+A: becoming similar, but no hierarchical trust relationship
+
+What is a Grid pokey?
+-=-=-=-=-=-=-=--=-=-
+
+- coordinate distributed resources (d.net-ish)
+Grids cross organizational boundaries
+- use standard, open general-purpose protocols and interfaces
+- deliver non-trivial qualities of service
+
+Grids are not:
+a cluster
+
+Technical reqs:
+- virtual organizations, dynamically forming and managing them
+- discover/negotiate with services online
+- configure apps to deliver multiple qualities of service ("can i pay
+mor eto get better quality?")
+- "autonomic" mgmt of distrib. infrastructures, services and apps
+- mgmt of distributed state--keep to a minimum, but manage
+- extensible
+
+NEESgrid--earthquake simulation, engineering.  simulate on computers,
+share lab equipment, etc.
+
+(semi-)realtime coordination of beam properties in an earthquake... a
+beam structure is being modeled at three disparate universities and a
+grid system is combining the three models
+
+What is Globus pokey?
+-=-=-=-=-=-=-=-=-=-=-
+
+middleware toolkit for grids
+GT2 protocols are about to be released in Python
+what made the web/internet work?

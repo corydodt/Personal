@@ -1,0 +1,71 @@
+/* vi:ft=css 
+*/
+
+/* docdub format has a few new macros, like url() and content().  
+elem() is a value that expands to an element. elem(*) expands
+to every defined element, elem(*[structure]) expands to every structure
+element, etc.  elem(/) expands to the document root object, therefore
+  parent: elem(/);
+is how you set the topmost element.
+*/
+
+/* 
+Several elements are always available.  If they were defined, they would look
+like this:
+
+para 
+{ 
+    primitive: structure;
+    parent: elem(*[structure]);
+}
+
+emph 
+{ primitive: flowable; }
+
+author 
+{ primitive: metadata; }
+
+version
+{ primitive: metadata; } 
+
+heading1, heading2, heading3
+{ 
+    primitive: flowable; 
+    parent: elem(*[structure]);
+}
+
+*/
+
+
+
+/* now for the goodies.  Structures... */
+campaign, campaignnotes, timeline, module, modulenotes, chapter, dungeonlevel, chapternotes, room, map, prose, randomencounters, goals
+{ primitive: structure; }
+
+campaign
+{ parent: elem(/); 
+    version: 1.0; /* the root element has the version property */
+}
+
+campaignnotes, timeline, module
+{ parent: elem(campaign); }
+
+modulenotes, chapter, dungeonlevel
+{ parent: elem(module); }
+
+chapternotes, room
+{ parent: elem(chapter, dungeonlevel); }
+
+
+
+/* flowables */
+image, spelleffect, magicitem, dieroll
+{ primitive: flowable; }
+
+/* separables */
+monsterbox, artifactbox
+{ primitive: separable; }
+
+/* metadata */
+suggestedlevel
+{ primitive: metadata; }

@@ -1,0 +1,75 @@
+Tools are important
+
+DB is not a word processor, graphic environment, or simple
+
+* Q: conglomerate?
+* Q: how do you respond to the statement: "DocBook is a
+general-purpose format, where for most applications a tailored XML
+format is better because it holds the structure you really care about."
+
+Over 300 tags
+
+Strict structure rules
+
+* Q: tools like livedtd for relax?
+
+Some hierarchical elements like <part> are optional, e.g. things
+normally contained in it would be in <book>.
+
+2 sectioning options.. <sect1> <sect2> ... <sect5> or unlimited
+section nesting,
+e.g. <section><section><section></section></section></section>
+
+<literallayout> - for e.g. poetry; non monospace font but whitespace
+is preserved
+
+Q: nbsp?
+A: works in XML, but the processor has to deal with it (entity resolution)
+
+"formal displays": have a title/caption, are containers for some
+content that illustrates the main text
+
+<mediaobject> has various <imageobjects> which are the format for
+different "roles"
+* Q: what's the standard way to deal with audio output?
+Q: is there agreement for what the "role" attribute should be? 
+A: The stylesheet has to agree with currently the only docbook stylesheet.
+
+Q: math?
+A: basic solution is to use MathML within a docbook document; later we
+will cover namespace/dtd issues
+
+Q: running headers?
+A: stylesheet
+
+Q: short title?
+A: titleabbrev, shorter version
+
+Customize the DTD so that frex <para> understands the Mathml
+container, and the stylesheet recognizes mathml and deals with it.
+
+customization: fill in user-defined templates... use parameters
+
+generated text has been translated, you can use other languages for it
+(in common dir)
+
+Q: how do you dump the catalog file?
+A: processors have a debug option
+
+parameters? pass them in on the CL using e.g. xsltproc (slide 70)
+own stylesheet?  --stringparam html.stylesheet style.css 
+
+slide 72-73.. use driver file, pull in standard docbook with
+<xsl:import href="path/to/docbook.xsl"/>, set parameters, replacement
+templates, etc.
+
+slide 74 - &#160;==&nbsp;
+
+sagehill book is a good source of info about customizing the stylesheets.
+
+* mention pyana as possible CL processor
+
+
+
+
+Comments: ADD IMAGES!!

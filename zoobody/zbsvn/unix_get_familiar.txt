@@ -1,0 +1,275 @@
+
+================================
+Getting Familiar with Subversion
+================================
+
+.. default-role:: literal
+
+This will be a quick guide to using Subversion on `zoobody.com`.
+
+
+Working Copy
+------------
+
+Subversion consists of a repository and many working copies.  A working copy
+is a local copy on your hard drive of the files in the repository.  Everyone
+who wants to work on source code in the repository must have one.
+
+* Stored on your hard drive
+
+* You can edit files in it normally
+
+* When you commit, the repository is updated, and your changes 
+  are available to everyone.
+
+Subversion Commands
+-------------------
+
+Subversion uses a command line that always looks like `svn foo <args>`.  The
+subcommand `foo` tells `svn` what you want to do.  These commands almost always
+have a few things in common:
+
+* `-rNNN` is almost always an accepted argument.  This tells `svn` what
+  revision to work on.  You'll learn a little more about that later.
+
+* If you omit `<args>`, `svn` assumes you want to do something to the current
+  directory.  Otherwise, `<args>` will be a directory or filename, or multiple
+  directories or filenames, to tell `svn` to do that command only in those
+  places.  For example::
+
+  $ svn checkin  # checks in everything under the current dir
+  $ svn checkin foo/  # only checks in changes to foo
+
+Check Out Your Sandbox
+----------------------
+
+`svn co .../sandbox/<your username>`
+
+I have created a personal sandbox directory in the Subversion repository.  You
+can do anything you want in here without worrying about the other
+developers.::
+
+  % svn co svn+ssh://zoobody.com/zoobody/sandbox/cdodt
+  Checked out revision 15.
+
+I now have a "cdodt" working copy I can make changes in.
+
+
+Add a File
+----------
+`svn add`
+
+To make Subversion aware of new files, you must use `svn add`::
+
+  % echo 'touch it' > monkey.txt
+  % svn add monkey.txt
+  A         monkey.txt
+
+* Changes to existing files require no special command; Subversion is just
+  aware of them.
+
+* `svn add` on a directory adds all of its contents recursively
+
+* `svn del` or `svn rm` will delete files in a similar way
+
+
+See Status
+----------
+
+`svn st` / `svn status`::
+
+  % svn st
+  A      monkey.txt
+
+* Shows me changes in my working copy; i.e. uncommitted changes
+
+* These changes aren't shared until I commit.
+  
+  + This includes added files, removed files, and modifications to existing
+    files.  
+
+See Differences
+---------------
+
+`svn diff`::
+
+  % svn diff monkey.txt
+  Index: monkey.txt
+  ===================================================================
+  --- monkey.txt  (revision 0)
+  +++ monkey.txt  (revision 0)
+  @@ -0,0 +1 @@
+  +touch it
+
+* Shows me what I've changed since my last commit (`diff -u` format)
+
+* Use it every time you commit, as it prevents you from:
+
+  + Committing files you didn't mean to, and
+
+  + Committing debug print statements and other gaffes.
+
+Commit Your Change
+------------------
+`svn ci` / `svn commit`::
+
+  % svn ci -m "monkeys hooray"
+  Adding         monkey.txt
+  Transmitting file data .
+  Committed revision 16.
+
+As you can see, I connected to the Subversion repository and sent my new file.
+Now everyone can see my monkey.
+
+Note the `-m`: This is the mandatory log message.  If you don't specify a
+`-m`, your editor will pop up and ask you for a log message.  Make your log
+messages more informative than this one.
+
+
+Update to the Current
+---------------------
+`svn up` / `svn update`
+
+* Brings everyone else's changes over to you
+
+Each changed file will be printed on a line, much the way `svn co` looked.
+The flags you see before files have meanings:
+
+U
+  an existing file was modified
+A
+  a new file was created
+D
+  an existing file was deleted
+
+Update to the Current, Cont'd
+-----------------------------
+
+G
+  a file you had modified was also modified by someone else.  The two sets
+  of changes were merged cleanly.
+
+.. warning:: 
+  Watch for the `C` flag during an `svn update`: This means you edited a file
+  someone else was editing, and your changes conflicted!  You will not be able
+  to commit this file without resolving the conflict.
+
+See the Log
+-----------
+`svn log`::
+
+  % svn log
+  ------------------------------------------------------------------------
+  r16 | SYSTEM | 2006-04-07 15:25:49 -0700 (Fri, 07 Apr 2006) | 1 line
+
+  monkeys hooray
+  ------------------------------------------------------------------------
+  r15 | SYSTEM | 2006-04-07 15:17:35 -0700 (Fri, 07 Apr 2006) | 1 line
+
+  sandboxes
+  ------------------------------------------------------------------------
+
+* Activity on a particular file or directory.
+
+* Use `-r` to limit svn log to a range of revisions
+
+* Requires the network, can be slow when `-r` is omitted
+
+
+See a Previous Version
+----------------------
+`svn up -rXYZ`:
+
+You can see past changes by looking at previous revisions.  When I do this, my
+new file goes away.::
+
+  % svn up -r15
+  D    monkey.txt
+  Updated to revision 15.
+
+`-r` is the revision argument.  It specifies a revision by number.
+
+*You should do another svn up afterwards to return to the most recent
+revision (called HEAD).  Otherwise you're editing out-of-date files.*
+
+
+Undo a Commit
+-------------
+`svn merge -rXYZ:XYY .`
+
+Whoa, I really didn't want to add that monkey.  I'll get rid of him now,
+permanently and for everyone::
+
+  $ svn merge -r16:15 .
+  D    monkey.txt
+  $ svn st
+  D      monkey.txt
+  $ svn ci -m "boo monkeys"
+  Deleting       monkey.txt
+
+  Committed revision 17.
+
+* Note the dot (.) after the revision.  It is required here.
+
+Undoing, Explained
+------------------
+
+`svn merge` applies a change or set of changes to your working copy as a
+patch.  When I did `svn merge -r16:15`, 16 was the starting revision, and 15
+the ending revision.
+
+In other words, I patched my working copy with the reverse of change 16.  In
+effect, this returns me to the state I was in at change 15: I've undone my
+change.  Then I committed, making this undoing permanent.
+
+
+Other Topics
+------------
+
+`svn info`
+  A handy way to see information about a file in the working copy
+
+`svn revert`
+  This undoes a change *locally*.  You can only do this with a change that
+  hasn't been committed.  It does not require network access, because `svn`
+  keeps local copies of the last good revision in your working copy.  (That's
+  why your working copy seems twice as big as it should be.)
+
+::
+
+  $ notepad monkey.txt
+  ... edits ...
+  $ svn revert monkey.txt
+  Reverted 'monkey.txt'
+
+Even More Topics
+----------------
+
+Branching__
+  Allows you to edit your changes "off to the side" of the trunk,
+  where everyone else is working.  We will probably use branches heavily later
+  on in development.
+
+__ http://svnbook.red-bean.com/nightly/en/svn.branchmerge.html
+
+Properties__
+  Changes the way Subversion handles the file.  For example, you can make
+  Subversion change the kind of newlines in a file based on the operating
+  system, or you can make a file always executable when it gets checked out.
+
+__ http://svnbook.red-bean.com/nightly/en/svn.advanced.props.html
+
+Further Reading
+---------------
+
+http://svnbook.red-bean.com/nightly/en/index.html
+
+
+Peace
+-----
+
+Out__
+
+__ subversion_for_zbdev.html
+
+.. vi:ft=rst

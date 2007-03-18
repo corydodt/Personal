@@ -1,0 +1,49 @@
+pythoncard - kevin altis
+
+build an application from scratch
+pythoncard != hypercard
+more like vb
+pycard 1.0 sometime this year - with wxpython 2.6
+pycard 2.0 might be very different
+
+build an application
+
+pycard includes tools, framework, sample apps (~50)
+. everything built w/ pythoncard
+. very simple app
+
+app on mac: mortgage calculator
+. pythoncard gui
+. resource editor
+. grab a template from sample templates
+. app w/ file/exit menu
+. save as directory
+. names are identifiers
+. new field, amount
+. new field, rate
+. new calculate button
+. new statictext labels for fields
+. for each field: properties, font, change to make bigger
+. align components to grid option
+. statictext field for the result (html window another option)
+
+
+(editing python code in pycrust)
+PythonCard.model.Background is the main app class
+on_initialize event
+on_calculate_mouseClick for handling the field
+used pyfi to calculate amortization
+
+on_initialize is an event at the app startup
+. use it to force the caculate to happen at startup with the default field values
+
+runtime tools
+. shell
+. resource editor
+. code editor
+. message watcher (show events)
+these can be embedded in the pythoncard app you're writing itself.. you can
+have them start up when it does in a separate window
+
+
+
