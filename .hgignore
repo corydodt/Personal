@@ -2,3 +2,5 @@
 (/|\\).lock$
 (/|\\).fileTable.*$
 (/|\\).*\.pyc$
+(/|\\)dropin.cache$
+(/|\\)Thumbs.db$
