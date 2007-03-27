@@ -39,7 +39,7 @@ set backspace=eol,indent,start
 set whichwrap=b,s,<,>,h,l,~,[,] " these movements permit line wrapping
 set nu " line numbers
 set laststatus=2 " always show status
-set stl=%F\ %h%m%r
+set stl=%F\ %y\ %l/%L@%c\ %m%r
 
 
 " Helpers for some VCS systems
