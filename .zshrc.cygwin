@@ -53,8 +53,3 @@ cd "${START_DIR:-}"
 # export HOME="`cygpath -ma \"$HOME\"`"
 export MAGICK_CODER_MODULE_PATH='C:\Program Files\ImageMagick-6.1.6-Q16\modules\coders'
 export MAGICK_FILTER_MODULE_PATH='C:\Program Files\ImageMagick-6.1.6-Q16\modules\filters'
-
-
-# lotsa variables for CDS debugging
-export CDS_HTMLDIR="$USERPROFILE/svn/cds/code/Cyberhigh/html"
-export CDS_PFDIR="$PROGRAMFILES/cyberhigh_service"
