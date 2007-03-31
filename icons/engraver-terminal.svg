@@ -9,13 +9,13 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="55.221146"
-   height="48.021645"
+   width="57.704575"
+   height="48.056934"
    id="svg1306"
    sodipodi:version="0.32"
    inkscape:version="0.44"
    sodipodi:docbase="/home/cdodt/wc/Personal/icons"
-   sodipodi:docname="apollo-terminal.svg"
+   sodipodi:docname="engraver-terminal.svg"
    inkscape:export-filename="/home/andreas/projekt/bild/tango/terminal4.png"
    inkscape:export-xdpi="240.00000"
    inkscape:export-ydpi="240.00000"
@@ -282,9 +282,9 @@
      borderopacity="0.19607843"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="10.620211"
-     inkscape:cx="27.610573"
-     inkscape:cy="24.010823"
+     inkscape:zoom="10.633221"
+     inkscape:cx="28.852288"
+     inkscape:cy="24.028467"
      inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:grid-bbox="true"
@@ -497,23 +497,23 @@
        d="M 28.875 38.75 A 0.5625 0.5625 0 1 1  27.75,38.75 A 0.5625 0.5625 0 1 1  28.875 38.75 z"
        transform="translate(4.375,-6.25e-2)" />
     <g
-       id="g2157"
-       transform="matrix(3.239426,0,0,3.239426,-57.19814,-35.82652)">
+       id="g1953"
+       transform="matrix(3.242689,0,0,3.242689,-57.09058,-35.87871)">
       <text
          sodipodi:linespacing="125%"
          id="text1941"
          y="26.563381"
          x="25.417473"
-         style="font-size:7.47076893px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:purple;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         style="font-size:7.47076893px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#404040;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;font-family:Bitstream Vera Sans"
          xml:space="preserve"><tspan
-           style="font-size:17.43179321px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:purple;font-family:Bitstream Vera Sans"
+           style="font-size:17.43179321px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#404040;fill-opacity:1;font-family:Bitstream Vera Sans"
            y="26.563381"
            x="25.417473"
            id="tspan1943"
-           sodipodi:role="line">a</tspan></text>
+           sodipodi:role="line">e</tspan></text>
       <text
          xml:space="preserve"
-         style="font-size:7.47076893px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffb1ff;fill-opacity:1;stroke:#ff68ff;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         style="font-size:7.47076893px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#f2f2f2;fill-opacity:1;stroke:#b4b4b4;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Vera Sans"
          x="24.694496"
          y="25.960903"
          id="text1945"
@@ -522,7 +522,7 @@
            id="tspan1947"
            x="24.694496"
            y="25.960903"
-           style="font-size:17.43179321px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#ffb1ff;fill-opacity:1;stroke:#ff68ff;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Vera Sans">a</tspan></text>
+           style="font-size:17.43179321px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#f2f2f2;fill-opacity:1;stroke:#b4b4b4;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Vera Sans">e</tspan></text>
     </g>
   </g>
 </svg>
