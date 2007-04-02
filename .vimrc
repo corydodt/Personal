@@ -16,7 +16,7 @@ au BufNewFile,BufEnter *.js set smartindent
 map <Leader>- YpV:s:.:-:g<CR>  " underline a heading
 map <Leader>= YpV:s:.:=:g<CR>  " underline a heading at a different level
 map <Leader>` YpV:s:.:\~:g<CR>  " underline a heading at a different level
-map <Leader>== YpV:s:.:=:g<CR>YkO<Esc>pjj0  " title
+map <Leader><Leader>= YpV:s:.:=:g<CR>YkO<Esc>pjj0  " title
 
 " temp files 
 set virtualedit=block
