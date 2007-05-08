@@ -1,0 +1,73 @@
+
+==============================
+Iterative Development Workshop
+==============================
+
+Speaker: Kelly Goto, gotomedia
+------------------------------
+
+http://www.gotomedia.com/goto/web2expo/workshop
+
+Kelly is "design ethnographer" - ethnography evangelist
+
+Does design and research to make "it" fit users' lifestyles
+
+What do people actually need?  Maybe not what they think?
+
+--
+
+Gather info about your customers
+
+Meet your customers a lot.  As much as possible.  Suggests 1/qtr.
+
+Amazon does testing called "4% test" on their own servers, where 4% of users
+see this interface.  (Cory says: Google does this too.)
+
+--
+
+"Scrum" methodology -> daily iterations, 7 person, tight groups
+
+--
+
+Provide a style guide to developers and designers and contractors for your
+pages
+
+--
+Web Nouveau
+===========
+
+Aesthetics are important, get an emotional response to applications 
+
+[Book: Karen Donohue "Build for Use"]
+
+--
+
+Prototyping 
+
+"Low Resolution" - Sketches/PDF
+
+"Mid" - Visio/HTML/Flash
+
+"High" - high fidelity prototype - actually create some piece of the UI
+
+
+Try using Acrobat PDF with hotspots
+
+Prototypers
+-----------
+
+Visio w/ Plugins
+Axure
+Wufu
+Fireworks? (coming soon)
+
+--
+
+Get Unstuck
+
+Look for "aha moment" - such as seeing your website work on a mobile phone for
+the first time "aha CSS"
+
+[Book: Steve Krug - Don't Make Me Think]
+
+[Morae: for Screen caps]
