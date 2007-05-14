@@ -1,0 +1,19 @@
+#!/bin/bash
+set -e 
+
+cd ~/wc/
+hg clone v2 "$1"
+cd ~/wc/"$1"/hermes/pyx
+cp -v Makefile.include.mosquito Makefile.include.`hostname -s`
+cd ../c
+cp -v Makefile.include.mosquito Makefile.include.`hostname -s`
+cd ../..
+echo "Compiling C/pyx code"
+make > make.log 2>&1
+bash scripts/bootstrap
+cd ..
+echo "Copying demo directory.."
+cp -a v2/demo "$1"/demo
+touch "$1"/HERMES2_HOME
+makepth "$1"
+echo done
