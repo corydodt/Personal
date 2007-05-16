@@ -11,7 +11,7 @@ cd ../..
 echo "Compiling C/pyx code"
 make > make.log 2>&1
 bash scripts/bootstrap
-cd ..
+cd ~/wc/
 echo "Copying demo directory.."
 cp -a v2/demo "$1"/demo
 touch "$1"/HERMES2_HOME
