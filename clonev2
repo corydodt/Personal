@@ -3,23 +3,20 @@ set -e
 
 cd ~/wc/
 hg clone v2 "$1"
-cd ~/wc/"$1"/hermes/pyx
-cp -v Makefile.include.mosquito Makefile.include.`hostname -s`
-cd ../c
-cp -v Makefile.include.mosquito Makefile.include.`hostname -s`
-cd ../..
 
 echo "Compiling C/pyx code"
+cd ~/wc/"$1"
 make > make.log 2>&1
 
 echo "Fixing up ph script"
-sed -e "s:~/h/dev:$1:g
-s:erwin:cdodt:g" "$1"/scripts/sample/ph > "$1"/ph
+sed -e "s:~/h/dev:~/wc/$1:g
+s:erwin:cdodt:g
+s:python2.4:python2.5:g" ~/wc/"$1"/scripts/sample/ph > ~/wc/"$1"/ph
+chmod +x ~/wc/"$1"/ph
 
 bash scripts/bootstrap
-cd ~/wc/
 echo "Copying demo directory.."
-cp -a v2/demo "$1"/demo
-touch "$1"/HERMES2_HOME
-makepth "$1"
+cp -a ~/wc/v2/demo ~/wc/"$1"/demo
+touch ~/wc/"$1"/HERMES2_HOME
+makepth ~/wc/"$1"
 echo done
