@@ -8,8 +8,14 @@ cp -v Makefile.include.mosquito Makefile.include.`hostname -s`
 cd ../c
 cp -v Makefile.include.mosquito Makefile.include.`hostname -s`
 cd ../..
+
 echo "Compiling C/pyx code"
 make > make.log 2>&1
+
+echo "Fixing up ph script"
+sed -e "s:~/h/dev:$1:g
+s:erwin:cdodt:g" "$1"/scripts/sample/ph > "$1"/ph
+
 bash scripts/bootstrap
 cd ~/wc/
 echo "Copying demo directory.."
