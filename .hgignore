@@ -1,6 +1,6 @@
-(/|\\).project$
-(/|\\).lock$
-(/|\\).fileTable.*$
-(/|\\).*\.pyc$
-(/|\\)dropin.cache$
-(/|\\)Thumbs.db$
+(/|\\|^).project$
+(/|\\|^).lock$
+(/|\\|^).fileTable.*$
+(/|\\|^).*\.pyc$
+(/|\\|^)dropin.cache$
+(/|\\|^)Thumbs.db$
