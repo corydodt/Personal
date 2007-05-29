@@ -15,7 +15,7 @@
    sodipodi:version="0.32"
    inkscape:version="0.45"
    sodipodi:docbase="/home/cdodt/wc/Personal/icons"
-   sodipodi:docname="apollo-terminal.svg"
+   sodipodi:docname="ares-terminal.svg"
    inkscape:export-filename="/home/andreas/projekt/bild/tango/terminal4.png"
    inkscape:export-xdpi="240.00000"
    inkscape:export-ydpi="240.00000"
@@ -515,7 +515,7 @@
            sodipodi:role="line">a</tspan></text>
       <text
          xml:space="preserve"
-         style="font-size:7.47076893px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#b9b1ff;fill-opacity:1;stroke:#7668ff;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Vera Sans"
+         style="font-size:7.47076893px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#c6bfff;fill-opacity:1;stroke:#7668ff;stroke-width:0.40000001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Vera Sans"
          x="24.694496"
          y="25.960903"
          id="text1945"
@@ -524,7 +524,7 @@
            id="tspan1947"
            x="24.694496"
            y="25.960903"
-           style="font-size:17.43179321px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#b9b1ff;fill-opacity:1;stroke:#7668ff;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Vera Sans">a</tspan></text>
+           style="font-size:17.43179321px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:100%;writing-mode:lr-tb;text-anchor:start;fill:#c6bfff;fill-opacity:1;stroke:#7668ff;stroke-width:0.40000001;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;font-family:Bitstream Vera Sans">a</tspan></text>
     </g>
   </g>
 </svg>
