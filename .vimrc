@@ -287,3 +287,5 @@ fu! DoPrettyXML()
 endfu
 
 command! PrettyXML call DoPrettyXML()
+
+set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
