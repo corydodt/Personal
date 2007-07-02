@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# print the first available bittorrent port for aria2
+
+ports=$(
+    netstat -tlpn 2>&1 | grep 'tcp\b' | awk '{print $4}' | cut -d: -f2 | sort -n)
+
+topPort=ERROR_NO_FREE_PORT
+
+for port in {22000..22022};do
+    if echo "$ports" | grep -q "$port" -; then
+        continue
+    fi
+
+    topPort=$port
+    break
+done
+
+echo $topPort
