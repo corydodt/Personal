@@ -1,19 +1,30 @@
+source ~/.zsh/myPrompt
+
+myColor=yellow # may also be "yellow bold" for example
+# colors are: white red yellow green magenta blue black cyan
+
 # If running interactively, then:
 if [ "$PS1" ]; then
     # enable color support of ls and also add handy aliases
     eval `dircolors -b`
     alias ls='ls --color=auto -F'
     alias usudo='sudo -H -s -u'
+    alias open='gnome-open'
 
-    for f in .zsh/*; do source $f; done
 
     # If this is an xterm set the title to user@host:dir
     case $TERM in
       cygwin*|xterm*)
-        precmd() {echo -ne "\033]0;${USER}@${HOST}: ${PWD}\007"}
+        precmd() {
+            echo -ne "\033]0;${USER}@${HOST}: ${PWD}\007"
+            myPrompt $myColor
+        }
         ;;
       screen*)
-        precmd() {echo -ne "\033]0;${USER}@${HOST}: ${PWD} ${WINDOW}\007"}
+        precmd() {
+            echo -ne "\033]0;${USER}@${HOST}: ${PWD} ${WINDOW}\007"
+            myPrompt $myColor
+        }
         ;;
       *)
         ;;
@@ -43,3 +54,7 @@ setopt -oSHARE_HISTORY
 if ! echo $STY | cut -d. -f1 | xargs ps -p 2> /dev/null | grep -i screen > /dev/null 2>&1; then
     exec screen -RR
 fi
+
+
+# eval `keychain --eval ~/.ssh/id_dsa 70221D07` # don't use a gpg key that often
+eval `keychain --eval ~/.ssh/id_dsa`

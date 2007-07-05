@@ -1,0 +1,34 @@
+#!/bin/zsh
+autoload colors
+colors
+
+# print the color string of an escape
+esccolor () {
+    bold="${color[${2}]}"
+    bold="${bold:+;}${bold:-}"
+    echo -n "\e[${color[$1]}${bold}m"
+}
+
+colorOff=`esccolor none`
+
+border='________________________________________________________________________________________________________________________________________________________________________________________________________'
+
+# set a fancy prompt
+myPrompt () {
+    colorName="$@"
+    hostColor=`eval esccolor ${colorName}`
+
+    hostWidth=${#HOST}
+    c=$COLUMNS
+    borderPart="${border[1,$((c - 4 - hostWidth))]}"
+    coloredHost="%{${hostColor}%}${HOST}%{${colorOff}%}"
+    line1="${borderPart} ${coloredHost} __"$'\n'
+
+    dirStuff='%(4~,.../,)%3~'
+    dirBlue=`eval esccolor blue`
+    line2="%n ${WINDOW} %{${dirBlue}%}${dirStuff}%{${colorOff}%}%# "
+
+    export PS1="${line1}${line2}"
+}
+
+
