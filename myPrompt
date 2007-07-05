@@ -25,7 +25,7 @@ myPrompt () {
     line1="${borderPart} ${coloredHost} __"$'\n'
 
     dirStuff='%(4~,.../,)%3~'
-    dirBlue=`eval esccolor blue`
+    dirBlue=`eval esccolor blue bold`
     line2="%n ${WINDOW} %{${dirBlue}%}${dirStuff}%{${colorOff}%}%# "
 
     export PS1="${line1}${line2}"
