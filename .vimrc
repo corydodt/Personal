@@ -215,6 +215,10 @@ class Options(usage.Options):
     synopsis = "{Press 's' and type a new synopsis}"
     optParameters = [[long, short, default, help], ...]
 
+    # def parseArgs(self, ...):
+
+    # def postOptions(self):
+
 def run(argv=None):
     if argv is None:
         argv = sys.argv
