@@ -11,7 +11,16 @@ esccolor () {
 
 colorOff=`esccolor none`
 
-border='________________________________________________________________________________________________________________________________________________________________________________________________________'
+_border='________________________________________________________________________________________________________________________________________________________________________________________________________'
+
+# print the first $1 characters of the border, possibly using $2 as char
+border () {
+    n="$1"
+    c="${2-_}"
+    echo "${_border[1,$((n))]}" | tr '_' "$c"
+}
+
+
 
 # set a fancy prompt
 myPrompt () {
@@ -20,9 +29,15 @@ myPrompt () {
 
     hostWidth=${#HOST}
     c=$COLUMNS
-    borderPart="${border[1,$((c - 4 - hostWidth))]}"
+    if [ $(id -u) -eq 0 ]; then
+        b=`eval border $((c - 4 - hostWidth)) '\#' `
+        b2=`eval border 2 '\#' `
+    else
+        b=`eval border $((c - 4 - hostWidth)) `
+        b2=`eval border 2 `
+    fi
     coloredHost="%{${hostColor}%}${HOST}%{${colorOff}%}"
-    line1="${borderPart} ${coloredHost} __"$'\n'
+    line1="${b} ${coloredHost} ${b2}"$'\n'
 
     dirStuff='%(4~,.../,)%3~'
     dirBlue=`eval esccolor blue bold`
