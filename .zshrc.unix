@@ -1,6 +1,6 @@
 source ~/.zsh/myPrompt
 
-myColor=yellow # may also be "yellow bold" for example
+myColor="blue bold" # may also be "yellow bold" for example
 # colors are: white red yellow green magenta blue black cyan
 
 # If running interactively, then:
@@ -42,7 +42,7 @@ if [ "$PS1" ]; then
         exec screen -RR
     fi
 
-    if [ $(id -u) -ne 0 ]; then
+    if [ $(id -u) -ne 0 ] && which keychain >/dev/null 2>&1; then
         # eval `keychain --eval ~/.ssh/id_dsa 70221D07` # don't use a gpg key that often
         eval `keychain --eval ~/.ssh/id_dsa`
     fi
