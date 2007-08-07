@@ -1,14 +1,18 @@
 source ~/.zsh/myPrompt
 
-myColor=yellow # may also be "yellow bold" for example
+myColor="blue bold" # may also be "yellow bold" for example
 # colors are: white red yellow green magenta blue black cyan
 
 # If running interactively, then:
 if [ "$PS1" ]; then
     # enable color support of ls and also add handy aliases
-    eval `dircolors -b`
+    if [ ! -r ~/.dircolors ]; then
+        dircolors -p | sed '/^DIR /d' > ~/.dircolors
+        echo "DIR 01;36" >> ~/.dircolors
+    fi
+    eval `dircolors -b ~/.dircolors`
+
     alias ls='ls --color=auto -F'
-    alias usudo='sudo -H -s -u'
     alias open='gnome-open'
     alias -g su='su -m'
 
@@ -42,13 +46,10 @@ if [ "$PS1" ]; then
         exec screen -RR
     fi
 
-    if [ $(id -u) -ne 0 ]; then
+    if [ $(id -u) -ne 0 ] && which keychain >/dev/null 2>&1; then
         # eval `keychain --eval ~/.ssh/id_dsa 70221D07` # don't use a gpg key that often
         eval `keychain --eval ~/.ssh/id_dsa`
     fi
-
-    # color dirs in bright cyan so they show up in the dark.
-    eval $(dircolors - <<<`dircolors -p`$'\n'"DIR 01;36")
 fi
 
 umask 002
