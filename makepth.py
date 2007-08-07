@@ -1,11 +1,12 @@
 """
 Add a .pth file to this location, using the given .pth filename
 
-If no .pth filename is given, guess (looks for the first Python package in the
-directory).
+If no .pth filename is given, guess--it looks for the Python package
+(containing __init__.py) with the greatest number of .py files in the
+directory.
 """
 
-import sys, os.path
+import sys, os.path, os
 from distutils import sysconfig
 
 def usage():
@@ -17,7 +18,6 @@ file explicitly as the second argument.
 
 Usage: makepth <directory> [filename.pth]
 """)
-
 
 def run(argv=None):
     if argv is None:
@@ -57,14 +57,31 @@ def run(argv=None):
 class NoUsefulGuess(Exception):
     """Couldn't find any package in that directory"""
     
+def countPyFiles(dr):
+    """Return the number of .py files under dr, recursive."""
+    counted = 0
+    for dirpath, dirnames, filenames in os.walk(dr):
+        for f in filenames:
+            if f.lower().endswith('.py'):
+                counted = counted + 1
+
+    return counted
+
 def guessPthFilename(dr):
     """Guess the name of the package that should be given for the pth
     filename
     """
+    candidates = []
     for d in os.listdir(dr):
         if os.path.exists(os.path.join(dr, d, '__init__.py')):
-            return '%s.pth' % (d,)
-    raise NoUsefulGuess()
+            candidates.append( (countPyFiles(d), d) )
+    
+    if len(candidates) == 0:
+        raise NoUsefulGuess()
+
+    candidates.sort()
+
+    return '%s.pth' % (candidates[-1][1],)
 
 
 if __name__ == '__main__':
