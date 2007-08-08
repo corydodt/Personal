@@ -31,7 +31,7 @@ highlight link v2styleVariable Identifier
 highlight link v2styleFlowArgument Constant
 
 " top-level tokens
-syn match v2styleComment "#.*$"
+syn match v2styleComment "^#.*$"
 
 syn match v2styleSelector  "^\*[a-zA-Z0-9_\./-]*:.*$"
 

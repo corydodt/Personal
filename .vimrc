@@ -2,14 +2,11 @@
 au BufRead,BufNewFile *.tac setf python
 " indenting
 set tw=78
-set sw=4 expandtab
+set sw=4 ts=4 sts=4 expandtab
 filetype indent on
-au BufNewFile,BufEnter *.{html,xml,rng,xhtml,htm} set sw=2 ts=2
-au BufNewFile,BufEnter * exec ":cd " expand('%:p:h')
-au BufNewFile,BufEnter * set expandtab
-au BufLeave *.{html,xml,rng,xhtml,htm} set sw=4 ts=4
-au BufNewFile,BufEnter {ChangeLog,CHANGELOG,changelog,Makefile} set noet
-au BufNewFile,BufEnter *.js set smartindent
+au BufNewFile,BufEnter * silent! exec ":cd " expand('%:p:h')
+au BufNewFile,BufEnter {ChangeLog,CHANGELOG,changelog,Makefile} setlocal noet
+au BufNewFile,BufEnter *.js setlocal smartindent
 
 
 " reST helpers
