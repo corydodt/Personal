@@ -8,12 +8,11 @@ if exists("b:current_syntax")
 endif
 
 if version < 600
-  synax clear
+  syntax clear
 elseif exists("b:current_syntax")
   finish
 endif
 
-""
 highlight clear v2styleComment
 highlight clear v2styleSelector
 highlight clear v2styleCall
@@ -28,23 +27,39 @@ highlight link v2styleCall Macro
 highlight link v2styleKeyword Keyword
 highlight link v2styleFlowBegin Special
 highlight link v2styleVariable Identifier
-highlight link v2styleFlowArgument Constant
+highlight link v2styleFlowKeyword Constant
 
-" top-level tokens
-syn match v2styleComment "^#.*$"
+" we define it here so that included files can test for it
+if !exists("main_syntax")
+  let main_syntax='v2_style'
+endif
 
-syn match v2styleSelector  "^\*[a-zA-Z0-9_\./-]*:.*$"
+if version < 600
+  so <sfile>:p:h/html.vim
+else
+  runtime! syntax/html.vim
+endif
+unlet b:current_syntax
+syn case match
 
-syn match v2styleFlowBegin "^\s*@" nextgroup=v2styleKeyword
+syn include @v2Python syntax/python.vim
 
-syn region v2styleVariable start="\${" end="}" oneline
-syn region v2styleVariable start="\$(" end=")" oneline
-
+syn match v2styleComment "#.*$"
+syn match v2styleSelector  "^\*[a-zA-Z0-9_\./-]*:"
 syn match v2styleCall "^\[[^\]]*\]$"
-
 syn match v2styleBlankLine "^$"
 
+syn region v2styleFlowKeyword start="^\s*@[if|else|endif|for|end]" end="$" contains=@v2Python
 
-" contained in flow lines:
-syn match v2styleKeyword "if\|else\|endif" contained nextgroup=v2styleFlowArgument
-syn match v2styleFlowArgument ".*$" contained
+syn region v2styleVariable contained start="\${" end="}" contained contains=@v2Python
+syn region v2styleVariable contained start="\$(" end=")" contained contains=@v2Python
+
+syn cluster htmlPreproc add=v2styleVariable
+"syn cluster v2styleVariable add=
+
+let b:current_syntax = "v2_style"
+
+if main_syntax == 'v2_style'
+  unlet main_syntax
+endif
+
