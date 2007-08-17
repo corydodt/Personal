@@ -1,4 +1,4 @@
-from twisted.web import microdom
+from twisted.web import microdom, twcgi
 
 from nevow import static, rend, loaders, tags as T
 
@@ -26,10 +26,10 @@ class TheSoftWorldHtml(rend.Page):
             return ctx.tag
         return T.title[self.titleNodes]
 
-
     def render_everything(self, ctx, data):
         ctx.tag.fillSlots('contentMain', self.content)
         return ctx.tag
+
 
 class TheSoftWorldPage(static.File):
     """
@@ -37,6 +37,12 @@ class TheSoftWorldPage(static.File):
     """
     processors = {'.tsw': TheSoftWorldHtml}
     indexNames = ['index.tsw'] + list(static.File.indexNames)
+
+    def locateChild(self, ctx, segs):
+        if segs[0] == 'cgi-bin':
+            dir = '/usr/lib/cgi-bin'
+            return twcgi.CGIDirectory(dir), segs[1:]
+        return static.File.locateChild(self, ctx, segs)
 
 def root(directory):
     return TheSoftWorldPage(directory)
