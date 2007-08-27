@@ -12,27 +12,19 @@ function! V2StyleFoldText()
 endfu
 
 function! GetV2StyleFold(lnum)
-    let line = getline(a:lnum)
-    let nextline = getline(a:lnum+1)
+    let style = '^\*.*:'
 
-    let styleMark = '^\*.*:$'
-
-    " end file folds on the line before the next style begins
-    if nextline =~ styleMark
-        return "<1"
-    endif
-
-    " begin a file fold at the filename marker
-    if line =~ styleMark
+    if getline(a:lnum) =~ style
+        if getline(a:lnum + 1) =~ style
+            return "0"
+        endif
         return "1"
     endif
 
-    " this has to be evaluated last -- any line that is not a diff line or other
-    " marker is some kind of comment.
-    if line =~ commentmark && line !~ svndiffdecoration
+    if getline(nextnonblank(a:lnum)) =~ style
         return "0"
     endif
 
-    return "="
-
+    return "1"
 endfu
+
