@@ -44,7 +44,11 @@ class TheSoftWorldPage(static.File):
         if segs[0] == 'cgi-bin':
             dir = '/usr/lib/cgi-bin'
             return twcgi.CGIDirectory(dir), segs[1:]
+        elif segs[0] == 'pipermail':
+            dir = '/var/lib/mailman/archives/public/'
+            return static.File(dir), segs[1:]
         return static.File.locateChild(self, ctx, segs)
+
 
 class VhostFakeRoot:
     """
@@ -66,6 +70,7 @@ class VhostFakeRoot:
             return vhost.VHostMonsterResource(), segments[1:]
         else:
             return self.wrapped.locateChild(ctx, segments)
+
 
 def root(directory):
     return VhostFakeRoot(TheSoftWorldPage(directory))
