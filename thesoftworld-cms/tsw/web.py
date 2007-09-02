@@ -21,13 +21,19 @@ class TheSoftWorldHtml(rend.Page):
         # with a default when necessary.
         _title = doc.getElementsByTagName('title')
         if len(_title) >= 1:
-            self.titleNodes = _title[0].childNodes
+            title = _title[0]
+            self.titleNodes = title.childNodes
         else:
             self.titleNodes = None
+            title = None
 
         # then, everything else in original's head
-        head = doc.getElementsByTagName('head')
-        self.originalHead = [n for n in head.childNodes if n is not _title]
+        _head = doc.getElementsByTagName('head')
+        if len(_head) >= 1:
+            head = _head[0]
+            self.originalHead = [n for n in head.childNodes if n is not title]
+        else:
+            self.originalHead = []
 
         rend.Page.__init__(self, *a, **kw)
 
