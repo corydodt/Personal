@@ -14,12 +14,23 @@ class TheSoftWorldHtml(rend.Page):
         self.registry = registry
         doc = microdom.parse(self.path)
         self.content = doc.getElementsByTagName('body')[0].childNodes
+
+        # we will get title out of the original's <head> so we can replace it
+        # with a default when necessary.
         _title = doc.getElementsByTagName('title')
         if len(_title) >= 1:
             self.titleNodes = _title[0].childNodes
         else:
             self.titleNodes = None
+
+        # then, everything else in original's head
+        head = doc.getElementsByTagName('head')
+        self.originalHead = [n for n in head.childNodes if n is not _title]
+
         rend.Page.__init__(self, *a, **kw)
+
+    def render_includedHead(self, ctx, data):
+        return self.originalHead
 
     def render_title(self, ctx, data):
         if self.titleNodes is None:
