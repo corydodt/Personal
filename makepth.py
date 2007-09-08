@@ -10,6 +10,7 @@ import sys, os.path, os
 from distutils import sysconfig
 
 def usage():
+    # bah, can't use t.py.usage because I use makepth on Twisted itself :)
     sys.stderr.write(
 """makepth: Write a .pth file to the stdlib, using the given directory.
 If the directory contains a Python package, the filename of the .pth
@@ -18,6 +19,8 @@ file explicitly as the second argument.
 
 Usage: makepth <directory> [filename.pth]
 """)
+    #
+
 
 def run(argv=None):
     if argv is None:
@@ -56,6 +59,7 @@ def run(argv=None):
 
 class NoUsefulGuess(Exception):
     """Couldn't find any package in that directory"""
+
     
 def countPyFiles(dr):
     """Return the number of .py files under dr, recursive."""
@@ -66,6 +70,7 @@ def countPyFiles(dr):
                 counted = counted + 1
 
     return counted
+
 
 def guessPthFilename(dr):
     """Guess the name of the package that should be given for the pth
