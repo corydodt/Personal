@@ -1,0 +1,162 @@
+restart
+y
+z.z.z.z.z.z.z.w.get in webbing.z.z.z.z.z.z.z.z.z.z.z.z.z.
+
+#save
+#/tmp/1.sav
+
+#restore
+#/tmp/1.sav
+
+leave webbing.open door.u.u.u.u.u.drop card and brush.
+
+#save
+#/tmp/2.sav
+
+#restore
+#/tmp/2.sav
+
+n.ne.e.e.e.s.s.s.sw.get magnet.ne.n.n.n.n.
+
+l at crevice.get key with magnet.s.w.w.
+
+unlock padlock with key.get padlock.drop all.open door.n.
+
+get ladder.s.e.e.n.n.drop ladder.extend ladder.put ladder over rift.
+
+n.w.open desk.get kitchen.get upper.w.open desk.get card.e.e.s.s.s.w.w.s.
+
+get canteen.slide kitchen thru slot.s.open canteen.
+
+put canteen under spout.push button.get canteen.drink fluid.
+
+put canteen under spout.push button.get canteen.close canteen.
+
+put kitchen in pocket.n.n.e.e.s.e.get box.w.n.e.e.drop box.
+
+w.w.s.s.s.sw.get all.e.e.search robot.turn on robot.nw.n.n.n.e.e.
+
+put upper in pocket.put lower in pocket.drop battery and pliers and laser.
+
+w.push red.push blue.z.z.n.slide upper thru slot.push up button.z.z.s.ne.
+
+
+[look at the color!]  brown
+
+
+sw.n.slide upper thru slot.push down button.z.z.s.w.s.s.s.s.put flask under spout.
+
+
+push   [color]
+
+
+get flask.n.n.n.n.
+
+# time to deal with your sleep and wait for hunger
+
+w.n.drop all.get in bed.z.stand up.get all.s.w.s.
+
+slide kitchen thru slot.s.open canteen.z.z.z.z.z.z.z.z.z.drink protein-rich.
+
+put canteen under spout.push button.get canteen.n.n.e.e.e.n.
+
+slide upper thru slot.push up button.z.z.s.ne.pour chemical in funnel.
+
+
+[look at the color!]  blue
+
+
+#save.
+#/tmp/3.sav
+
+#restore.
+#/tmp/3.sav
+
+
+## REPEAT THIS LOOP starts here
+sw.n.slide upper thru slot.push down button.z.z.s.w.
+
+s.s.s.s.put flask under spout.
+
+
+push    [color]
+
+
+get flask.n.n.n.n.e.n.slide upper thru slot.push up button.z.z.s.ne.
+
+pour chemical in funnel.
+
+
+[ you *MIGHT* have to repeat this loop a third time.  sometimes it's only 2 ]
+
+
+drop flask.sw.n.
+
+slide upper thru slot.push down button.z.z.s.s.slide lower thru slot.
+
+push down button.z.z.z.n.e.s.e.slide shuttle thru slot.pull lever up.
+
+z.z.z.z.z.z.z.z.pull lever down.z.z.z.z.z.z.
+
+pull lever down.z.z.z.z.z.z.z.z.
+
+w.n.e.e.se.e.e.e.s.open lab pocket.get battery and card.
+
+n.w.n.e.slide teleport thru slot.push 2.
+
+put battery in laser.drop lower and upper and shuttle.put teleport in pocket.
+
+w.w.w.w.w.w.
+
+e.e.e.e.e.e.get pliers and bedistor.slide teleport thru slot.push 3.
+
+w.n.n.open cube.get fused bedistor with pliers.drop pliers and fused.
+
+put good bedistor in cube.close cube.s.w.w.n.
+
+
+[wait for floyd]
+
+
+floyd, north.
+
+floyd, get fromitz.
+
+s.e.n.open panel.get second fromitz and drop it.put shiny in panel.s.e.s.s.s.
+
+
+[wait for floyd - he has to see this room and then say "Computer is broken" ]
+
+
+ne.open bio-lock.se.close door.z.z.z.z.open canteen.drink fluid.e.
+
+
+[wait for floyd to offer]
+
+
+#save.
+#/tmp/6.sav
+
+#restore.
+#/tmp/6.sav
+
+open door.close door.z.open door.close door.get card.w.open door.w.w.n.e.
+
+get laser.turn laser to 1.w.s.s.s.slide miniature thru slot.type 384. 
+
+e.n.n.fire laser at speck.g.g.
+
+
+[repeat until speck is ash]
+
+
+turn laser to 2.s.fire laser at microbe.g.g.
+
+
+[repeat until laser is "hot"]
+
+
+throw laser over side.s.w.n.open desk.get mask.wear mask.push red.
+
+open door.w.open lab door.w.w.open door.w.sw.w.s.push button.z.z.z.n.
+
