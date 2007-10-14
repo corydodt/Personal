@@ -15,6 +15,9 @@ map <Leader>= YpV:s:.:=:g<CR>  " underline a heading at a different level
 map <Leader>` YpV:s:.:\~:g<CR>  " underline a heading at a different level
 map <Leader><Leader>= YpV:s:.:=:g<CR>YkO<Esc>pjj0  " title
 
+" tab helper
+map <Leader>t :tab new<CR>
+
 " temp files 
 set virtualedit=block
 set nobackup nowritebackup
@@ -44,7 +47,7 @@ fu! DoSvnDiff()
     let s:thispath = expand('%:t')
     new
     exe ':0r!svn diff "'.s:thispath.'" | dos2unix'
-    set ft=diff
+    setlocal ft=diff
 endfu
 command! SvnDiff call DoSvnDiff()
 
@@ -52,10 +55,16 @@ fu! DoHgDiff()
     let s:thispath = expand('%:t')
     new
     exe ':0r!hg diff "'.s:thispath.'" | dos2unix'
-    set ft=diff
+    setlocal ft=diff
 endfu
 command! HgDiff call DoHgDiff()
 
+fu! DoGather()
+    let s:thispath = expand('%:t')
+    new
+    exe ':0r!gather "'.s:thispath.'" | dos2unix'
+endfu
+command! Gather call DoGather()
 
 
 
@@ -290,3 +299,17 @@ endfu
 command! PrettyXML call DoPrettyXML()
 
 set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
+
+
+
+fu! DoRunPyBuffer2()
+    pclose!
+    setlocal ft=python
+    sil %y a | below new | sil put a | sil %!python -
+    setlocal previewwindow ro nomodifiable
+    winc p
+endfu
+
+command! RunPyBuffer call DoRunPyBuffer2()
+map <Leader>p :RunPyBuffer<CR>
+
