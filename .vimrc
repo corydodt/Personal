@@ -303,10 +303,15 @@ set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
 
 
 fu! DoRunPyBuffer2()
-    pclose!
+    pclose!  " force preview window closed
     setlocal ft=python
+
+    " copy the buffer into a new window, then run that buffer through python
     sil %y a | below new | sil put a | sil %!python -
+    " indicate the output window as the current previewwindow
     setlocal previewwindow ro nomodifiable
+
+    " back into the original window
     winc p
 endfu
 
