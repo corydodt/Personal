@@ -3,6 +3,7 @@ au BufRead,BufNewFile *.tac setf python
 " indenting
 set tw=78
 set sw=4 ts=4 sts=4 expandtab
+set modeline
 filetype indent on
 au BufNewFile,BufEnter * silent! exec ":cd " expand('%:p:h')
 au BufNewFile,BufEnter {ChangeLog,CHANGELOG,changelog,Makefile} setlocal noet
@@ -15,8 +16,9 @@ map <Leader>= YpV:s:.:=:g<CR>  " underline a heading at a different level
 map <Leader>` YpV:s:.:\~:g<CR>  " underline a heading at a different level
 map <Leader><Leader>= YpV:s:.:=:g<CR>YkO<Esc>pjj0  " title
 
-" tab helper
+" tab helpers
 map <Leader>t :tab new<CR>
+map <Leader><Leader><Leader>t :tabclose!<CR>
 
 " temp files 
 set virtualedit=block
@@ -29,9 +31,9 @@ set nohlsearch
 filetype plugin on
 " colorscheme koehler
 " colorscheme peachpuff
-colorscheme greener
 set ts=4
 syn on
+colorscheme greener
 
 " misc
 set visualbell
@@ -74,44 +76,6 @@ fu! Copyabspath()
 endfu
 command! Abspath call Copyabspath()
 
-fu! PutCanvassy()
-    " insert Python code for displaying a Canvas
-    insert
-import sys
-
-import gtk
-import gnomecanvas
-
-class Canvassy(gnomecanvas.Canvas):
-    def __init__(self, *args, **kwargs):
-        gnomecanvas.Canvas.__init__(self)
-        self.set_center_scroll_region(False)
-        self.root().add("GnomeCanvasRect", x1=0, y1=0, x2=500, y2=500,
-                        fill_color="#ffffff")
-
-def destroy(event):
-    gtk.main_quit()
-
-def run(argv=None):
-    if argv is None:
-        argv = sys.argv
-
-    w = gtk.Window()
-    w.connect('destroy', destroy)
-    c = Canvassy()
-    w.add(c)
-    w.show_all()
-
-    gtk.main()
-    return 0
-
-
-if __name__ == '__main__':
-    sys.exit(run())
-.
-endfu
-command! Canvasbp call PutCanvassy()
-
 
 
 fu! PutHtml()
@@ -140,8 +104,8 @@ endfu
 fu! DoHtmlBP()
     " insert the HTML page then select the title interactively
     call PutHtml()
-    set ft=html
     exe "norm ?{Press\<Cr>v/}\<Cr>"
+    set ft=html
 endfu
 
 command! Htmlbp call DoHtmlBP()
@@ -217,6 +181,7 @@ import sys, os
 
 from twisted.python import usage
 
+
 class Options(usage.Options):
     synopsis = "{Press 's' and type a new synopsis}"
     optParameters = [[long, short, default, help], ...]
@@ -224,6 +189,7 @@ class Options(usage.Options):
     # def parseArgs(self, ...):
 
     # def postOptions(self):
+
 
 def run(argv=None):
     if argv is None:
@@ -240,11 +206,13 @@ def run(argv=None):
 
     return 0
 
+
 if __name__ == '__main__': sys.exit(run())
 .
 endfu
 
 fu! DoPutUsage()
+    setlocal nofoldenable
     call PutUsage()
     set ft=python
     exe "norm ?{Press\<Cr>v/}\<Cr>"
@@ -302,19 +270,20 @@ set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
 
 
 
-fu! DoRunPyBuffer2()
-    pclose!  " force preview window closed
-    setlocal ft=python
-
-    " copy the buffer into a new window, then run that buffer through python
-    sil %y a | below new | sil put a | sil %!python -
-    " indicate the output window as the current previewwindow
-    setlocal previewwindow ro nomodifiable
-
-    " back into the original window
+fu! DoRunAnyBuffer(interpreter, syntax)
+    pclose!
+    exe "setlocal ft=" . a:syntax
+    exe "sil %y a | below new | sil put a | sil %!" . a:interpreter
+    setlocal previewwindow ro nomodifiable nomodified
     winc p
 endfu
 
-command! RunPyBuffer call DoRunPyBuffer2()
+command! RunPyBuffer call DoRunAnyBuffer("python -", "python")
 map <Leader>p :RunPyBuffer<CR>
+command! RunBashBuffer call DoRunAnyBuffer("bash -", "bash")
+map <Leader>b :RunBashBuffer<CR>
+
+
+" make it easier to edit vimrc
+map <Leader>v :so ~/.vimrc<CR>
 
