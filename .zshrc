@@ -1,6 +1,7 @@
 source ~/.zsh/myPrompt
+source ~/.zsh/`uname`
 
-myColor="blue bold" # may also be "yellow bold" for example
+myColor="magenta bold" # may also be "yellow bold" for example
 # colors are: white red yellow green magenta blue black cyan
 
 # If running interactively, then:
@@ -12,8 +13,6 @@ if [ "$PS1" ]; then
     fi
     eval `dircolors -b ~/.dircolors`
 
-    alias ls='ls --color=auto -F'
-    alias open='gnome-open'
     alias -g su='su -m'
 
 
