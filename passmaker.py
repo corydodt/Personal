@@ -29,7 +29,9 @@ import sys
 import random
 import string
 
-from twisted.python import usage
+from twisted.python import usage, util
+
+RESOURCE = lambda p: util.sibpath(__file__, p)
 
 
 def GetWord(dictFilePath = "/usr/dict/linux.words", minWordLength=4, maxWordLength=6):
@@ -90,9 +92,13 @@ class PassmakerOptions(usage.Options):
     optParameters=[["wordcount", "w", "3", "Number of words in password"],
                    ["minlength", "n", "3", "Minimum length of each word"],
                    ["maxlength", "x", "5", "Maximum length of each word"],
-                   ["dictionary", "d", "/usr/share/dict/american-english",
-                    "Filename of dictionary for retrieving words"],
+                   ["dictionary", "d", None,
+                       "Filename of dictionary for retrieving words [default: script_directory/american-english"],
                    ]
+    
+    def parseArgs(self):
+        if self['dictionary'] is None:
+            self['dictionary'] = RESOURCE('american-english')
 
 if __name__ == '__main__':
     o=PassmakerOptions()
