@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 """
 Add a .pth file to this location, using the given .pth filename
 
@@ -20,6 +21,23 @@ file explicitly as the second argument.
 Usage: makepth <directory> [filename.pth]
 """)
     #
+
+
+def sitePackages():
+    """
+    Return the most likely candidate for site-packages
+    """
+    LIBDEST = sysconfig.get_config_var('LIBDEST')
+
+    site1 = os.path.join(LIBDEST, 'site-packages')
+    if os.path.exists(site1):
+        return site1
+    else:
+        for x in sys.path:
+            if x.endswith('site-packages'):
+                return x
+    assert 0, "No site-packages found anywhere :("
+
 
 
 def run(argv=None):
@@ -45,11 +63,8 @@ def run(argv=None):
 "** Please give a filename.pth argument, couldn't guess the dirname\n")
             return 1
 
-    LIBDEST = sysconfig.get_config_var('LIBDEST')
-
-    abspth = os.path.join(LIBDEST, 'site-packages', pthfile)
-
     absdirname = os.path.abspath(dirname)
+    abspth = os.path.join(sitePackages(), pthfile)
 
     file(abspth, 'w').write(absdirname + '\n')
 
