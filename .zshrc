@@ -14,6 +14,8 @@ if [ "$PS1" ]; then
     eval `dircolors -b ~/.dircolors`
 
     alias -g su='su -m'
+    alias here='source <(command here)'
+    alias vim='vim -X'
 
 
     # If this is an xterm set the title to user@host:dir
