@@ -1,0 +1,8 @@
+[ui]
+username = Cory Dodt <corydodt+mercurial_spams@gmail.com>
+
+[extensions]
+hgext.fetch =
+hgext.convert =
+# hgext.purge =
+hgext.transplant =

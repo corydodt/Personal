@@ -1,0 +1,3 @@
+alias dircolors=gdircolors
+export PATH="$PATH":/opt/local/bin
+alias ls='gls --color=auto -F'
