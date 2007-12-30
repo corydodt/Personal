@@ -39,7 +39,6 @@ def sitePackages():
     assert 0, "No site-packages found anywhere :("
 
 
-
 def run(argv=None):
     if argv is None:
         argv = sys.argv
@@ -93,6 +92,8 @@ def guessPthFilename(dr):
     """
     candidates = []
     for d in os.listdir(dr):
+        if d in ['test', 'tests']:
+            continue
         if os.path.exists(os.path.join(dr, d, '__init__.py')):
             candidates.append( (countPyFiles(d), d) )
     
