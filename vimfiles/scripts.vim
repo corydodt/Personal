@@ -7,6 +7,8 @@ endif
 " detect hg out -p by looking at the first line
 if getline(1) =~ '^searching for changes$\|^changeset: '
     setfiletype diff
+elseif getline(1) =~ '^comparing with ' && getline(2) =~ '^searching for changes$'
+    setfiletype diff
 endif
 
 " To detect pylog, we're going to look for a log timestamp pattern 
