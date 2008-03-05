@@ -1,0 +1,9 @@
+#!/bin/bash
+rdiff-backup /var /mnt/s3backup/engraver.goonmill.org/var
+rdiff-backup /home /mnt/s3backup/engraver.goonmill.org/home
+rdiff-backup /etc /mnt/s3backup/engraver.goonmill.org/etc
+rdiff-backup /usr/local /mnt/s3backup/engraver.goonmill.org/usr/local
+rdiff-backup --remove-older-than 6W /mnt/s3backup/engraver.goonmill.org/var
+rdiff-backup --remove-older-than 6W /mnt/s3backup/engraver.goonmill.org/home
+rdiff-backup --remove-older-than 6W /mnt/s3backup/engraver.goonmill.org/etc
+rdiff-backup --remove-older-than 6W /mnt/s3backup/engraver.goonmill.org/usr/local
