@@ -1,5 +1,5 @@
 """
-Twistd plugin to run thesoftworld-cms
+Twistd plugin to run goonsite-cms
 
 Twisted 2.5 or later is required to use this.
 """
@@ -29,7 +29,7 @@ class TheSoftWorldMaker(object):
     the right makeService method to call.
     """
     implements(IServiceMaker, IPlugin)
-    tapname = "thesoftworld-cms"
+    tapname = "goonsite-cms"
     description = "Listen for HTTP requests and simulate the FF partner server"
     options = Options
 
