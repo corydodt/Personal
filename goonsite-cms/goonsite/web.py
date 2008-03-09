@@ -4,13 +4,13 @@ from twisted.web import microdom, twcgi
 
 from nevow import static, rend, loaders, tags as T, inevow, vhost
 
-from tsw import RESOURCE
+from goonsite import RESOURCE
 
 class TheSoftWorldHtml(rend.Page):
     """
-    Render an HTML page inside tsw's template
+    Render an HTML page inside goonsite's template
     """
-    docFactory = loaders.xmlfile(RESOURCE('tsw.xhtml'))
+    docFactory = loaders.xmlfile(RESOURCE('goonsite.xhtml'))
     def __init__(self, path, registry, *a, **kw):
         self.path = path
         self.registry = registry

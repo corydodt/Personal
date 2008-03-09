@@ -13,7 +13,7 @@ from twisted.application import strports
 
 from nevow import appserver
 
-import tsw
+import goonsite
 
 class Options(usage.Options):
     optParameters = [['port', 'p', '800', 'Port to run on'],
@@ -37,7 +37,7 @@ class TheSoftWorldMaker(object):
         """
         Construct a sender daemon.
         """
-        resource = tsw.root(options['directory'])
+        resource = goonsite.root(options['directory'])
         factory = appserver.NevowSite(resource)
         port = 'tcp:%s' % (options['port'],)
         ## port = 'ssl:%s:privateKey=%s:certKey=%s' % (options['port'],
