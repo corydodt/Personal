@@ -36,6 +36,7 @@ $RSYNC /var /mnt/s3backup/engraver.goonmill.org
 $RSYNC /home /mnt/s3backup/engraver.goonmill.org
 $RSYNC /etc /mnt/s3backup/engraver.goonmill.org
 $RSYNC /usr/local /mnt/s3backup/engraver.goonmill.org/usr
+$RSYNC /usr/share/moin /mnt/s3backup/engraver.goonmill.org/usr/share
 sync
 
 # don't keep s3backup mounted, less chance of disaster leaking into it
