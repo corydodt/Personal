@@ -1,9 +1,44 @@
 #!/bin/bash
-rdiff-backup /var /mnt/s3backup/engraver.goonmill.org/var
-rdiff-backup /home /mnt/s3backup/engraver.goonmill.org/home
-rdiff-backup /etc /mnt/s3backup/engraver.goonmill.org/etc
-rdiff-backup /usr/local /mnt/s3backup/engraver.goonmill.org/usr/local
-rdiff-backup --remove-older-than 6W /mnt/s3backup/engraver.goonmill.org/var
-rdiff-backup --remove-older-than 6W /mnt/s3backup/engraver.goonmill.org/home
-rdiff-backup --remove-older-than 6W /mnt/s3backup/engraver.goonmill.org/etc
-rdiff-backup --remove-older-than 6W /mnt/s3backup/engraver.goonmill.org/usr/local
+
+set -e
+
+echo Backing up `hostname` on `date -I`
+
+# =============================
+# command line flags I'm using:
+# =============================
+# -C --cvs-exclude (use .cvsignore files to determine what to ignore/skip)
+# -a --archive (ALL of the following):
+#    -r --recursive (descend subdirectories)
+#    -l --links (copy symlinks as symlinks)
+#    -p --permissions (copy permissions)
+#    -g --group (copy group owner)
+#    -o --owner (copy user owner)
+#    -D --devices (copy devices intact)
+#    -t --times (copy times)
+# -v --verbose (show what's happening)
+# --inplace  (copy files in place over old files, to reduce i/o)
+# --delete (when a file in the destination is missing in the source, delete it
+#           in the destination)
+
+# TODO - alternate days
+
+ARGS="-Cav --inplace --delete --log-file=/var/log/backup-engraver.log"
+## ARGS="-CrlpgoDv --size-only --inplace --delete --log-file=/var/log/backup-engraver.log"
+RSYNC="rsync $ARGS"
+
+mount /mnt/s3backup
+
+touch /var/log/backup-engraver.log
+chmod 600 /var/log/backup-engraver.log
+
+$RSYNC /var /mnt/s3backup/engraver.goonmill.org
+$RSYNC /home /mnt/s3backup/engraver.goonmill.org
+$RSYNC /etc /mnt/s3backup/engraver.goonmill.org
+$RSYNC /usr/local /mnt/s3backup/engraver.goonmill.org/usr
+sync
+
+# don't keep s3backup mounted, less chance of disaster leaking into it
+# (e.g. sudo rm -rf /* will happily erase backups too, if they are mounted)
+umount /mnt/s3backup
+echo "/mnt/s3backup complete and disconnected"
