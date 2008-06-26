@@ -3,5 +3,5 @@
 cd ~/.bip/bip
 bzip2 -c bip.log > bip-$(date -I).log.bz2
 tail -1000 bip.log > bip.log.1000
-mv bip.log.1000 bip
+mv bip.log.1000 bip.log
 
