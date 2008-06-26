@@ -34,5 +34,7 @@ hi DiffDelete                     guifg=Black      guibg=LightCyan
 hi DiffText                       guifg=White      guibg=DarkRed      gui=NONE
 hi DiffChange                     guifg=Black      guibg=LightYellow
 
+hi TabLine term=underline cterm=underline ctermfg=7 ctermbg=0 gui=underline guibg=DarkGrey
+hi TabLineSel term=bold cterm=bold gui=bold 
 " vim: ts=2 sw=2
 

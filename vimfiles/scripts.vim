@@ -5,7 +5,7 @@ if did_filetype()
 endif
 
 " detect hg out -p by looking at the first line
-if getline(1) =~ '^searching for changes$\|^changeset: '
+if getline(1) =~ '^searching for changes$\|^changeset: \|^# HG changeset patch$'
     setfiletype diff
 elseif getline(1) =~ '^comparing with ' && getline(2) =~ '^searching for changes$'
     setfiletype diff
