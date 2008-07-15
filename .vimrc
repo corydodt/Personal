@@ -174,6 +174,29 @@ command! -nargs=1 Ppn exe ':new '.system('pp <args>')
 command! -nargs=1 Ppv exe ':vs '.system('pp <args>')
 
 
+fu! PutSurvey()
+    insert
+<survey name="Blank Survey" state="dev">
+
+    <radio label="q1" title="Choose your favorite fruit">
+        <comment>Choose one</comment>
+        <row label="r1">Orange</row>
+        <row label="r2">Banana</row>
+        <row label="r3">Apple</row>
+    </radio>
+
+</survey>
+.
+endfu
+
+fu! DoPutSurvey()
+    setlocal nofoldenable
+    call PutSurvey()
+    set ft=xml
+endfu
+
+command! Survey call DoPutSurvey()
+
 fu! PutUsage()
     insert
 # vi:ft=python
