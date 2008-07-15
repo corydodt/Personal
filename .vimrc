@@ -185,6 +185,10 @@ fu! PutSurvey()
         <row label="r3">Apple</row>
     </radio>
 
+    <exec>
+setMarker("qualified")
+</exec>
+
 </survey>
 .
 endfu
