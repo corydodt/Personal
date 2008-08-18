@@ -1,7 +1,7 @@
 source ~/.zsh/myPrompt
 source ~/.zsh/`uname`
 
-myColor="magenta bold" # may also be "yellow bold" for example
+myColor=yellow # may also be "yellow bold" for example
 # colors are: white red yellow green magenta blue black cyan
 
 # If running interactively, then:
@@ -12,8 +12,7 @@ if [ "$PS1" ]; then
         echo "DIR 01;36" >> ~/.dircolors
     fi
     eval `dircolors -b ~/.dircolors`
-
-    alias -g su='su -m'
+    
     alias here='source <(command here)'
     alias vim='vim -X'
 
@@ -49,7 +48,7 @@ if [ "$PS1" ]; then
 
     if [ $(id -u) -ne 0 ] && which keychain >/dev/null 2>&1; then
         # eval `keychain --eval ~/.ssh/id_dsa 70221D07` # don't use a gpg key that often
-        eval `keychain --eval ~/.ssh/id_dsa`
+        eval `keychain --nogui --eval ~/.ssh/id_dsa`
     fi
 fi
 
