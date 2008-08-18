@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 set -e
 
@@ -40,7 +40,7 @@ ARGS="-Cav --inplace --delete --log-file=/var/log/backup-engraver.log"
 ## ARGS="-CrlpgoDv --size-only --inplace --delete --log-file=/var/log/backup-engraver.log"
 RSYNC="rsync $ARGS"
 
-if ! isMounted; then mount /mnt/s3backup; fi
+if ! isMounted; then mount /mnt/s3backup; sleep 3; fi
 
 if ! isMounted; then
     echo "** Couldn't mount jungledisk; did it fail earlier and keep running?" 1>&2
