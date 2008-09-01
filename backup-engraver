@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 set -e
 
@@ -23,11 +23,34 @@ echo Backing up `hostname` on `date -I`
 
 # TODO - alternate days
 
+# returns true if s3backup is mounted correctly
+isMounted() {
+    ROOT_MOUNT=`mountpoint -d /`
+    S3BACKUP_MOUNT=`mountpoint -d /mnt/s3backup`
+    if mountpoint -q /mnt/s3backup && [ "$ROOT_MOUNT" != "$S3BACKUP_MOUNT" ];
+    then
+        return 0
+    else
+        return 1
+    fi
+}
+
+
 ARGS="-Cav --inplace --delete --log-file=/var/log/backup-engraver.log"
 ## ARGS="-CrlpgoDv --size-only --inplace --delete --log-file=/var/log/backup-engraver.log"
 RSYNC="rsync $ARGS"
 
-mount /mnt/s3backup
+if ! isMounted; then mount /mnt/s3backup; sleep 3; fi
+
+if ! isMounted; then
+    echo "** Couldn't mount jungledisk; did it fail earlier and keep running?" 1>&2
+    PIDS=`pgrep -f jungledisk`
+    if [ -n "$PIDS" ]; then 
+        echo "$PIDS" | xargs ps -o pid= -o args= -p | xargs -i printf '** %s\n' "{}" 1>&2
+    fi
+    exit 1
+fi
+
 
 touch /var/log/backup-engraver.log
 chmod 600 /var/log/backup-engraver.log
