@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# for some given input, count the number of instances of each line, and
+# display as an ascii histogram
+sort - | uniq -c | sort -n | python -c "
+import sys, operator
+width = 50
+rows = []
+for line in sys.stdin:
+    row = line.strip().split()
+    rows.append((int(row[0]), row[1]))
+
+maxCount = max(rows, key=operator.itemgetter(0))[0]
+maxItem = max(map(len, [r[1] for r in rows]))
+factor = 50./maxCount
+for count, item in rows:
+  print ('%%%ds' % (maxItem + 1,)) % item, '*' * int(count*factor), '(%s)' % (count,)
+"
