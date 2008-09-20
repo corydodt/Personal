@@ -95,9 +95,9 @@ fu! PutHtml()
 /* styles here */
     </style>
     <script type='text/javascript' language='javascript'>
-<![CDATA[
+// <![CDATA[
 // scripts here
-]]>
+// ]]>
     </script>
   </head>
   <body>
