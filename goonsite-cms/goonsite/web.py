@@ -64,6 +64,9 @@ class TheSoftWorldPage(static.File):
         elif segs[0] == 'pipermail':
             dir = '/var/lib/mailman/archives/public/'
             return static.File(dir), segs[1:]
+        elif segs[0] == 'millwheel':
+            dir = '/var/www/htdocs/millwheel/'
+            return static.File(dir), segs[1:]
         return static.File.locateChild(self, ctx, segs)
 
 
