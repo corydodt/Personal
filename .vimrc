@@ -1,5 +1,3 @@
-" tac files
-au BufRead,BufNewFile *.tac setf python
 " indenting
 set tw=78
 set sw=4 ts=4 sts=4 expandtab
@@ -8,6 +6,11 @@ filetype indent on
 au BufNewFile,BufEnter * silent! exec ":cd " expand('%:p:h')
 au BufNewFile,BufEnter {ChangeLog,CHANGELOG,changelog,Makefile} setlocal noet
 au BufNewFile,BufEnter *.js setlocal smartindent
+
+" clipboard helpers
+map <Leader>c "+y
+map <Leader>V "+p
+map <Leader>x "+x
 
 
 " reST helpers
@@ -81,17 +84,20 @@ command! Abspath call Copyabspath()
 fu! PutHtml()
     " just insert the html page
     insert
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> -->
 <html xmlns='http://www.w3.org/1999/xhtml'>
-  <!-- vi:ft=html
-  -->
+  <!-- vi:set ft=html: -->
   <head>
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
     <title>{Press 's' to type a title here}</title>
     <style type='text/css'>
-      /* styles here */
+/* styles here */
     </style>
     <script type='text/javascript' language='javascript'>
-      // scripts here
+<![CDATA[
+// scripts here
+]]>
     </script>
   </head>
   <body>
@@ -307,7 +313,7 @@ endfu
 
 command! RunPyBuffer call DoRunAnyBuffer("python -", "python")
 map <Leader>p :RunPyBuffer<CR>
-command! RunBashBuffer call DoRunAnyBuffer("bash -", "bash")
+command! RunBashBuffer call DoRunAnyBuffer("bash -", "sh")
 map <Leader>b :RunBashBuffer<CR>
 
 
