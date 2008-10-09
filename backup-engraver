@@ -27,12 +27,12 @@ echo Backing up `hostname` on `date -I`
 isMounted() {
     ROOT_MOUNT=`mountpoint -d /`
     S3BACKUP_MOUNT=`mountpoint -d /mnt/s3backup`
-    if mountpoint -q /mnt/s3backup && [ "$ROOT_MOUNT" != "$S3BACKUP_MOUNT" ];
-    then
-        return 0
-    else
-        return 1
+    if mountpoint -q /mnt/s3backup; then
+        if [ "$ROOT_MOUNT" != "$S3BACKUP_MOUNT" ]; then
+            return 0
+        fi
     fi
+    return 1
 }
 
 
@@ -40,7 +40,13 @@ ARGS="-Cav --inplace --delete --log-file=/var/log/backup-engraver.log"
 ## ARGS="-CrlpgoDv --size-only --inplace --delete --log-file=/var/log/backup-engraver.log"
 RSYNC="rsync $ARGS"
 
-if ! isMounted; then mount /mnt/s3backup; sleep 3; fi
+# this sleep is absolutely necessary because mount is asynchronous and it takes
+# a while for jungledisk to connect
+if ! isMounted; then mount /mnt/s3backup; sleep 60; fi
+
+echo AFTER MOUNT: ....
+mount
+
 
 if ! isMounted; then
     echo "** Couldn't mount jungledisk; did it fail earlier and keep running?" 1>&2
@@ -64,5 +70,12 @@ sync
 
 # don't keep s3backup mounted, less chance of disaster leaking into it
 # (e.g. sudo rm -rf /* will happily erase backups too, if they are mounted)
-umount /mnt/s3backup
+# -z = lazy umount (will work even when resource is in use)
+fusermount -z -u /mnt/s3backup
 echo "/mnt/s3backup complete and disconnected"
+
+# again, asynchronous, we wait to finish up
+sleep 60
+
+# still mounted? that's an error
+if isMounted; then exit 1; fi
