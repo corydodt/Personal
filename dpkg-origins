@@ -1,0 +1,104 @@
+#!/usr/bin/env python
+"""
+Print out every system package, grouped by origin, for system recovery.
+
+To recover the system packages, take the output (which you have previously
+saved off or emailed to yourself) and do:
+
+    cat selections.txt | sudo dpkg --set-selections && sudo apt-get -u dselect-upgrade"
+"""
+import sys, os
+import subprocess
+import itertools
+
+from twisted.python import usage
+
+import apt
+import apt_pkg
+apt_pkg.init()
+
+
+class Options(usage.Options):
+    synopsis = "dpkg-origins | mail ..."
+
+    def postOptions(self):
+        origins = sorted(self.packageOrigins())
+
+        sourceTypes = [((lambda s: s==''), 'blank'),
+                ((lambda s: 'ubuntu' in s), 'ubuntu'),
+                ((lambda s: 'ubuntu' not in s), 'thirdParty')
+                ]
+        def getType(site):
+            for fn, key in sourceTypes:
+                if fn(site): return key
+            assert 0, "This site doesn't match any known type"
+
+        for key, grouper in itertools.groupby(origins, lambda o: o[0]):
+            type = getType(key)
+            printer = getattr(self, 'printGroup_%s' % type)
+            printer(grouper)
+            print ''
+
+    def printGroup_blank(self, grouper):
+        print '#' * 78
+        print '## No apt archive - packages were installed manually from .deb'
+        print '## Note - this list may contain packages from third-party archives if the'
+        print '## PPA is configured incorrectly.'
+        print ''
+        for package in grouper:
+            print "# %s == %s" % (package[1], package[2])
+
+    def printGroup_thirdParty(self, grouper):
+        print '#' * 78
+        print '''## Third-party apt archive packages
+## Add the following archives to your sources list, then uncomment all the
+## following packages and pipe into dpkg --set-selections'''
+        print ''
+
+        sources = apt_pkg.GetPkgSourceList()
+        sources.ReadMainList()
+        for meta in sources.List:
+            if 'ubuntu.com' not in meta.URI:
+                print '## deb %s %s main' % (meta.URI, meta.Dist)
+        print ''
+
+        for package in grouper:
+            print "# %s install" % (package[1],)
+
+    def printGroup_ubuntu(self, grouper):
+        print '#' * 78
+        print '## Canonical packages'
+        print '## Pipe the following into dpkg --set-selections'''
+        print ''
+        for package in grouper:
+            print '%s install' % (package[1],)
+        
+
+    def packageOrigins(self):
+        dpkg = subprocess.Popen(r"dpkg-query -W -f'${Package}\t${Version}\n'",
+                stdout=subprocess.PIPE, shell=True)
+        cache = apt.Cache()
+
+        for n, line in enumerate(dpkg.stdout.readlines()):
+            package, version = line.strip().split('\t')
+            cpkg = cache[package]
+            origin = cpkg.candidateOrigin[0] # FIXME - is it always the first??
+            yield (origin.site, package, version)
+
+
+
+def run(argv=None):
+    if argv is None:
+        argv = sys.argv
+    o = Options()
+    try:
+        o.parseOptions(argv[1:])
+    except usage.UsageError, e:
+        print str(o)
+        print str(e)
+        return 1
+
+    return 0
+
+
+if __name__ == '__main__': sys.exit(run())
