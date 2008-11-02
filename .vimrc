@@ -9,8 +9,12 @@ au BufNewFile,BufEnter *.js setlocal smartindent
 
 " clipboard helpers
 map <Leader>c "+y
-map <Leader>V "+p
+map <Leader>v "+p
 map <Leader>x "+x
+
+" make error helpers
+map <Leader>] :cn
+map <Leader>[ :cp
 
 
 " reST helpers
@@ -318,5 +322,11 @@ map <Leader>b :RunBashBuffer<CR>
 
 
 " make it easier to edit vimrc
-map <Leader>v :so ~/.vimrc<CR>
+map <Leader>V :so ~/.vimrc<CR>
 
+" js static checking with :make
+fu! EnableJsLint()
+    setlocal makeprg=rhino\ ~/wc/Personal/jslint.js\ %:p
+    setlocal errorformat=%l:%c:%m
+endfu
+au BufNewFile,BufEnter *.js call EnableJsLint()
