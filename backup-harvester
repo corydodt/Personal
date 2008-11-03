@@ -1,0 +1,60 @@
+#!/bin/bash -x
+
+set -e
+
+ARGS="-Cav -F --inplace --delete"
+RSYNC="rsync $ARGS"
+DEST="goonmill.org:/home/cdodt/backups/`hostname -s`/"
+
+FAILADDRESS="corydodt+hello@gmail.com"
+
+echo Backing up `hostname` on `date -I`
+
+failmail() {
+    message="$1"
+    echo "$message" | mail -s "harvester backup failed; reason shown below" "$FAILADDRESS"
+}
+
+cd ~cdodt
+
+TOHGFILES='.gvimrc
+.screenrc
+.vimrc
+.vim
+.xmodmap
+.zshrc
+.zsh
+'
+
+HOMEFILES='.compiz
+.config
+bin
+cory.kdb
+Desktop
+.gnupg
+.gconf
+.gnome2
+.hgrc
+.HotheadGames
+.java
+.kde4
+.libao
+.local
+.openoffice.org2
+.prism
+.purple
+.mozilla
+RecentDownloads
+.Skype
+.tomboy
+'
+
+ROOTFILES='/etc/X11/xorg.conf
+/etc/modules
+/etc/modprobe.d/options
+'
+
+ssh goonmill.org 'mkdir -p backups/'`hostname -s`
+$RSYNC $TOHGFILES $DEST
+$RSYNC $HOMEFILES $DEST
+$RSYNC $ROOTFILES $DEST
