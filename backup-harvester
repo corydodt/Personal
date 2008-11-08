@@ -28,6 +28,7 @@ TOHGFILES='.gvimrc
 
 HOMEFILES='.compiz
 .config
+backgrounds
 bin
 cory.kdb
 Desktop
@@ -41,6 +42,7 @@ Desktop
 .libao
 .local
 .openoffice.org2
+packages.txt
 .prism
 .purple
 .mozilla
@@ -54,7 +56,12 @@ ROOTFILES='/etc/X11/xorg.conf
 /etc/modprobe.d/options
 '
 
+dpkg-origins > packages.txt
+
+$RSYNC $TOHGFILES ~/wc/Personal/
+
 ssh goonmill.org 'mkdir -p backups/'`hostname -s`
 $RSYNC $TOHGFILES $DEST
 $RSYNC $HOMEFILES $DEST
 $RSYNC $ROOTFILES $DEST
+
