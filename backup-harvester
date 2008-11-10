@@ -56,12 +56,12 @@ ROOTFILES='/etc/X11/xorg.conf
 /etc/modprobe.d/options
 '
 
-dpkg-origins > packages.txt
+dpkg-origins > packages.txt || failmail "Could not run dpkg-origins"
 
-$RSYNC $TOHGFILES ~/wc/Personal/
+$RSYNC $TOHGFILES ~/wc/Personal/  # don't fail if this doesn't work
 
-ssh goonmill.org 'mkdir -p backups/'`hostname -s`
-$RSYNC $TOHGFILES $DEST
-$RSYNC $HOMEFILES $DEST
-$RSYNC $ROOTFILES $DEST
+ssh goonmill.org 'mkdir -p backups/'`hostname -s` || failmail "Could not create backups dir"
+$RSYNC $TOHGFILES $DEST || failmail "Could not rsync TOHGFILES"
+$RSYNC $HOMEFILES $DEST || failmail "Could not rsync HOMEFILES"
+$RSYNC $ROOTFILES $DEST || failmail "Could not rsync ROOTFILES"
 
