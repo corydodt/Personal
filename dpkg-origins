@@ -1,11 +1,20 @@
 #!/usr/bin/env python
 """
+(c) 2008 Cory Dodt
+
+Released under the terms of the MIT license.
+
+dpkg-origins v0.9
+
 Print out every system package, grouped by origin, for system recovery.
+Requires 'python-apt' and 'python-twisted' packages.
+
+    dpkg-origins > selections.txt
 
 To recover the system packages, take the output (which you have previously
 saved off or emailed to yourself) and do:
 
-    cat selections.txt | sudo dpkg --set-selections && sudo apt-get -u dselect-upgrade"
+    cat selections.txt | sudo dpkg --set-selections && sudo apt-get -u dselect-upgrade
 """
 import sys, os
 import subprocess
@@ -42,6 +51,7 @@ class Options(usage.Options):
     def printGroup_blank(self, grouper):
         print '#' * 78
         print '## No apt archive - packages were installed manually from .deb'
+        print '## or other dodgy source (including preinstalled by ISP).'
         print '## Note - this list may contain packages from third-party archives if the'
         print '## PPA is configured incorrectly.'
         print ''
@@ -75,12 +85,14 @@ class Options(usage.Options):
         
 
     def packageOrigins(self):
-        dpkg = subprocess.Popen(r"dpkg-query -W -f'${Package}\t${Version}\n'",
+        dpkg = subprocess.Popen(r"dpkg-query -W -f'${Status}\t${Package}\t${Version}\n'",
                 stdout=subprocess.PIPE, shell=True)
         cache = apt.Cache()
 
         for n, line in enumerate(dpkg.stdout.readlines()):
-            package, version = line.strip().split('\t')
+            status, package, version = line.strip().split('\t')
+            if not status.startswith('install ok'):
+                continue
             cpkg = cache[package]
             origin = cpkg.candidateOrigin[0] # FIXME - is it always the first??
             yield (origin.site, package, version)
