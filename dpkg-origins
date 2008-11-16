@@ -16,6 +16,9 @@ saved off or emailed to yourself) and do:
 
     cat selections.txt | sudo dpkg --set-selections && sudo apt-get -u dselect-upgrade
 """
+import warnings
+warnings.simplefilter('ignore', FutureWarning)
+
 import sys, os
 import subprocess
 import itertools
@@ -25,6 +28,7 @@ from twisted.python import usage
 import apt
 import apt_pkg
 apt_pkg.init()
+
 
 
 class Options(usage.Options):
@@ -83,7 +87,6 @@ class Options(usage.Options):
         for package in grouper:
             print '%s install' % (package[1],)
         
-
     def packageOrigins(self):
         dpkg = subprocess.Popen(r"dpkg-query -W -f'${Status}\t${Package}\t${Version}\n'",
                 stdout=subprocess.PIPE, shell=True)
