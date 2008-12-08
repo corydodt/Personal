@@ -53,7 +53,7 @@ isMounted() {
 }
 
 
-ARGS="-Cav --inplace --delete --log-file=/var/log/backup-engraver.log"
+ARGS="-Cav -F --inplace --delete --log-file=/var/log/backup-engraver.log"
 ## ARGS="-CrlpgoDv --size-only --inplace --delete --log-file=/var/log/backup-engraver.log"
 RSYNC="rsync $ARGS"
 
