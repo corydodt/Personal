@@ -36,7 +36,7 @@ isEvenDay() {
 if isEvenDay; then
     MOUNTPOINT=/mnt/s3backup2
 else
-    MOUNTPOINT=/mnt/s3backup2
+    MOUNTPOINT=/mnt/s3backup1
 fi
 
 
