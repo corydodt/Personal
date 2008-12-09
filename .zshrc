@@ -13,7 +13,6 @@ if [ "$PS1" ]; then
     fi
     eval `dircolors -b ~/.dircolors`
     
-    alias here='source <(command here)'
     alias vim='vim -X'
 
 
