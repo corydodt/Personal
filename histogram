@@ -7,7 +7,7 @@ import sys, operator
 width = 50
 rows = []
 for line in sys.stdin:
-    row = line.strip().split()
+    row = line.strip().split(None, 1)
     rows.append((int(row[0]), row[1]))
 
 maxCount = max(rows, key=operator.itemgetter(0))[0]
