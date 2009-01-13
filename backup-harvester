@@ -45,6 +45,7 @@ Desktop
 packages.txt
 .prism
 .purple
+.pydistutils.cfg
 .mozilla
 RecentDownloads
 .Skype
