@@ -38,8 +38,9 @@ map <Leader><Leader>= Yp:.,.s:.:=:g<CR>YkPjj0
 map <Leader>t :tab new<CR>
 map <Leader><Leader><Leader>t :tabclose!<CR>
 
-" temp files 
 set virtualedit=block
+
+" temp files 
 set nobackup nowritebackup
 " 2 path separators == use abspath in filename for uniqueness
 "   (see :help 'directory' ) 
@@ -47,10 +48,9 @@ set directory=/tmp//
 " colors/fonts
 set nohlsearch
 filetype plugin on
+syn on
 " colorscheme koehler
 " colorscheme peachpuff
-set ts=4
-syn on
 colorscheme greener
 
 " misc
