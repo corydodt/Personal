@@ -3,9 +3,16 @@ set tw=78
 set sw=4 ts=4 sts=4 expandtab
 set modeline
 filetype indent on
-au BufNewFile,BufEnter * silent! exec ":cd " expand('%:p:h')
-au BufNewFile,BufEnter {ChangeLog,CHANGELOG,changelog,Makefile} setlocal noet
-au BufNewFile,BufEnter *.js setlocal smartindent
+au BufReadPost,BufNewFile,BufEnter * silent! exec ":cd " expand('%:p:h')
+au BufReadPost,BufNewFile,BufEnter {ChangeLog,CHANGELOG,changelog,Makefile} setlocal noet
+au Filetype javascript setlocal smartindent
+
+" so ~/autocmddebug.vim
+
+let g:yankring_history_file='.yankring_history'
+
+" taglist.vim
+map T :TlistToggle<CR>
 
 " clipboard helpers
 map <Leader>c "+y
@@ -18,10 +25,14 @@ map <Leader>[ :cp
 
 
 " reST helpers
-map <Leader>- YpV:s:.:-:g<CR>  " underline a heading
-map <Leader>= YpV:s:.:=:g<CR>  " underline a heading at a different level
-map <Leader>` YpV:s:.:\~:g<CR>  " underline a heading at a different level
-map <Leader><Leader>= YpV:s:.:=:g<CR>YkO<Esc>pjj0  " title
+"   underline a heading
+map <Leader>- Yp:.,.s:.:-:g<CR>
+"   underline a heading at a different level
+map <Leader>= Yp:.,.s:.:=:g<CR>
+"   underline a heading at a different level
+map <Leader>` Yp:.,.s:.:\~:g<CR>
+"   title
+map <Leader><Leader>= Yp:.,.s:.:=:g<CR>YkPjj0
 
 " tab helpers
 map <Leader>t :tab new<CR>
@@ -31,7 +42,7 @@ map <Leader><Leader><Leader>t :tabclose!<CR>
 set virtualedit=block
 set nobackup nowritebackup
 " 2 path separators == use abspath in filename for uniqueness
-" (see :help 'directory' ) 
+"   (see :help 'directory' ) 
 set directory=/tmp//
 " colors/fonts
 set nohlsearch
