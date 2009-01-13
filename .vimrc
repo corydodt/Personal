@@ -12,7 +12,7 @@ au Filetype javascript setlocal smartindent
 let g:yankring_history_file='.yankring_history'
 
 " taglist.vim
-map T :TlistToggle<CR>
+map <Leader>T :TlistToggle<CR>
 
 " clipboard helpers
 map <Leader>c "+y
