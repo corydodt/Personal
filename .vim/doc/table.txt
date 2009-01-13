@@ -1,0 +1,80 @@
+*table.txt*   Smarter Table Editing II
+
+In vimtip#547 I described some functions that enable easier navigation
+and editing of tables. I have considerably enhanced the functionality
+and placed all the relevant code in a script file.
+
+The idea of the script is to automatically extract fields from a table
+row and use that information to create maps that aid in editing and
+navigation of the table. The user first marks a table row as table
+heading. The line does not literally have to be the table heading, but
+it should be representative of the typical row of the table in
+question.
+
+After this step the script maps tab and shift-tab keys to move between
+fields. These mappings work in both insert and normal modes. The tab
+mapping is especially useful in insert mode as it inserts the correct
+amount of padding to reach the start of the next field. 
+
+The script also has an alignment feature that aligns the fields of the
+row with that of the heading. Editing a pre-existing table frequently
+leads to misaligned rows and this feature alleviates the need to
+manually add/remove padding.
+
+To better illustrate the functionality of the script, I have created
+the table below:
+
+====================================================================                                                 
+This table      illustrates the use of         table.vim script
+====================================================================                                                 
+<Leader>th      marks a line as table heading  and
+activates maps  for <Tab>                      and <S-Tab> keys
+<Leader>th      must be invoked on a well      formed line with
+the right       number of columns
+This means      that the above line does not   qualify
+Also notice     that the field separator is    atleast two spaces
+--------------------------------------------------------------------                                                 
+when the maps   are active, pressing           <Tab> here
+<-- moves here  <Tab> here                     <-- moves here
+<==             <S-Tab> moves back to "<=="    <**
+<S-Tab> here    moves to "<**" above
+--------------------------------------------------------------------                                                 
+The maps for    <Tab> and <S-Tab> work in      insert and normal
+modes, and can  be deactivated by pressing     <Leader>tt
+pressing        <Leader>tt again,              re-enables the maps
+--------------------------------------------------------------------                                                 
+The script      has some very basic support    for field alignment
+ It is very       easy to get out of alignment        when editing
+<Leader>ta      on the line above will         fix the line to:
+It is very      easy to get out of alignment   when editing
+--------------------------------------------------------------------                                                 
+<Leader>ta      can be very handy if the user  wants to expand or
+contract        fields, just change the width  of the fields on the
+  heading line      and press                      <Leader>th
+  to mark the       new heading and then           num<Leader>ta
+  on the top        line of the table.             num is the
+  number of         lines in the table
+--------------------------------------------------------------------                                                 
+The alignment   command fails when a row has   more fields than
+the heading     or when the contents of a      field don't fit
+inside the      field, as specified by the     heading row
+case1           is        this                 row
+case2 is this row      ...                       ...  
+this is another     example of case2, there    is no space for 
+field           separator on the first         field on above line
+====================================================================                                                 
+
+If you don't like the default mappings using <Leader> you can change
+them easily to whatever you like. The mappings are defined on top of
+the table.vim script file.
+
+To install the script, place table.vim in the vim macros directory 
+and source it in your vimrc using:
+source $VIMRUNTIME/macros/table.vim
+
+If you simply want to testdrive the script, place the script file in
+your current directory, open vim in the same directory and use 
+:so table.vim
+
+If you have questions, comments, or bug-reports to submit, send them
+to latif@techuser.net or visit my website http://www.techuser.net
