@@ -1,0 +1,225 @@
+*cory.txt*    A compilation of all of cory's vim utilities
+
+Author: Cory Dodt (cory AT decipherinc DOT com)
+For Vim version 7.0 and above
+Last change: 2009 Jan 13
+
+1. Overview                    |cory-intro|
+2. Features                    |cory-features|
+3. Commands                    |cory-commands|
+4. Mappings                    |cory-mappings|
+
+==============================================================================
+                                            *cory-intro*
+1. Overview~
+
+This is a collection of the vim configuration Cory has worked on for many
+years.  It contains a number of utilities, keyboard mappings, color schemes,
+syntax highlights, and other niceties that Cory can't live with it.  He hopes
+you will like it as well.
+
+==============================================================================
+                                            *cory-features*
+2. Features~
+
+    * Lots of commands added |cory-commands|
+
+    * Keyboard mappings for most of the commands |cory-mappings|
+
+    * Add a useful |modeline|
+
+    * Automatically change directories to be near the file you are editing.
+
+    * For using ReST or just typing nice text files, underline headers.  Use
+      \\= to over-and-underline (use only for titles), or use \=, \- and \` to
+      underline different levels of header.
+
+    * Includes these plugins:
+        * |yankring.txt| emacs-like ring buffer.  After pasting, press control+P to
+          cycle through any old deletion and bring it back.
+
+        * |taglist.txt| make use of ctags to see all tags in the file you're
+          editing.  Press \T to toggle it.
+
+        * |table.txt| make it easier to edit tables.  Type in the header line of a
+          table, properly spaced.  Then press: \\th to set those columns as
+          your table columns.  From that point <TAB> will move you from
+          virtual "cell" to cell, making it easier to type out all the data in
+          the table.  Press \\tt to toggle it off.
+
+        * |matchit.txt| Provides expanded functionality for the |%| key.  Put
+          your cursor on an opening XML <tag>, press %, and it will jump to the
+          closing </tag>
+
+    * Includes syntax highlighting for a number of extra languages such as N3,
+      EBNF, and Hermes V2 styles files.  Also a highlighter for log files
+      containing Python tracebacks, and enhanced highlighting for Javascript.
+
+    * Enhanced folding for a number of formats including Javascript, Python,
+      and unified diffs. 
+
+    * Set all options suitable for Python editing: tabs as spaces |'sts'|, correct
+      indentations |'ts'| |'sw'|, and so on
+
+    * Turn on lots of reasonable defaults: |'visualbell'|, |'number'|,
+      |'virtualedit'|=block, and others.
+
+    * Allow |:make| to run jslint on javascript files.  (XXX TODO - jslint.js
+      and support files not included and should be.)  Use \] and \[ to jump
+      backwards and forwards through error lists.  (This also works with e.g.
+      |:helpgrep|)
+
+==============================================================================
+                                            *cory-commands*
+3. Commands~
+
+
+
+Version control helpers~
+
+                                            *:HgDiff*
+:HgDiff
+    Will perform 'hg diff' on the file you're currently editing, and show the
+    results in a new window pane.
+                                            *:SvnDiff*
+:SvnDiff
+    Same, for Subversion
+
+Quickly insert boilerplate files~
+
+                                            *:Htmlbp*
+:Htmlbp
+    Write a blank HTML file into the current buffer,
+    complete with doctype, script and style tags.
+                                            *:Survey*
+:Survey
+    Write a blank survey.xml file into the current buffer
+                                            *:Usage*
+:Usage
+    Write a boilerplate Python command-line script into the
+    current buffer.  It uses twisted.python.usage as a basis
+    and has most of the classes and main function set up for
+    you. 
+
+
+Copy the current file's absolute path~
+                                            *:Abspath*
+:Abspath            
+    Copy the current file's absolute path to the system
+    clipboard so you can paste it into another application
+
+Jump to Python symbols quickly~
+
+Utilities for jumping straight to the system definition of a qualified Python
+name.  These utilities require that you have the Python script 'pp' installed
+into your system path.
+                                            *:Pp*
+:Pp {name}
+    In the current buffer, look for {name} as a Python symbol, and jump to the
+    file it's defined in.  e.g.: :Pp twisted.web will jump to
+    /usr/lib/python2.5/site-packages/twisted/web/__init__.py
+                                            *:Ppn*
+:Ppn {name}
+    Same as :Pp, in a new horizontal window.
+                                            *:Ppv*
+:Ppv {name}
+    Same as :Pp, in a new vertical window.
+
+Pretty up XML~
+                                            *:PrettyXML*
+:PrettyXML  
+    Automatically tidy up XML.  This fixes formatting in the current buffer
+    and prints out errors if there are any.  (It would be better if it used
+    the error list, but for now it just spews them into your buffer.  Yuck.
+    Hit |U| to undo that when it happens.)  This requires that 'xmllint' be
+    installed, which is usually found in the 'libxml2-utils' package.
+
+Run a buffer as a interpreted script~
+
+These will use an interpreter to run the contents of the current buffer, and
+then display the output below.
+
+                                            *:RunPyBuffer*
+:RunPyBuffer
+    Run the current buffer through 'python -' as a shell script
+                                            *:RunBashBuffer*
+:RunBashBuffer
+    Run the current buffer through 'bash -' as a shell script
+
+==============================================================================
+                                            *cory-mappings*
+3. Mappings~
+
+This is a summary of all mappings this config defines.  |<Leader>| means
+backslash (\) in default vim configurations, but you can change it to be something
+else.  All of these are actually mapped to <Leader>, but I'll list them using
+backslash for clarity's sake.
+
+\c
+    In gvim, copy to the clipboard (like ^C in other applications)
+\v
+    In gvim, paste from the clipboard (like ^V in other applications)
+\x
+    In gvim, cut to the clipboard (like ^X in other applications)
+\V
+    Reload your .vimrc
+
+Using script interpreters~
+\p
+    :RunPyBuffer - run the current buffer as a python script and
+    show output
+\b
+    :RunBashBuffer - run the current buffer as a bash script and
+    show output
+
+Using the quickfix list~
+\]
+    Jump to the next error when using |:make| or |:helpgrep|
+\[
+    Jump to the previous error when using |:make| or |:helpgrep|
+
+Underlining headings and titles~
+\\=
+    Underline a title, above and below
+\-
+    Underline a heading with ----
+\=
+    Underline a heading with ====
+\`
+    Underline a heading with tildes
+
+Tabs~
+\t
+    Open a new blank tab
+\\\t
+    Unconditionally close the current tab, regardless of changes
+
+Actually part of yankring, but useful~
+                                        *yankring.txt*
+<C-N>
+    Cycle through the kill/yank ring, looking for the deleted text you want
+    back.  For example, if you delete two items, then paste with |p|, then
+    press <C-N> once
+
+Actually part of matchit, but useful~
+                                        *matchit.txt*
+%
+    In addition to the usual paren-, bracket-, and brace-matching behavior,
+    jump to the matching xml tag in an xml document.
+
+Actually part of table, but useful~
+                                        *table.txt*
+\\th
+    Parse the current line for where columns start, and make <Tab> take you
+    between columns like a spreadsheet program
+\\tt
+    Toggle off <Tab>'s spreadsheet-like behavior
+
+Actually part of taglist, but useful~
+                                        *taglist.txt*
+\T
+    Turn on or off the taglist pane on the left
+
+==============================================================================
+
+vim:tw=78:ts=4:et:ft=help:si:

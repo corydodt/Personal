@@ -6,6 +6,7 @@ filetype indent on
 au BufReadPost,BufNewFile,BufEnter * silent! exec ":cd " expand('%:p:h')
 au BufReadPost,BufNewFile,BufEnter {ChangeLog,CHANGELOG,changelog,Makefile} setlocal noet
 au Filetype javascript setlocal smartindent
+au Filetype rst call EnableReST()
 
 " so ~/autocmddebug.vim
 
@@ -22,6 +23,9 @@ map <Leader>x "+x
 " make error helpers
 map <Leader>] :cn
 map <Leader>[ :cp
+
+" very useful shortcut
+map <Leader>. :normal .
 
 
 " reST helpers
@@ -333,7 +337,7 @@ map <Leader>b :RunBashBuffer<CR>
 
 
 " make it easier to edit vimrc
-map <Leader>V :so ~/.vimrc<CR>
+map <Leader>V :so ~/vimrc<CR>
 
 " js static checking with :make
 fu! EnableJsLint()
@@ -341,3 +345,9 @@ fu! EnableJsLint()
     setlocal errorformat=%l:%c:%m
 endfu
 au BufNewFile,BufEnter *.js call EnableJsLint()
+
+fu! EnableReST()
+    setlocal makeprg=rst2html\ %:p\ %:p.html
+    setlocal errorformat=%l:%c:%m
+endfu
+au BufNewFile,BufEnter *.rst call EnableReST()
