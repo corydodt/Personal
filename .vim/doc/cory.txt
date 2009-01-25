@@ -15,7 +15,7 @@ Last change: 2009 Jan 13
 
 This is a collection of the vim configuration Cory has worked on for many
 years.  It contains a number of utilities, keyboard mappings, color schemes,
-syntax highlights, and other niceties that Cory can't live with it.  He hopes
+syntax highlights, and other niceties that Cory can't live without.  He hopes
 you will like it as well.
 
 ==============================================================================
