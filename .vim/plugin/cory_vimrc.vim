@@ -348,6 +348,7 @@ au BufNewFile,BufEnter *.js call EnableJsLint()
 
 fu! EnableReST()
     setlocal makeprg=rst2html\ %:p\ %:p.html
-    setlocal errorformat=%l:%c:%m
+    setlocal errorformat=%f:%l:\ %m
 endfu
 au BufNewFile,BufEnter *.rst call EnableReST()
+" TODO - 
