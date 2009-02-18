@@ -19,8 +19,6 @@ cd ~cdodt
 
 TOHGFILES='.gvimrc
 .screenrc
-.vimrc
-.vim
 .xmodmap
 .zshrc
 .zsh
@@ -55,6 +53,7 @@ RecentDownloads
 ROOTFILES='/etc/X11/xorg.conf
 /etc/modules
 /etc/modprobe.d/options
+/etc/vim
 '
 
 dpkg-origins > packages.txt || failmail "Could not run dpkg-origins"
