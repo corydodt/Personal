@@ -38,6 +38,7 @@ class Options(usage.Options):
         origins = sorted(self.packageOrigins())
 
         sourceTypes = [((lambda s: s==''), 'blank'),
+                ((lambda s: s is None), 'blank'),
                 ((lambda s: 'ubuntu' in s), 'ubuntu'),
                 ((lambda s: 'ubuntu' not in s), 'thirdParty')
                 ]
@@ -97,8 +98,12 @@ class Options(usage.Options):
             if not status.startswith('install ok'):
                 continue
             cpkg = cache[package]
-            origin = cpkg.candidateOrigin[0] # FIXME - is it always the first??
-            yield (origin.site, package, version)
+            if cpkg.candidateOrigin is None:
+                yield (None, package, version)
+            else:
+                # FIXME - is it always the first?
+                site = cpkg.candidateOrigin[0].site
+                yield (site, package, version)
 
 
 
