@@ -2,6 +2,8 @@
 
 set -e
 
+export PATH=$PATH:/home/cdodt/bin
+
 ARGS="-Cav -F --inplace --delete"
 RSYNC="rsync $ARGS"
 DEST="goonmill.org:/home/cdodt/backups/`hostname -s`/"
@@ -19,7 +21,7 @@ cd ~cdodt
 
 TOHGFILES='.gvimrc
 .screenrc
-.xmodmap
+.xmodmaprc
 .zshrc
 .zsh
 '
@@ -54,6 +56,7 @@ ROOTFILES='/etc/X11/xorg.conf
 /etc/modules
 /etc/modprobe.d/options
 /etc/vim
+/etc/hal/fdi/policy/appletouch.fdi
 '
 
 dpkg-origins > packages.txt || failmail "Could not run dpkg-origins"
