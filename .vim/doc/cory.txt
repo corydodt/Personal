@@ -35,19 +35,19 @@ you will like it as well.
       underline different levels of header.
 
     * Includes these plugins:
-        * |yankring.txt| emacs-like ring buffer.  After pasting, press control+P to
+        * |cory-yankring.txt| emacs-like ring buffer.  After pasting, press control+P to
           cycle through any old deletion and bring it back.
 
-        * |taglist.txt| make use of ctags to see all tags in the file you're
+        * |cory-taglist.txt| make use of ctags to see all tags in the file you're
           editing.  Press \T to toggle it.
 
-        * |table.txt| make it easier to edit tables.  Type in the header line of a
+        * |cory-table.txt| make it easier to edit tables.  Type in the header line of a
           table, properly spaced.  Then press: \\th to set those columns as
           your table columns.  From that point <TAB> will move you from
           virtual "cell" to cell, making it easier to type out all the data in
           the table.  Press \\tt to toggle it off.
 
-        * |matchit.txt| Provides expanded functionality for the |%| key.  Put
+        * |cory-matchit.txt| Provides expanded functionality for the |%| key.  Put
           your cursor on an opening XML <tag>, press %, and it will jump to the
           closing </tag>
 
@@ -195,20 +195,20 @@ Tabs~
     Unconditionally close the current tab, regardless of changes
 
 Actually part of yankring, but useful~
-                                        *yankring.txt*
+                                        *cory-yankring.txt*
 <C-N>
     Cycle through the kill/yank ring, looking for the deleted text you want
     back.  For example, if you delete two items, then paste with |p|, then
     press <C-N> once
 
 Actually part of matchit, but useful~
-                                        *matchit.txt*
+                                        *cory-matchit.txt*
 %
     In addition to the usual paren-, bracket-, and brace-matching behavior,
     jump to the matching xml tag in an xml document.
 
 Actually part of table, but useful~
-                                        *table.txt*
+                                        *cory-table.txt*
 \\th
     Parse the current line for where columns start, and make <Tab> take you
     between columns like a spreadsheet program
@@ -216,7 +216,7 @@ Actually part of table, but useful~
     Toggle off <Tab>'s spreadsheet-like behavior
 
 Actually part of taglist, but useful~
-                                        *taglist.txt*
+                                        *cory-taglist.txt*
 \T
     Turn on or off the taglist pane on the left
 
