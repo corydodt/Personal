@@ -3,12 +3,15 @@ set tw=78
 set sw=4 ts=4 sts=4 expandtab
 set modeline
 filetype indent on
-au BufReadPost,BufNewFile,BufEnter * silent! exec ":cd " expand('%:p:h')
-au BufReadPost,BufNewFile,BufEnter {ChangeLog,CHANGELOG,changelog,Makefile} setlocal noet
+au BufWinEnter,BufReadPost,BufNewFile,BufEnter * silent! exec ":cd " expand('%:p:h')
+" set noacd - autochdir is weird on blank buffers.  prefer my hook, which leaves
+" you in the same directory when you are editing a new blank tab with \t
+
+au Filetype changelog,Makefile setlocal noet
 au Filetype javascript setlocal smartindent
 au Filetype rst call EnableReST()
-
-" so ~/autocmddebug.vim
+au Filetype javascript call EnableJsLint()
+au FileType javascript setl fen
 
 let g:yankring_history_file='.yankring_history'
 
@@ -40,7 +43,7 @@ map <Leader><Leader>= Yp:.,.s:.:=:g<CR>YkPjj0
 
 " tab helpers
 map <Leader>t :tab new<CR>
-map <Leader><Leader><Leader>t :tabclose!<CR>
+map <Leader><C-T> :tabclose!<CR>
 
 set virtualedit=block
 
@@ -74,6 +77,18 @@ fu! DoSvnDiff()
     setlocal ft=diff
 endfu
 command! SvnDiff call DoSvnDiff()
+
+fu! DoHgDiff2()
+    pclose!
+    let s:thispath = expand('%:t')
+    below vnew
+    exe ':0r!hg cat "'.s:thispath.'"'
+    setlocal previewwindow nomodified
+    diffthis
+    winc p
+    diffthis
+endfu
+command! HgDiff2 call DoHgDiff2()
 
 fu! DoHgDiff()
     let s:thispath = expand('%:t')
@@ -149,45 +164,6 @@ svc = internet.TCPServer(8080, appserver.NevowSite(FIXMEPage()))
 svc.setServiceParent(application)
 .
 endfu
-
-fu! DoTacBP()
-    " insert the tac file boiler plate
-    call PutTac()
-    set ft=python
-    let s:orighls = &hls
-
-    set hls
-    exe "/FIXME"
-    redraw
-    let s:replacement = input('App name: ', 'FIXME')
-    exe ":1,$s/FIXME/".s:replacement."/g"
-    exe "/LOADER"
-    redraw
-    let s:loader = input('Loader (stan, xmlstr, or xmlfile): ', 'stan')
-    if s:loader == 'xmlstr'
-        let s:loaderrep = 'docFactory = loaders.xmlstr('."'''".'<html xmlns:n="http:\/\/nevow.com\/ns\/nevow\/0.1">'."\r".'..<\/html>'."'''".')'
-    elseif s:loader == 'xmlfile'
-        let s:loaderrep = 'docFactory = loaders.xmlfile("{Press s and type a new filename}")'
-    else
-        let s:loaderrep = 'docFactory = loaders.stan(T.html["Put something here."])'
-    endif
-
-    exe ":1,$s/LOADER/".s:loaderrep."/g"
-    redraw
-
-    if s:loader == 'xmlfile'
-        exe "norm /{Press s\<Cr>zAv/}\<Cr>"
-    endif
-
-
-    if s:orighls
-        set hls
-    else
-        set nohls
-    endif
-endfu
-
-command! Tacbp call DoTacBP()
 
 " examples: 
 " :Pp twisted.internet  " replace the current buffer
@@ -331,7 +307,7 @@ fu! DoRunAnyBuffer(interpreter, syntax)
 endfu
 
 command! RunPyBuffer call DoRunAnyBuffer("python -", "python")
-map <Leader>p :RunPyBuffer<CR>
+map <Leader>p :RunPyBuffer<CR>:winc p<cr>:set filetype=pylog<cr>:winc p<cr>
 command! RunBashBuffer call DoRunAnyBuffer("bash -", "sh")
 map <Leader>b :RunBashBuffer<CR>
 
@@ -344,11 +320,17 @@ fu! EnableJsLint()
     setlocal makeprg=rhino\ ~/wc/Personal/jslint.js\ %:p
     setlocal errorformat=%l:%c:%m
 endfu
-au BufNewFile,BufEnter *.js call EnableJsLint()
 
 fu! EnableReST()
-    setlocal makeprg=rst2html\ %:p\ %:p.html
+    let l:rstCSS = expand('%:p:h') . '/rst.css'
+
+    " check for the existence of rst.css in the same directory; if it exists,
+    " pass it to rst2html as an option.
+    if len(glob(l:rstCSS)) | let $RSTOPTS='--stylesheet-path=rst.css'
+    else | let $RSTOPTS=''
+    endif
+
+    setlocal makeprg=rst2html\ $RSTOPTS\ %:p\ %:p.html
     setlocal errorformat=%f:%l:\ %m
 endfu
-au BufNewFile,BufEnter *.rst call EnableReST()
-" TODO - 
+

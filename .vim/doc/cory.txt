@@ -81,6 +81,10 @@ Version control helpers~
 :HgDiff
     Will perform 'hg diff' on the file you're currently editing, and show the
     results in a new window pane.
+                                            *:HgDiff2*
+:HgDiff2
+    (experimental) Will perform 'hg diff' on the file you're currently editing, and show the
+    results as a side-by-side vimdiff.
                                             *:SvnDiff*
 :SvnDiff
     Same, for Subversion
@@ -191,7 +195,7 @@ Underlining headings and titles~
 Tabs~
 \t
     Open a new blank tab
-\\\t
+\<CTRL-T>
     Unconditionally close the current tab, regardless of changes
 
 Actually part of yankring, but useful~
