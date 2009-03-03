@@ -1,72 +1,120 @@
-" indenting
-set tw=78
-set sw=4 ts=4 sts=4 expandtab
-set modeline
-filetype indent on
-au BufWinEnter,BufReadPost,BufNewFile,BufEnter * silent! exec ":cd " expand('%:p:h')
-" set noacd - autochdir is weird on blank buffers.  prefer my hook, which leaves
-" you in the same directory when you are editing a new blank tab with \t
+fu! SetCoryOptions()
+    " indenting
+    set tw=78
+    set sw=4 ts=4 sts=4 expandtab
+    set modeline
+    filetype indent on
+    let g:yankring_history_file='.yankring_history'
 
-au Filetype changelog,Makefile setlocal noet
-au Filetype javascript setlocal smartindent
-au Filetype rst call EnableReST()
-au Filetype javascript call EnableJsLint()
-au FileType javascript setl fen
+    set virtualedit=block
 
-let g:yankring_history_file='.yankring_history'
+    " temp files 
+    set nobackup nowritebackup
+    " 2 path separators == use abspath in filename for uniqueness
+    "   (see :help 'directory' ) 
+    set directory=/tmp//
+    " colors/fonts
+    set nohlsearch
+    filetype plugin on
+    syn on
+    " colorscheme koehler
+    " colorscheme peachpuff
+    colorscheme greener
 
-" taglist.vim
-map <Leader>T :TlistToggle<CR>
+    " misc
+    set visualbell
+    set backspace=eol,indent,start
+    set whichwrap=b,s,<,>,h,l,~,[,] " these movements permit line wrapping
+    set nu " line numbers
+    set laststatus=2 " always show status
+    set stl=%F\ %y\ %l/%L@%c\ %m%r
+    set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
 
-" clipboard helpers
-map <Leader>c "+y
-map <Leader>v "+p
-map <Leader>x "+x
+endfu
 
-" make error helpers
-map <Leader>] :cn
-map <Leader>[ :cp
+fu! SetCoryAutoCommands()
+    augroup Cory
+    au! "clear this group.
+    au BufWinEnter,BufReadPost,BufNewFile,BufEnter * silent! exec ":cd " expand('%:p:h')
+    " set noacd - autochdir is weird on blank buffers.  prefer my hook, which leaves
+    " you in the same directory when you are editing a new blank tab with \t
 
-" very useful shortcut
-map <Leader>. :normal .
+    au Filetype changelog,Makefile setlocal noet
+    au Filetype javascript setlocal smartindent
+    au Filetype rst call EnableReST()
+    au Filetype javascript call EnableJsLint()
+    au FileType javascript setl fen
+    au BufWinEnter,BufReadPost,BufNewFile,BufEnter * silent! exec ":cd " expand('%:p:h')
+    augroup END
+endfu
+
+fu! SetCoryCommands()
+    command! SvnDiff call DoSvnDiff()
+    command! HgDiff2 call DoHgDiff2()
+    command! HgDiff call DoHgDiff()
+    command! Gather call DoGather()
+    command! Abspath call Copyabspath()
+    command! Htmlbp call DoHtmlBP()
+
+    " examples: 
+    " :Pp twisted.internet  " replace the current buffer
+    " :Pp! twisted.internet  " replace the current buffer, even if modified
+    " :Ppn py2exe.build_exe  " horiz-split and put file in new buffer
+    " :Ppv py2exe.build_exe  " vert-split and put file in new buffer
+    command! -nargs=1 -bang Pp exe ':edit<bang> '.system('pp <args>')
+    command! -nargs=1 Ppn exe ':new '.system('pp <args>')
+    command! -nargs=1 Ppv exe ':vs '.system('pp <args>')
+
+    command! Survey call DoPutSurvey()
+    command! Usage call DoPutUsage()
+    command! PrettyXML call DoPrettyXML()
+    command! RunPyBuffer call DoRunAnyBuffer("python -", "python")
+    command! RunBashBuffer call DoRunAnyBuffer("bash -", "sh")
+endfu
+
+fu! SetCoryMappings()
+
+    " taglist.vim
+    map <Leader>T :TlistToggle<CR>
+
+    " clipboard helpers
+    map <Leader>c "+y
+    map <Leader>v "+p
+    map <Leader>x "+x
+
+    " make error helpers
+    map <Leader>] :cn
+    map <Leader>[ :cp
+
+    " very useful shortcut
+    map <Leader>. :normal .
 
 
-" reST helpers
-"   underline a heading
-map <Leader>- Yp:.,.s:.:-:g<CR>
-"   underline a heading at a different level
-map <Leader>= Yp:.,.s:.:=:g<CR>
-"   underline a heading at a different level
-map <Leader>` Yp:.,.s:.:\~:g<CR>
-"   title
-map <Leader><Leader>= Yp:.,.s:.:=:g<CR>YkPjj0
+    " reST helpers
+    "   underline a heading
+    map <Leader>- Yp:.,.s:.:-:g<CR>
+    "   underline a heading at a different level
+    map <Leader>= Yp:.,.s:.:=:g<CR>
+    "   underline a heading at a different level
+    map <Leader>` Yp:.,.s:.:\~:g<CR>
+    "   title
+    map <Leader><Leader>= Yp:.,.s:.:=:g<CR>YkPjj0
 
-" tab helpers
-map <Leader>t :tab new<CR>
-map <Leader><C-T> :tabclose!<CR>
+    " tab helpers
+    map <Leader>t :tab new<CR>
+    map <Leader><C-T> :tabclose!<CR>
 
-set virtualedit=block
+    map <Leader>p :RunPyBuffer<CR>:winc p<cr>:set filetype=pylog<cr>:winc p<cr>
+    map <Leader>b :RunBashBuffer<CR>
 
-" temp files 
-set nobackup nowritebackup
-" 2 path separators == use abspath in filename for uniqueness
-"   (see :help 'directory' ) 
-set directory=/tmp//
-" colors/fonts
-set nohlsearch
-filetype plugin on
-syn on
-" colorscheme koehler
-" colorscheme peachpuff
-colorscheme greener
+    " diffs
+    map <Leader>D :call ToggleHgDiff2()<CR>
 
-" misc
-set visualbell
-set backspace=eol,indent,start
-set whichwrap=b,s,<,>,h,l,~,[,] " these movements permit line wrapping
-set nu " line numbers
-set laststatus=2 " always show status
-set stl=%F\ %y\ %l/%L@%c\ %m%r
+
+    " make it easier to edit vimrc
+    map <Leader>V :so ~/vimrc<CR>
+
+endfu
 
 
 " Helpers for some VCS systems
@@ -76,19 +124,36 @@ fu! DoSvnDiff()
     exe ':0r!svn diff "'.s:thispath.'" | dos2unix'
     setlocal ft=diff
 endfu
-command! SvnDiff call DoSvnDiff()
 
-fu! DoHgDiff2()
-    pclose!
-    let s:thispath = expand('%:t')
-    below vnew
-    exe ':0r!hg cat "'.s:thispath.'"'
-    setlocal previewwindow nomodified
-    diffthis
-    winc p
-    diffthis
+fu! TurnOnHgDiff2()
+    if !exists("b:diffIsOn") || !b:diffIsOn
+        pclose!
+        let s:thispath = expand('%:t')
+        below vnew
+        exe ':0r!hg cat "'.s:thispath.'"'
+        setlocal previewwindow nomodified
+        diffthis
+        winc p
+        diffthis
+        let b:diffIsOn = 1
+    endif
 endfu
-command! HgDiff2 call DoHgDiff2()
+
+fu! TurnOffHgDiff2()
+    if exists("b:diffIsOn") && b:diffIsOn
+        diffoff!
+        pclose!
+        let b:diffIsOn = 0
+    endif
+endfu
+
+fu! ToggleHgDiff2()
+    if exists("b:diffIsOn") && b:diffIsOn
+        call TurnOffHgDiff2()
+    else
+        call TurnOnHgDiff2()
+    endif
+endfu
 
 fu! DoHgDiff()
     let s:thispath = expand('%:t')
@@ -96,14 +161,12 @@ fu! DoHgDiff()
     exe ':0r!hg diff "'.s:thispath.'" | dos2unix'
     setlocal ft=diff
 endfu
-command! HgDiff call DoHgDiff()
 
 fu! DoGather()
     let s:thispath = expand('%:t')
     new
     exe ':0r!gather "'.s:thispath.'" | dos2unix'
 endfu
-command! Gather call DoGather()
 
 
 
@@ -111,7 +174,6 @@ fu! Copyabspath()
     let @+ = expand('%:p')
     echo 'Copied to clipboard:' expand('%:p')
 endfu
-command! Abspath call Copyabspath()
 
 
 
@@ -148,8 +210,6 @@ fu! DoHtmlBP()
     set ft=html
 endfu
 
-command! Htmlbp call DoHtmlBP()
-
 fu! PutTac()
     insert
 # vi:ft=python
@@ -164,15 +224,6 @@ svc = internet.TCPServer(8080, appserver.NevowSite(FIXMEPage()))
 svc.setServiceParent(application)
 .
 endfu
-
-" examples: 
-" :Pp twisted.internet  " replace the current buffer
-" :Pp! twisted.internet  " replace the current buffer, even if modified
-" :Ppn py2exe.build_exe  " horiz-split and put file in new buffer
-" :Ppv py2exe.build_exe  " vert-split and put file in new buffer
-command! -nargs=1 -bang Pp exe ':edit<bang> '.system('pp <args>')
-command! -nargs=1 Ppn exe ':new '.system('pp <args>')
-command! -nargs=1 Ppv exe ':vs '.system('pp <args>')
 
 
 fu! PutSurvey()
@@ -200,7 +251,6 @@ fu! DoPutSurvey()
     set ft=xml
 endfu
 
-command! Survey call DoPutSurvey()
 
 fu! PutUsage()
     insert
@@ -246,7 +296,6 @@ fu! DoPutUsage()
     exe "norm ?{Press\<Cr>v/}\<Cr>"
 endfu
 
-command! Usage call DoPutUsage()
 
 fu! DoPrettyXML()
     " save the filetype so we can restore it later
@@ -292,11 +341,6 @@ fu! DoPrettyXML()
     exe "set ft=" . l:origft
 endfu
 
-command! PrettyXML call DoPrettyXML()
-
-set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
-
-
 
 fu! DoRunAnyBuffer(interpreter, syntax)
     pclose!
@@ -305,15 +349,6 @@ fu! DoRunAnyBuffer(interpreter, syntax)
     setlocal previewwindow ro nomodifiable nomodified
     winc p
 endfu
-
-command! RunPyBuffer call DoRunAnyBuffer("python -", "python")
-map <Leader>p :RunPyBuffer<CR>:winc p<cr>:set filetype=pylog<cr>:winc p<cr>
-command! RunBashBuffer call DoRunAnyBuffer("bash -", "sh")
-map <Leader>b :RunBashBuffer<CR>
-
-
-" make it easier to edit vimrc
-map <Leader>V :so ~/vimrc<CR>
 
 " js static checking with :make
 fu! EnableJsLint()
@@ -334,3 +369,8 @@ fu! EnableReST()
     setlocal errorformat=%f:%l:\ %m
 endfu
 
+
+call SetCoryOptions()
+call SetCoryAutoCommands()
+call SetCoryCommands()
+call SetCoryMappings()

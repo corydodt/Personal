@@ -165,6 +165,8 @@ backslash for clarity's sake.
     In gvim, paste from the clipboard (like ^V in other applications)
 \x
     In gvim, cut to the clipboard (like ^X in other applications)
+\D
+    Toggle :HgDiff2 mode on or off
 \V
     Reload your .vimrc
 
