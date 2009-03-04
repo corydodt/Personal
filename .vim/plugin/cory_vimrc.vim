@@ -34,7 +34,8 @@ endfu
 
 fu! SetCoryAutoCommands()
     augroup Cory
-    au! "clear this group.
+    " clear this group
+    au!
     au BufWinEnter,BufReadPost,BufNewFile,BufEnter * silent! exec ":cd " expand('%:p:h')
     " set noacd - autochdir is weird on blank buffers.  prefer my hook, which leaves
     " you in the same directory when you are editing a new blank tab with \t
