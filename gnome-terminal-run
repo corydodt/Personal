@@ -2,15 +2,14 @@
 
 gnome-terminal --tab-with-profile=Default --tab-with-profile=engraver --tab-with-profile=ares --hide-menubar
 
-sleep 3
-
-for x in {1..10}; do
+for x in {1..20}; do
     wid=$(xdotool search --title ares | head -1)
-    if [ $? -eq 0 ]; then
+    if [ -n "$wid" ]; then
         wmctrl -r "ares" -b add,maximized_vert,maximized_horz
         xdotool windowactivate $wid
         xdotool key ctrl+Prior
         xdotool key ctrl+Prior
         break
     fi
+    sleep 0.5
 done
