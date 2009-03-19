@@ -46,6 +46,8 @@ packages.txt
 .prism
 .purple
 .pydistutils.cfg
+.pypirc
+.ssh
 .mozilla
 RecentDownloads
 .Skype
