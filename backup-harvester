@@ -6,7 +6,8 @@ export PATH=$PATH:/home/cdodt/bin
 
 ARGS="-Cav -F --inplace --delete"
 RSYNC="rsync $ARGS"
-DEST="goonmill.org:/home/cdodt/backups/`hostname -s`/"
+REMOTEDIR=backups/`hostname -s`
+DEST="goonmill.org:/home/cdodt/$REMOTEDIR/"
 
 FAILADDRESS="corydodt+hello@gmail.com"
 
@@ -38,7 +39,6 @@ Desktop
 .hgrc
 .HotheadGames
 .java
-.kde4
 .libao
 .local
 .openoffice.org2
@@ -46,25 +46,35 @@ packages.txt
 .prism
 .purple
 .pydistutils.cfg
+.pypirc
+.ssh
 .mozilla
 RecentDownloads
 .Skype
 .tomboy
 '
+# no longer backing up .kde4
 
 ROOTFILES='/etc/X11/xorg.conf
 /etc/modules
 /etc/modprobe.d/options
 /etc/vim
-/etc/hal/fdi/policy/appletouch.fdi
 '
+# no longer backing up /etc/hal/fdi/policy/appletouch.fdi
 
 dpkg-origins > packages.txt || failmail "Could not run dpkg-origins"
 
 $RSYNC $TOHGFILES ~/wc/Personal/  # don't fail if this doesn't work
 
-ssh goonmill.org 'mkdir -p backups/'`hostname -s` || failmail "Could not create backups dir"
+ssh goonmill.org 'mkdir -p '$REMOTEDIR || failmail "Could not create backups dir"
 $RSYNC $TOHGFILES $DEST || failmail "Could not rsync TOHGFILES"
 $RSYNC $HOMEFILES $DEST || failmail "Could not rsync HOMEFILES"
 $RSYNC $ROOTFILES $DEST || failmail "Could not rsync ROOTFILES"
+
+# some stupid programs insist on removing all write permissions.  i guess this
+# is a security feature for firefox extensions to prevent sploits in
+# extensions mutating other extensions?  whatever, in my backup, it will be
+# all writeable.  firefox seems to "fix" (by removing) the +w permission on
+# loading anyway, so this won't cause any problems.
+ssh goonmill.org 'chmod -R u+w '$REMOTEDIR
 
