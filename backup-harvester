@@ -39,7 +39,6 @@ Desktop
 .hgrc
 .HotheadGames
 .java
-.kde4
 .libao
 .local
 .openoffice.org2
@@ -54,6 +53,7 @@ RecentDownloads
 .Skype
 .tomboy
 '
+# no longer backing up .kde4
 
 ROOTFILES='/etc/X11/xorg.conf
 /etc/modules
