@@ -51,7 +51,7 @@ endfu
 
 fu! SetCoryCommands()
     command! SvnDiff call DoSvnDiff()
-    command! HgDiff2 call DoHgDiff2()
+    command! HgDiff2 call TurnOnHgDiff2()
     command! HgDiff call DoHgDiff()
     command! Gather call DoGather()
     command! Abspath call Copyabspath()
@@ -129,6 +129,14 @@ endfu
 fu! TurnOnHgDiff2()
     if !exists("b:diffIsOn") || !b:diffIsOn
         pclose!
+
+        let b:prevfoldmethod = &foldmethod
+        let b:prevfoldexpr = &foldexpr
+        let b:prevfoldlevel = &foldlevel
+        let b:prevfoldlevelstart = &foldlevelstart
+        let b:prevfoldcolumn = &foldcolumn
+        let b:prevfoldminlines = &foldminlines
+        let b:prevfoldnestmax = &foldnestmax
         let s:thispath = expand('%:t')
         below vnew
         exe ':0r!hg cat "'.s:thispath.'"'
@@ -145,6 +153,13 @@ fu! TurnOffHgDiff2()
         diffoff!
         pclose!
         let b:diffIsOn = 0
+        let &foldmethod = b:prevfoldmethod
+        let &foldexpr = b:prevfoldexpr
+        let &foldlevel = b:prevfoldlevel
+        let &foldlevelstart = b:prevfoldlevelstart 
+        let &foldcolumn = b:prevfoldcolumn 
+        let &foldminlines = b:prevfoldminlines 
+        let &foldnestmax = b:prevfoldnestmax 
     endif
 endfu
 
@@ -375,3 +390,5 @@ call SetCoryOptions()
 call SetCoryAutoCommands()
 call SetCoryCommands()
 call SetCoryMappings()
+
+" vim:set foldmethod=indent:

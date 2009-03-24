@@ -25,6 +25,7 @@
 'Tlist_WinWidth'	taglist.txt	/*'Tlist_WinWidth'*
 :Abspath	cory.txt	/*:Abspath*
 :HgDiff	cory.txt	/*:HgDiff*
+:HgDiff2	cory.txt	/*:HgDiff2*
 :Htmlbp	cory.txt	/*:Htmlbp*
 :MatchDebug	matchit.txt	/*:MatchDebug*
 :Pp	cory.txt	/*:Pp*
@@ -100,6 +101,10 @@ cory-commands	cory.txt	/*cory-commands*
 cory-features	cory.txt	/*cory-features*
 cory-intro	cory.txt	/*cory-intro*
 cory-mappings	cory.txt	/*cory-mappings*
+cory-matchit.txt	cory.txt	/*cory-matchit.txt*
+cory-table.txt	cory.txt	/*cory-table.txt*
+cory-taglist.txt	cory.txt	/*cory-taglist.txt*
+cory-yankring.txt	cory.txt	/*cory-yankring.txt*
 cory.txt	cory.txt	/*cory.txt*
 g%	matchit.txt	/*g%*
 global-example	yankring.txt	/*global-example*
