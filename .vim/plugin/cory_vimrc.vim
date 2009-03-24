@@ -45,7 +45,6 @@ fu! SetCoryAutoCommands()
     au Filetype rst call EnableReST()
     au Filetype javascript call EnableJsLint()
     au FileType javascript setl fen
-    au BufWinEnter,BufReadPost,BufNewFile,BufEnter * silent! exec ":cd " expand('%:p:h')
     augroup END
 endfu
 
@@ -114,6 +113,9 @@ fu! SetCoryMappings()
 
     " make it easier to edit vimrc
     map <Leader>V :so ~/vimrc<CR>
+
+    " Q enters ex-mode which is annoying. kill that.
+    map Q <Nop>
 
 endfu
 
