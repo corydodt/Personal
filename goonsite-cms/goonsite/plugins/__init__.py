@@ -1,0 +1,3 @@
+"""
+The plugins directory
+"""

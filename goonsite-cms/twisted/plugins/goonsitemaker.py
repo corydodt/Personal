@@ -30,7 +30,7 @@ class TheSoftWorldMaker(object):
     """
     implements(IServiceMaker, IPlugin)
     tapname = "goonsite-cms"
-    description = "Listen for HTTP requests and simulate the FF partner server"
+    description = "My little website"
     options = Options
 
     def makeService(self, options):
