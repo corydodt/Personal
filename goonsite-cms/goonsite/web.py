@@ -7,11 +7,11 @@ from nevow import static, rend, loaders, tags as T, inevow, vhost
 from goonsite import RESOURCE
 from goonsite.app import AppDispatchURL
 
-class TheSoftWorldHtml(rend.Page):
+class GoonsiteHTML(rend.Page):
     """
     Render an HTML page inside goonsite's template
     """
-    docFactory = loaders.xmlfile(RESOURCE('goonsite.xhtml'))
+    docFactory = loaders.xmlfile(RESOURCE('templates/goonsite.xhtml'))
     def __init__(self, path, registry, *a, **kw):
         self.path = path
         self.registry = registry
@@ -51,11 +51,11 @@ class TheSoftWorldHtml(rend.Page):
         return ctx.tag
 
 
-class TheSoftWorldPage(static.File):
+class GoonsitePage(static.File):
     """
     Root page
     """
-    processors = {'.tsw': TheSoftWorldHtml}
+    processors = {'.tsw': GoonsiteHTML}
     indexNames = ['index.tsw'] + list(static.File.indexNames)
 
     def locateChild(self, ctx, segs):
@@ -92,6 +92,6 @@ class VhostFakeRoot(object):
 
 
 def root(directory):
-    return VhostFakeRoot(TheSoftWorldPage(directory))
+    return VhostFakeRoot(GoonsitePage(directory))
 
 
