@@ -68,7 +68,6 @@ class GoonsitePage(static.File):
         return static.File.locateChild(self, ctx, segs)
 
 
-
 class VhostFakeRoot(object):
     """
     I am a wrapper to be used at site root when you want to combine 

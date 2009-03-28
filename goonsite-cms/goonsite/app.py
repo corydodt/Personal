@@ -46,7 +46,6 @@ class AppDispatchURL(rend.Page):
         next, rest = segs[0], segs[1:]
         if next in APPS:
             r = APPS[next].getResource()
-            print r
             return r, rest
         return self, rest
 
@@ -59,3 +58,4 @@ class AppDispatchURL(rend.Page):
     def render_everything(self, ctx, data):
         ctx.tag.fillSlots('contentMain', AppList())
         return ctx.tag
+
