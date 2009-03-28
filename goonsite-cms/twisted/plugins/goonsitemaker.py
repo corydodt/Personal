@@ -17,6 +17,7 @@ import goonsite
 
 class Options(usage.Options):
     optParameters = [['port', 'p', '800', 'Port to run on'],
+                     ['interface', 'i', '0.0.0.0', 'Interface to run on'],
                      ['directory', 'd', '.', 'Directory containing files'],
                      ]
 
@@ -39,7 +40,7 @@ class TheSoftWorldMaker(object):
         """
         resource = goonsite.root(options['directory'])
         factory = appserver.NevowSite(resource)
-        port = 'tcp:%s' % (options['port'],)
+        port = 'tcp:%s:interface=%s' % (options['port'], options['interface'])
         ## port = 'ssl:%s:privateKey=%s:certKey=%s' % (options['port'],
         ##        options['privkey'], options['certificate'])
         return strports.service(port, factory)
