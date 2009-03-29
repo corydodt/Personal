@@ -1,0 +1,67 @@
+
+body { 
+  padding: 2em;
+  background-image: url(/static/papery.png);
+}
+
+#middle {
+  border: 2px solid #A68A50; /* secondary-b-3 */
+  padding: 15px;
+  position: absolute;
+}
+
+h1, h2, h3, h4, h5, h6 { 
+  font-family: sans-serif;
+}
+
+h2 {
+  color: #509EA6; /* primary-3 */
+}
+
+.displayDoc, .textareaMain {
+  width: 1008px;
+  height: 300px;
+}
+
+.displayDoc {
+    border: none;
+}
+
+.hidden {
+    display:none;
+}
+
+.source, .conversion {
+  padding: 8px;
+  font-family: sans-serif;
+  border: 1px solid black;
+  margin: 8px;
+}
+
+/* http://colorschemedesigner.com/#3k41T1h--w0w0 */
+.primary-1 { background-color: #F5FEFF }
+.primary-2 { background-color: #BABFBF }
+.primary-3 { background-color: #509EA6 }
+.primary-4 { background-color: #F8FEFF }
+.primary-5 { background-color: #FAFFFF }
+
+.secondary-a-1 { background-color: #F6F8FF }
+.secondary-a-2 { background-color: #BABCBF }
+.secondary-a-3 { background-color: #5067A6 }
+.secondary-a-4 { background-color: #F8FAFF }
+.secondary-a-5 { background-color: #FAFBFF }
+
+.secondary-b-1 { background-color: #FFFCF5 }
+.secondary-b-2 { background-color: #BFBDBA }
+.secondary-b-3 { background-color: #A68A50 }
+.secondary-b-4 { background-color: #FFFDF7 }
+.secondary-b-5 { background-color: #FFFDF9 }
+
+.complement-1 { background-color: #FFFAF5 }
+.complement-2 { background-color: #BFBCBA }
+.complement-3 { background-color: #A67850 }
+.complement-4 { background-color: #FFFBF7 }
+.complement-5 { background-color: #FFFCF9 }
+
+
+
