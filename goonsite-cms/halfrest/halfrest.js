@@ -1,6 +1,6 @@
 document.observe('dom:loaded', function() {
 
-    var resizeIframe, bindEditBox;
+    var bindEditBox;
 
     bindEditBox = function() {
         var edit;
