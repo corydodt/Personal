@@ -50,8 +50,7 @@ class PastePage(rend.Page):
     addSlash = True
     docFactory = loaders.xmlfile(TEMPLATE)
 
-    def __init__(self, store, appURL=None, doc=None, *a, **kw):
-        self.appURL = appURL
+    def __init__(self, store, doc=None, *a, **kw):
         self.store = store
         self.doc = self.title = self.body = None
         if doc is not None:
@@ -105,6 +104,8 @@ class PastePage(rend.Page):
         if self.doc is not None:
             if next == 'print':
                 return static.Data(self.doc.convert(), 'text/html'), segs
+            if next == 'source':
+                return static.Data(self.doc.text.encode('utf-8'), 'text/plain; charset=utf-8'), segs
         else:
             if next == 'doc':
                 next = segs[0]
@@ -113,7 +114,7 @@ class PastePage(rend.Page):
                     id = int(next)
                     doc = self.store.find(Document, Document.id==id).one()
                     if doc is not None:
-                        return PastePage(self.store, self.appURL, doc), segs
+                        return PastePage(self.store, doc), segs
                     else:
                         return url.here.up().up(), ()
 
