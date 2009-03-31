@@ -8,7 +8,7 @@ import pysqlite2
 
 from storm import locals
 
-from nevow import rend, loaders, static, url, util as nevowutil
+from nevow import rend, loaders, static, url, util as nevowutil, tags as T
 from nevow.inevow import IRequest
 
 from . import converter, TEMPLATE, DBFILE
@@ -39,6 +39,12 @@ class Document(object):
     def convert(self):
         return converter.convert(self.text)
 
+    def convertParts(self):
+        """
+        Return body and title of converted document
+        """
+        return converter.convert(self.text, parts=True)
+
 
 class PastePage(rend.Page):
     addSlash = True
@@ -47,9 +53,10 @@ class PastePage(rend.Page):
     def __init__(self, store, appURL=None, doc=None, *a, **kw):
         self.appURL = appURL
         self.store = store
-        self.doc = None
+        self.doc = self.title = self.body = None
         if doc is not None:
             self.doc = doc
+            self.body, self.title = doc.convertParts()
 
     def renderHTTP(self, ctx):
         """
@@ -76,24 +83,28 @@ class PastePage(rend.Page):
         return rend.Page.renderHTTP(self, ctx)
 
     def render_title(self, ctx, data):
-        # TODO - incorporate the document's title
-        return ctx.tag["HalfReST Paste"]
+        if self.title is None:
+            return ctx.tag["HalfReST Paste"]
+        ctx.tag.fillSlots('title', self.title)
+        return ctx.tag
 
     def render_pastebin(self, ctx, data):
         p = lambda s: ctx.tag.onePattern(s)()
 
         if self.doc is not None:
-            return ctx.tag[p("miniTitle"), p("form"), p("displayDoc")]
+            displayDoc = p("displayDoc")
+            displayDoc.fillSlots('displayDoc', T.raw(self.body))
+            return ctx.tag[p("miniTitle"), p("form"), displayDoc]
         else:
             return ctx.tag[p("mainTitle"), p("form")]
 
     def locateChild(self, ctx, segs):
         next = segs[0]
         segs = segs[1:]
-        if self.doc is not None:
-            if next == 'convert':
-                return static.Data(self.doc.convert(), 'text/html'), segs
 
+        if self.doc is not None:
+            if next == 'print':
+                return static.Data(self.doc.convert(), 'text/html'), segs
         else:
             if next == 'doc':
                 next = segs[0]
