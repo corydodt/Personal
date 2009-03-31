@@ -43,6 +43,10 @@ h2 {
     cursor: pointer;
 }
 
+.textareaHandle:hover {
+    border-bottom: 1px dotted;
+}
+
 /* http://colorschemedesigner.com/#3k41T1h--w0w0 */
 .primary-1 { background-color: #F5FEFF }
 .primary-2 { background-color: #BABFBF }

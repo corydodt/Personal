@@ -7,7 +7,7 @@ document.observe('dom:loaded', function() {
         edit = $$('.source')[0].down('.textareaHandle');
         if (edit !== undefined) {
             edit.observe('click', function () {
-                edit.next('.textareaMain').removeClassName('hidden');
+                edit.next('.textareaContainer').removeClassName('hidden');
                 edit.addClassName('hidden');
             });
         }

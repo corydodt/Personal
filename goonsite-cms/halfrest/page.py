@@ -131,9 +131,9 @@ class PastePage(rend.Page):
             handle = ctx.tag.onePattern('textareaHandle')()
 
             ta.fillSlots('textareaClass', 'hidden')
-            ta[self.doc.text]
+            ta.fillSlots('source', self.doc.text)
 
-            docID = ctx.tag.onePattern('docID')()
+            docID = ta.onePattern('docID')()
             docID.fillSlots('docID', self.doc.id)
 
             return ctx.tag[handle, ta, docID]

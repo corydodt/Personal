@@ -29,22 +29,27 @@
 
       <form enctype="multipart/form-data" accept-charset="utf-8" n:pattern=
         "form" method="post">
-        <input type="hidden" name="_charset_" /> <!-- for getPOSTCharset -->
         <div class="source secondary-b-4" n:render="source">
           <span class="textareaHandle" n:pattern=
             "textareaHandle" title=
             "show the text editor to edit this character">+ Edit this</span>
 
-          <textarea name="text" n:pattern="textarea"><n:attr name=
-              "class">textareaMain <n:slot name=
-              "textareaClass" /></n:attr></textarea>
+          <div n:pattern="textarea"><n:attr name=
+              "class">textareaContainer <n:slot name=
+              "textareaClass" /></n:attr>
+            <textarea name="text" class="textareaMain"><n:slot name=
+                "source" /></textarea>
 
-          <input type="hidden" name="docID" n:pattern=
-            "docID"><n:attr name="value"><n:slot name=
-            "docID" /></n:attr></input>
+            <input type="submit" name="convert" value="convert" title=
+              "save this character and convert it to nice-looking html" />    
+
+            <input type="hidden" name="_charset_" /> <!-- for getPOSTCharset -->
+
+            <input type="hidden" name="docID" n:pattern=
+              "docID"><n:attr name="value"><n:slot name=
+              "docID" /></n:attr></input>
+          </div>
         </div>
-        <input type="submit" name="convert" value="convert" title=
-          "save this character and convert it to nice-looking html" />    
       </form>
 
       <div class="conversion document secondary-b-4" n:pattern="displayDoc">
