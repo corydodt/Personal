@@ -83,7 +83,7 @@ class PastePage(rend.Page):
 
     def render_title(self, ctx, data):
         if self.title is None:
-            return ctx.tag["HalfReST Paste"]
+            return ctx.tag.clear()["HalfReST Paste"]
         ctx.tag.fillSlots('title', self.title)
         return ctx.tag
 
@@ -107,7 +107,7 @@ class PastePage(rend.Page):
             if next == 'source':
                 return static.Data(self.doc.text.encode('utf-8'), 'text/plain; charset=utf-8'), segs
         else:
-            if next == 'doc':
+            if segs and next == 'doc':
                 next = segs[0]
                 segs = segs[1:]
                 if next.isdigit():
@@ -138,6 +138,7 @@ class PastePage(rend.Page):
 
             return ctx.tag[handle, ta, docID]
         ta.fillSlots('textareaClass', '')
+        ta.fillSlots('source', '')
         return ctx.tag[ta]
 
 
