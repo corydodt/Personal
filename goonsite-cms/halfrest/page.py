@@ -11,7 +11,7 @@ from storm import locals
 from nevow import rend, loaders, static, url, util as nevowutil, tags as T
 from nevow.inevow import IRequest
 
-from . import converter, TEMPLATE, DBFILE
+from . import converter, TEMPLATE, DBFILE, CHARSHEET_T
 
 
 def bootstrap(store):
@@ -89,6 +89,9 @@ class PastePage(rend.Page):
 
     def render_pastebin(self, ctx, data):
         p = lambda s: ctx.tag.onePattern(s)()
+
+        ctx.tag.fillSlots('sheetTemplate', CHARSHEET_T)
+
 
         if self.doc is not None:
             displayDoc = p("displayDoc")

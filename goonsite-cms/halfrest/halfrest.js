@@ -1,6 +1,10 @@
 document.observe('dom:loaded', function() {
 
-    var bindEditBox;
+    var bindInsertTemplate, bindTextArea, bindEditBox, insertButton, ta,
+        timer;
+
+    ta = $$('.textareaMain')[0];
+    insertButton = $$('.insertTemplateButton')[0];
 
     bindEditBox = function() {
         var edit;
@@ -13,6 +17,35 @@ document.observe('dom:loaded', function() {
         }
     };
     bindEditBox();
+
+    bindTextarea = function() {
+        timer = setInterval(function() {
+            if (ta.value == '' && insertButton.disabled) {
+                insertButton.enable();
+            } else if (ta.value != '' && !insertButton.disabled) {
+                insertButton.disable();
+            }
+        }, 500);
+    }
+    bindTextarea();
+
+    bindInsertTemplate = function() {
+        insertButton.observe('click', function(event) {
+            insertButton.disable();
+            var sheet;
+            sheet = $$('.sheetTemplate')[0].value;
+            event.preventDefault();
+            event.stopPropagation();
+            if (ta.value == '') {
+                ta.value = sheet;
+            }
+        });
+    };
+    bindInsertTemplate();
+
+    if (ta.value != '') {
+        insertButton.disable();
+    }
 
 });
 

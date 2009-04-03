@@ -47,6 +47,10 @@ h2 {
     border-bottom: 1px dotted;
 }
 
+.templates {
+    display: none;
+}
+
 /* http://colorschemedesigner.com/#3k41T1h--w0w0 */
 .primary-1 { background-color: #F5FEFF }
 .primary-2 { background-color: #BABFBF }

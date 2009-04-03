@@ -40,6 +40,10 @@
             <textarea name="text" class="textareaMain"><n:slot name=
                 "source" /></textarea>
 
+            <input class="insertTemplateButton" type="button" value=
+              "insert a template..." name="template" title=
+              "paste a character sheet template into the text area" />    
+
             <input type="submit" name="convert" value="convert" title=
               "save this character and convert it to nice-looking html" />    
 
@@ -57,6 +61,12 @@
         <h1 class="title" n:render="title"><n:slot name="title" /></h1>
         <n:slot name="displayDoc" />
       </div>
+
+      <div class="templates">
+        <textarea class="sheetTemplate"><n:slot name=
+          "sheetTemplate" /></textarea>
+      </div>
+
     </div>
   </body>
 </html>
