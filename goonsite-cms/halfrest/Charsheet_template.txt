@@ -1,0 +1,331 @@
+==============
+Character Name
+==============
+
+| Gender Race Class-#Lv
+| Alignment Alignment
+| Representing Playername
+
+Character Sheet
+===============
+
+Attributes
+----------
+
+.. sidebar:: Appearance
+
+    ======== ========= ========= =========== =============== ==========
+    Size     Height    Weight    Eyes        Hair            Skin
+    ======== ========= ========= =========== =============== ==========
+    Xxx      x'x"      xxx lb                            
+    ======== ========= ========= =========== =============== ==========
+
+:Str:    xx | **+x**
+:Dex:    xx | **+x**
+:Con:    xx | **+x**
+:Int:    xx | **+x**
+:Wis:    xx | **+x**
+:Chr:    xx | **+x**
+
+----------
+
+Combat
+------
+
+.. sidebar:: Saves
+
+    :Fortitude Save:    **+ xx** = xx [base] + x [con]
+    :Reflex Save:       **+ xx** = xx [base] + x [dex]
+    :Will Save:         **+ xx** = xx [base] + x [wis]
+
+:Total HP:          **xx**
+
+    :hp rolls:      Ftr-1: 10, Ftr-2: 5, Clr-1: 6, ..   
+
+.. TODO - in pathfinder, we don't care about hp rolls because we use negative
+.. levels instead
+
+:Speed:             xx feet 
+
+:Armor Class:       **xx** = 10 + xx [armor] + xx [shield] + x [dexterity in armor] +
+
+    :Touch AC:      xx
+
+    :Flat-Footed:   xx
+
+:Init Modifier:     **+ xx** = + x [dexterity] + xx [feat]
+
+.. sidebar:: Unadjusted Attacks
+
+    *Hits*
+
+    :Melee:        **+xx** = xx [base] + x [str]
+    :Ranged:       **+xx** = xx [base] + x [dex]
+    :Grapple chk:  **+xx** = xx [base] + x [str]
+
+    *Damage*
+
+    :Mel./thrown:  **+xx** = 0 [base] + x [str]
+    :Missile:      **+0** (except compos. bow [str])
+
+Weapons
+~~~~~~~
+XXXX [**+xx hit**, **xdx+xx**, crit xx-xx/xx, x-handed, xx lb, xx damage type]
+
+XXXX [**+xx hit**, **xdx+xx**, crit xx-xx/xx, range inc xxx, xx lb, xx damage type]
+
+Armor
+~~~~~
+xxx [heavy/light/med; +xx AC; max dex +xx; check penalty -xx; xx lb]
+
+xxx shield [+x AC; max dex +x; check penalty -x; hardness xx; hp xx; xx lb]
+
+------
+
+Weight Allowance
+----------------
+
+=========== =========== =========== ================= ================== =========
+Light       Medium      Heavy       Lift over head    Lift off ground    Push/Drag
+=========== =========== =========== ================= ================== =========
+xx or less  xx-xxx lb   xx-xxx lb   xxx lb            xxx lb             xxx lb  
+=========== =========== =========== ================= ================== =========
+
+------
+
+Feats, Skills, Language
+-----------------------
+
+Feats
+~~~~~
+
+* feat xxx
+
+* feat xxx
+
+.. sidebar:: Frequently-Used Skills
+
+    :Spot:                                                      +xx
+    :Listen:                                                    +xx
+    :Search:                                                    +xx
+
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+ 
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+.. TODO - pathfinder version of this table has a lot of diff. skills
+
+== ======================== ========= ========== ========== ======= =========
+cc Skill                    Total     Key Abil.  Abl.Mod.   Ranks   Misc.  
+== ======================== ========= ========== ========== ======= =========
+_  Appraise                 **+x**    Int        x                 
+_  Balance                  **+x**    Dex [1]_   x                 
+_  Bluff                    **+x**    Cha        x          x      
+_  Climb                    **+x**    Str [1]_   x                 
+_  Concentration            **+x**    Con        x          x      
+_  Craft (1)                **+x**    Int        x                 
+_  Craft (2)                **+x**    Int        x                 
+_  Craft (3)                **+x**    Int        x                 
+_  Diplomacy                **+x**    Cha        x                 
+_  Disguise                 **+x**    Cha        x                 
+_  Escape Artist            **+x**    Dex [1]_   x                 
+_  Forgery                  **+x**    Int        x                 
+_  Gather Information       **+x**    Cha        x                 
+_  Heal                     **+x**    Wis        x                 
+_  Hide                     **+x**    Dex [1]_   x                 
+_  Intimidate               **+x**    Cha        x                 
+_  Jump                     **+x**    Str [1]_   x                 
+_  Knowl. (arcana) [3]_     **+x**    Int        x          x      
+_  Knowl. (dungeon'ng) [3]_ **+x**    Int        x                 
+_  Knowl. (engin'ing) [3]_  **+x**    Int        x                 
+_  Knowl. (geography) [3]_  **+x**    Int        x                 
+_  Knowl. (history) [3]_    **+x**    Int        x                 
+_  Knowl. (local) [3]_      **+x**    Int        x                 
+_  Knowl. (nature) [3]_     **+x**    Int        x                 
+_  Knowl. (nobility) [3]_   **+x**    Int        x                 
+_  Knowl. (planes) [3]_     **+x**    Int        x                 
+_  Knowl. (religion) [3]_   **+x**    Int        x                 
+_  Listen                   **+x**    Wis        x                 
+_  Move Silently            **+x**    Dex [1]_   x                 
+_  Open Locks               **+x**    Dex        x                 
+_  Perform (1)              **+x**    Cha        x                 
+_  Perform (2)              **+x**    Cha        x                 
+_  Perform (3)              **+x**    Cha        x                 
+_  Ride                     **+x**    Dex        x                 
+_  Search                   **+x**    Int        x                 
+_  Sense Motive             **+x**    Wis        x                 
+_  Spellcraft [3]_          **+x**    Wis        x          x      
+_  Spot                     **+x**    Wis        x                 
+_  Survival                 **+x**    Wis        x                 
+_  Swim                     **+x**    Str [2]_   x                 
+_  Tumble                   **+x**    Dex        x
+_  Use Rope                 **+x**    Dex        x                 
+== ======================== ========= ========== ========== ======= =========
+
+.. [1] check penalty for wearing armor
+.. [2] double check penalty for wearing armor
+.. [3] may **not** be used untrained
+
+Languages
+~~~~~~~~~
+
+* Common
+
+* xx more
+
+------
+
+Race & Class
+------------
+
+race name
+
+* trait
+
+* trait
+
+class name
+
+* ability
+
+* ability
+
+---------
+
+Equipment
+---------
+
+    ========================== ======= ========
+    Item                       Weight  GP Value
+    ========================== ======= ========
+    Xxx                        xx lb   0.xx gp  
+    Xxx                        xx lb   0.xx gp  
+    Xxx                        xx lb   0.xx gp  
+    Xxx                        xx lb   0.xx gp  
+    ========================== ======= ========
+
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+ 
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+
+---------
+
+Spells
+------
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+---------
+
+Other Notes
+-----------
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+
+.. # vim:set ft=rst:
