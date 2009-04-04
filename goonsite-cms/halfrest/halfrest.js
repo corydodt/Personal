@@ -8,10 +8,10 @@ document.observe('dom:loaded', function() {
 
     bindEditBox = function() {
         var edit;
-        edit = $$('.source')[0].down('.textareaHandle');
+        edit = $$('.source')[0].down('.editControls');
         if (edit !== undefined) {
-            edit.observe('click', function () {
-                edit.next('.textareaContainer').removeClassName('hidden');
+            edit.down('.textareaHandle').observe('click', function () {
+                ta.up('.textareaContainer').removeClassName('hidden');
                 edit.addClassName('hidden');
             });
         }

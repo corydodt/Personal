@@ -30,7 +30,7 @@
       <form enctype="multipart/form-data" accept-charset="utf-8" n:pattern=
         "form" method="post">
         <div class="source secondary-b-4" n:render="source">
-          <div n:pattern="editControls">
+          <div class="editControls" n:pattern="editControls">
 
             <span class="textareaHandle" title=
               "show the text editor to edit this">+ Edit this</span>
@@ -52,6 +52,11 @@
               "textareaClass" /></n:attr>
             <textarea name="text" class="textareaMain"><n:slot name=
                 "source" /></textarea>
+
+            <div class="whoField"><label for=
+              "who">author</label><input id="who" type="text" name=
+              "who"><n:attr name="value"><n:slot name=
+              "who" /></n:attr></input></div>
 
             <input class="insertTemplateButton" type="button" value=
               "insert a template..." name="template" title=

@@ -4,6 +4,8 @@ The pages in halfrest
 TODO: ReST syntax highlighting using e.g. Helene or codepress
 """
 
+import datetime
+
 import pysqlite2
 
 from storm import locals
@@ -35,6 +37,8 @@ class Document(object):
     __storm_table__ = 'document'
     id = locals.Int(primary=True)
     text = locals.Unicode()
+    date14 = locals.Int()
+    who = locals.Unicode()
 
     def convert(self):
         return converter.convert(self.text)
@@ -72,6 +76,8 @@ class PastePage(rend.Page):
                 doc = Document()
             charset = nevowutil.getPOSTCharset(ctx)
             doc.text = req.args['text'][0].decode(charset)
+            doc.who = req.args['who'][0].decode(charset)
+            doc.date14 = int(datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
             self.store.add(doc)
             self.store.commit()
 
@@ -146,6 +152,7 @@ class PastePage(rend.Page):
 
             ta.fillSlots('textareaClass', 'hidden')
             ta.fillSlots('source', self.doc.text)
+            ta.fillSlots('who', self.doc.who)
 
             docID = ta.onePattern('docID')()
             docID.fillSlots('docID', self.doc.id)
@@ -153,6 +160,7 @@ class PastePage(rend.Page):
             return ctx.tag[editControls, ta, docID]
         ta.fillSlots('textareaClass', '')
         ta.fillSlots('source', '')
+        ta.fillSlots('who', '')
         return ctx.tag[ta]
 
 

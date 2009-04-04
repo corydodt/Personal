@@ -56,6 +56,14 @@ h2 {
     float: right;
 }
 
+.whoField {
+    margin: 4px 0 4px 0;
+}
+
+#who {
+    margin-left: 4px;
+}
+
 /* http://colorschemedesigner.com/#3k41T1h--w0w0 */
 .primary-1 { background-color: #F5FEFF }
 .primary-2 { background-color: #BABFBF }
