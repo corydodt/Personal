@@ -40,12 +40,32 @@ document.observe('dom:loaded', function() {
                 ta.value = sheet;
             }
         });
+
+        if (ta.value != '') {
+            insertButton.disable();
+        }
+
     };
     bindInsertTemplate();
 
-    if (ta.value != '') {
-        insertButton.disable();
+    bindDelete = function() {
+        var ok, deleter, deleteInput, title;
+        deleter = $$('.deleteThis')[0];
+        deleteInput = $$('.deleteInput')[0];
+        title = deleter.getAttribute('rel');
+        // deleter.observe('click', function(ev) {
+        deleter.observe('click', function(ev) {
+            ok = confirm("Really delete " + title + "?");
+            if (!ok) {
+                ev.stopPropagation();
+                ev.preventDefault();
+            } else {
+               deleteInput.value = "delete";
+               document.forms[0].submit();  
+            }
+        });
     }
+    bindDelete();
 
 });
 

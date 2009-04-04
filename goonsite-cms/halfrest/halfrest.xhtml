@@ -30,9 +30,22 @@
       <form enctype="multipart/form-data" accept-charset="utf-8" n:pattern=
         "form" method="post">
         <div class="source secondary-b-4" n:render="source">
-          <span class="textareaHandle" n:pattern=
-            "textareaHandle" title=
-            "show the text editor to edit this character">+ Edit this</span>
+          <div n:pattern="editControls">
+
+            <span class="textareaHandle" title=
+              "show the text editor to edit this">+ Edit this</span>
+
+            <input type="button" class="deleteThis" title=
+              "delete this character permanently" name="delete"><n:attr name=
+              "value">delete <n:slot name=
+              "title" /> ...</n:attr><n:attr name="rel"><n:slot name=
+              "title" /></n:attr></input>
+
+            <div style="clear:both;" />
+
+          </div>
+
+          <input class="deleteInput" type="hidden" name="delete" value="" />
 
           <div n:pattern="textarea"><n:attr name=
               "class">textareaContainer <n:slot name=

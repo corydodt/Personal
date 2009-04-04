@@ -41,6 +41,7 @@ h2 {
 .textareaHandle {
     cursor: hand;
     cursor: pointer;
+    float: left;
 }
 
 .textareaHandle:hover {
@@ -49,6 +50,10 @@ h2 {
 
 .templates {
     display: none;
+}
+
+.deleteThis {
+    float: right;
 }
 
 /* http://colorschemedesigner.com/#3k41T1h--w0w0 */

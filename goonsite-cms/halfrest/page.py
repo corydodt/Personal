@@ -18,7 +18,7 @@ def bootstrap(store):
     """
     Create tables when needed
     """
-    store.execute("CREATE TABLE document (id INTEGER PRIMARY KEY, text VARCHAR)")
+    store.execute(CREATE_SCRIPT)
 
 
 def dbopen():
@@ -79,6 +79,16 @@ class PastePage(rend.Page):
                 return url.here
             else:
                 return url.here.child('doc').child('%s' % (doc.id,))
+        elif req.args.get('delete', None) == ['delete']:
+            if 'docID' not in req.args or req.args['docID'][0] == '':
+                pass
+            else:
+                docID = int(req.args['docID'][0])
+                doc = self.store.find(Document, Document.id==docID).one()
+                self.store.remove(doc)
+                self.store.commit()
+                return url.here.up().up().up()
+
         return rend.Page.renderHTTP(self, ctx)
 
     def render_title(self, ctx, data):
@@ -131,7 +141,8 @@ class PastePage(rend.Page):
     def render_source(self, ctx, data):
         ta = ctx.tag.onePattern('textarea')()
         if self.doc is not None:
-            handle = ctx.tag.onePattern('textareaHandle')()
+            editControls = ctx.tag.onePattern('editControls')()
+            editControls.fillSlots('title', self.title)
 
             ta.fillSlots('textareaClass', 'hidden')
             ta.fillSlots('source', self.doc.text)
@@ -139,7 +150,7 @@ class PastePage(rend.Page):
             docID = ta.onePattern('docID')()
             docID.fillSlots('docID', self.doc.id)
 
-            return ctx.tag[handle, ta, docID]
+            return ctx.tag[editControls, ta, docID]
         ta.fillSlots('textareaClass', '')
         ta.fillSlots('source', '')
         return ctx.tag[ta]
