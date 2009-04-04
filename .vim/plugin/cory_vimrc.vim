@@ -70,6 +70,7 @@ fu! SetCoryCommands()
     command! PrettyXML call DoPrettyXML()
     command! RunPyBuffer call DoRunAnyBuffer("python -", "python")
     command! RunBashBuffer call DoRunAnyBuffer("bash -", "sh")
+    command! RunSQLiteBuffer call DoRunAnyBuffer("sqlite3", "sql")
 endfu
 
 fu! SetCoryMappings()
@@ -106,6 +107,7 @@ fu! SetCoryMappings()
 
     map <Leader>p :RunPyBuffer<CR>:winc p<cr>:set filetype=pylog<cr>:winc p<cr>
     map <Leader>b :RunBashBuffer<CR>
+    map <Leader>q :RunSQLiteBuffer<CR>
 
     " diffs
     map <Leader>D :call ToggleHgDiff2()<CR>

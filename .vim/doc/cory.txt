@@ -177,6 +177,14 @@ Using script interpreters~
 \b
     :RunBashBuffer - run the current buffer as a bash script and
     show output
+\q
+    :RunSQLiteBuffer - run the current buffer as a sqlite3 script and show
+    output.  Recommend you set up a ~/.sqliterc before using this.  You can
+    attach to databases by using the 'attach' SQL syntax:
+
+    attach '/path/to/mydb.db' as 'mydb';
+
+    Just add that to the top of your buffer with the correct path/name.
 
 Using the quickfix list~
 \]
