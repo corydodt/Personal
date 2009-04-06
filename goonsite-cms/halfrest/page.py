@@ -13,7 +13,7 @@ from storm import locals
 from nevow import rend, loaders, static, url, util as nevowutil, tags as T
 from nevow.inevow import IRequest
 
-from . import converter, TEMPLATE, DBFILE, CHARSHEET_T
+from . import converter, TEMPLATE, DBFILE, CHARSHEET_T, CREATE_SCRIPT
 
 
 def bootstrap(store):
