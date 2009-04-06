@@ -149,6 +149,15 @@ then display the output below.
                                             *:RunBashBuffer*
 :RunBashBuffer
     Run the current buffer through 'bash -' as a shell script
+                                            *:RunSQLiteBuffer*
+:RunSQLiteBuffer
+    Run the current buffer as a sqlite3 script and show output.  Recommend you
+    set up a ~/.sqliterc before using this.  You can attach to databases by
+    using the 'attach' SQL syntax:
+
+    attach '/path/to/mydb.db' as 'mydb';
+
+    Just add that to the top of your buffer with the correct path/name.
 
 ==============================================================================
                                             *cory-mappings*
@@ -179,12 +188,7 @@ Using script interpreters~
     show output
 \q
     :RunSQLiteBuffer - run the current buffer as a sqlite3 script and show
-    output.  Recommend you set up a ~/.sqliterc before using this.  You can
-    attach to databases by using the 'attach' SQL syntax:
-
-    attach '/path/to/mydb.db' as 'mydb';
-
-    Just add that to the top of your buffer with the correct path/name.
+    output.  See |:RunSQLiteBuffer| for tips.
 
 Using the quickfix list~
 \]
