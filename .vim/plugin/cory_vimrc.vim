@@ -70,6 +70,7 @@ fu! SetCoryCommands()
     command! PrettyXML call DoPrettyXML()
     command! RunPyBuffer call DoRunAnyBuffer("python -", "python")
     command! RunBashBuffer call DoRunAnyBuffer("bash -", "sh")
+    command! RunLuaBuffer call DoRunAnyBuffer("lua -", "lua")
     command! RunSQLiteBuffer call DoRunAnyBuffer("sqlite3", "sql")
 endfu
 
@@ -107,6 +108,7 @@ fu! SetCoryMappings()
 
     map <Leader>p :RunPyBuffer<CR>:winc p<cr>:set filetype=pylog<cr>:winc p<cr>
     map <Leader>b :RunBashBuffer<CR>
+    map <Leader>l :RunLuaBuffer<CR>
     map <Leader>q :RunSQLiteBuffer<CR>
 
     " diffs
