@@ -6,7 +6,10 @@ HalfReST: The plugin for goonsite-cms
 
 from zope.interface import implements
 from twisted.plugin import IPlugin
-from goonsite.app import IAppFactory, dbopen
+
+from goonsite.app import IAppFactory
+from goonsite.database import dbopen
+
 from halfrest.page import PastePage
 from halfrest import DBFILE
 
