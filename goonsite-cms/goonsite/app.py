@@ -2,9 +2,11 @@
 Make it possible and simple to plug applications into goonsite
 """
 
+import os
+
 from zope.interface import Interface
 from twisted.plugin import getPlugins
-from nevow import rend, url, loaders, page, tags as T
+from nevow import rend, loaders, page, tags as T
 
 from goonsite import RESOURCE
 
@@ -58,4 +60,32 @@ class AppDispatchURL(rend.Page):
     def render_everything(self, ctx, data):
         ctx.tag.fillSlots('contentMain', AppList())
         return ctx.tag
+
+def cannotCreateDatabase(store):
+    """
+    Default implementation just fails if the database does not exist
+    """
+    assert 0, "Cannot create this store"
+
+def dbopen(dbfile, bootstrapHook=cannotCreateDatabase):
+    """
+    Open a Storm database from SQLite file dbfile or, if not possible, create
+    one by calling bootstrapHook.
+
+    bootstrapHook is a function which takes one argument, a newly initialized
+    storm.store.Store.  bootstrapHook should use this Store to execute the SQL
+    necessary to create the database.
+    """
+    if os.access(dbfile, os.F_OK) and not os.access(dbfile, os.W_OK):
+        raise IOError("Database file %s is not writeable" % (dbfile,))
+
+    db = locals.create_database('sqlite:///%s' % (dbfile,))
+    if not os.access(db, os.F_OK):
+        store = locals.Store(db) # this physically creates the disk file which
+                                 # is why we have to check for existence first
+        bootstrapHook(store)
+    else:
+        store = locals.Store(db)
+    return store
+
 

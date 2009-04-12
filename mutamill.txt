@@ -1,0 +1,327 @@
+========
+Mutamill
+========
+
+Character Generator for Playtools
+=================================
+
+Goals
+-----
+
+Meta-chargen: the chargen itself is defined in n3 syntax.  That syntax
+specifies the data that will be stored as quoted graphs (formulae) where
+we will generate the graphs specified.  The definition of a chargen is, in
+part, a definition of its schema.
+
+It is also a definition of the UI to generate this schema.  The interface is
+specified by structured triples which provide a series of questions.  The
+questions are specified by:
+
+    - question text
+
+    - the schema of the answer
+
+    - the data type of the responses
+
+    - the source data for the responses
+
+Questions can be grouped into sections.  Everything in one section must be
+solved before moving on to the next section is possible.
+
+It should be possible to generate the UI in other media by implementing a new
+renderer for the responses.
+
+D20 Chargen
+-----------
+
+(sections already moved to mutamilld20.n3: stats, race, alignment)
+
+Gender/Appearance
+~~~~~~~~~~~~~~~~~
+
+* What is the gender?
+
+  - type: Gender
+
+  - choices: male, female, other
+
+    - filtered by race
+
+  - interface: choice
+
+* What is the height?
+
+  - type: str
+
+  - interface: text entry
+
+* Weight?
+
+  - type: str
+
+  - interface: text entry
+
+* Skin?
+
+  - type: SkinColor
+
+  - choices: from skin colors
+
+    - filtered by race
+
+  - interface: choice
+
+* Eyes?
+
+  - type: EyeColor
+
+  - choice: from eye colors
+
+    - filtered by race
+
+  - interface: choice
+
+* Hair color?
+
+  - type: HairColor
+
+  - choice: from hair colors
+
+    - filtered by race
+
+  - interface: choice
+
+* Hair type?
+
+  - type: HairStyle
+
+  - choice: from hair styles
+
+    - filtered by race
+
+  - interface: choice
+
+* Facial hair?
+
+  - type: FacialHair
+
+  - choice: from facial hairs
+
+    - filtered by race, gender
+
+  - interface: choice
+
+Classes and Levels
+~~~~~~~~~~~~~~~~~~
+
+* What class for level 1?
+
+  - type: ClassLevel
+
+  - choice: from class levels
+
+    - filtered by race, gender, alignment, stats, other ClassLevels
+
+  - interface: choice
+
+* Level 2?
+
+* ...
+
+Level Choices
+~~~~~~~~~~~~~
+
+* What are the hit point rolls?
+
+  - type: [int, ...]
+
+  - interface: random rolls by class
+
+* What are the every-4th-level stat increases?
+
+  - type: [Stat, ...]
+
+  - interface: [choice, ...]
+
+Class Choices
+~~~~~~~~~~~~~
+
+* Clerics: turning/spell energy type?
+
+  - type: DivineEnergyType
+
+  - choices: positive, negative
+
+    - filtered by class, alignment
+
+  - interface: choice
+
+* Clerics: what are the domains?
+
+  - type: [SpellDomain, ...]
+
+  - choices: from spell domains
+
+    - filtered by class, alignment, cleric energy type
+
+  - interface: [choice, ...]
+
+* Monks: abilities?
+
+  - type: [MonkAbility, ...]
+
+  - choices: from monk abilities
+
+    - filtered by monk level
+
+  - interface: [choice, ...]
+
+* Rangers: combat track?
+
+  - type: RangerCombat
+
+  - choices: archery, two-weapon, beast wrestling, mounted combat
+
+  - interface: radio
+
+* Rangers: favored enemies?
+
+  - type: [Monster, ...]
+
+  - choices: from monsters
+
+    - filtered by ranger favored enemy choices
+
+  - interface: [choice, ...]
+
+* Wizards etc.: familiar?
+
+  - type: FamiliarMonster
+
+  - choices: from familiars
+
+    - filtered by class, alignment, race
+
+  - interface: choice
+
+* Wizards: speciality school?
+
+  - type: SpellSchool
+
+  - choices: from schools
+
+  - interface: choice
+
+* Psionics: specialty school?
+
+  - 
+
+* Sorcerers and Bards: spells known?
+
+  - type: [Spell, ...]
+
+  - choices: from spells
+
+    - filtered by class, class level
+
+  - interface: TODO
+
+Skills
+~~~~~~
+
+* What skill points are allocated?
+
+  - 
+
+* What intelligence-based languages are known?
+
+  - 
+
+* What languages are allocated?
+
+  - 
+
+* Is reading and writing known?
+
+  - type: Language
+
+  - choice: yes or no
+
+    - filtered by class
+
+  - interface: radio
+
+Feats
+~~~~~
+
+* What class-determined feats are taken?
+
+  - type: Feat
+
+  - choices: from feats
+
+    - filtered by race, stats, class levels, other Feats, and class-determined
+      feat lists
+
+  - interface: TODO
+
+* What feats are taken?
+
+  - type: Feat
+
+  - choices: from feats
+
+    - filtered by race, stats, class levels, other Feats
+
+  - interface: TODO
+
+Equipment
+~~~~~~~~~
+
+* What is the starting gold?
+
+  - type: int
+
+  - interface: random roll by class levels
+
+* What equipment is available?
+
+  - type: [RawEquipment, ...]
+
+  - interface: TODO determine how the GM will decide this answer
+
+* What equipment is purchased?
+  
+  - type: [DefiniteEquipment, ...]
+
+  - interface: TODO
+
+* What equipment configurations are in use?
+
+  - type: [DefiniteEquipmentList, ...]
+
+  - interface: TODO
+
+Name, Backstory
+~~~~~~~~~~~~~~~
+
+* What is the character's name?
+
+  - type: str
+
+  - interface: text entry
+
+* Player's name?
+
+  - type: str
+
+  - interface: text entry
+
+* Backstory?
+
+  - type: str
+
+  - interface: text entry
+
+
+.. vim:ft=rst:

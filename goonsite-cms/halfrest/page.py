@@ -6,14 +6,12 @@ TODO: ReST syntax highlighting using e.g. Helene or codepress
 
 import datetime
 
-import pysqlite2
-
 from storm import locals
 
 from nevow import rend, loaders, static, url, util as nevowutil, tags as T
 from nevow.inevow import IRequest
 
-from . import converter, TEMPLATE, DBFILE, CHARSHEET_T, CREATE_SCRIPT
+from . import converter, TEMPLATE, CHARSHEET_T, CREATE_SCRIPT
 
 
 def bootstrap(store):
@@ -21,16 +19,6 @@ def bootstrap(store):
     Create tables when needed
     """
     store.execute(CREATE_SCRIPT)
-
-
-def dbopen():
-    db = locals.create_database('sqlite:///%s' % (DBFILE,))
-    store = locals.Store(db)
-    try:
-        store.execute("select count(*) from document")
-    except pysqlite2.dbapi2.OperationalError:
-        bootstrap(store)
-    return store
 
 
 class Document(object):
