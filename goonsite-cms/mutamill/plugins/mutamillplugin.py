@@ -6,7 +6,8 @@ Mutamill: The mutagenic chargen
 
 from zope.interface import implements
 from twisted.plugin import IPlugin
-from goonsite.app import IAppFactory, dbopen
+from goonsite.app import IAppFactory
+from goonsite.database import dbopen
 from mutamill.page import MillPage
 from mutamill import DBFILE
 
