@@ -34,6 +34,7 @@
 :PrettyXML	cory.txt	/*:PrettyXML*
 :RunBashBuffer	cory.txt	/*:RunBashBuffer*
 :RunPyBuffer	cory.txt	/*:RunPyBuffer*
+:RunSQLiteBuffer	cory.txt	/*:RunSQLiteBuffer*
 :Survey	cory.txt	/*:Survey*
 :SvnDiff	cory.txt	/*:SvnDiff*
 :TlistAddFiles	taglist.txt	/*:TlistAddFiles*

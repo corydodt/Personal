@@ -1,5 +1,5 @@
 """
-HalfReST: The plugin for goonsite-cms
+Mutamill: The mutagenic chargen
 
 !!! Install this file in, e.g. /usr/lib/python2.5/site-packages/goonsite/plugins/
 """
@@ -7,13 +7,13 @@ HalfReST: The plugin for goonsite-cms
 from zope.interface import implements
 from twisted.plugin import IPlugin
 from goonsite.app import IAppFactory, dbopen
-from halfrest.page import PastePage
-from halfrest import DBFILE
+from mutamill.page import MillPage
+from mutamill import DBFILE
 
-class HalfrestFactory(object):
+class MutamillFactory(object):
     implements(IPlugin, IAppFactory)
-    name = "halfrest"
-    title = "HalfReST character formatter"
+    name = "mutamill"
+    title = "Mutamill Chargen"
     store = dbopen(DBFILE)
 
     def getResource(self):

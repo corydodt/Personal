@@ -29,7 +29,6 @@ fu! SetCoryOptions()
     set laststatus=2 " always show status
     set stl=%F\ %y\ %l/%L@%c\ %m%r
     set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
-
 endfu
 
 fu! SetCoryAutoCommands()
@@ -70,11 +69,11 @@ fu! SetCoryCommands()
     command! PrettyXML call DoPrettyXML()
     command! RunPyBuffer call DoRunAnyBuffer("python -", "python")
     command! RunBashBuffer call DoRunAnyBuffer("bash -", "sh")
+    command! RunLuaBuffer call DoRunAnyBuffer("lua -", "lua")
     command! RunSQLiteBuffer call DoRunAnyBuffer("sqlite3", "sql")
 endfu
 
 fu! SetCoryMappings()
-
     " taglist.vim
     map <Leader>T :TlistToggle<CR>
 
@@ -107,6 +106,7 @@ fu! SetCoryMappings()
 
     map <Leader>p :RunPyBuffer<CR>:winc p<cr>:set filetype=pylog<cr>:winc p<cr>
     map <Leader>b :RunBashBuffer<CR>
+    map <Leader>l :RunLuaBuffer<CR>
     map <Leader>q :RunSQLiteBuffer<CR>
 
     " diffs
@@ -118,7 +118,6 @@ fu! SetCoryMappings()
 
     " Q enters ex-mode which is annoying. kill that.
     map Q <Nop>
-
 endfu
 
 
