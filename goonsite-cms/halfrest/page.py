@@ -100,7 +100,7 @@ class PastePage(rend.Page):
     def render_title(self, ctx, data):
         if self.title is None:
             return ctx.tag.clear()["HalfReST Paste"]
-        ctx.tag.fillSlots('title', self.title)
+        ctx.tag.fillSlots('title', self.title.encode('utf-8'))
         return ctx.tag
 
     def render_pastebin(self, ctx, data):
@@ -111,7 +111,7 @@ class PastePage(rend.Page):
 
         if self.doc is not None:
             displayDoc = p("displayDoc")
-            displayDoc.fillSlots('displayDoc', T.raw(self.body))
+            displayDoc.fillSlots('displayDoc', T.raw(self.body.encode('utf-8')))
             return ctx.tag[p("miniTitle"), p("form"), displayDoc]
         else:
             return ctx.tag[p("mainTitle"), p("form")]
@@ -126,16 +126,25 @@ class PastePage(rend.Page):
             if next == 'source':
                 return static.Data(self.doc.text.encode('utf-8'), 'text/plain; charset=utf-8'), segs
         else:
-            if segs and next == 'doc':
-                next = segs[0]
-                segs = segs[1:]
-                if next.isdigit():
-                    id = int(next)
-                    doc = self.store.find(Document, Document.id==id).one()
-                    if doc is not None:
-                        return PastePage(self.store, doc), segs
+            if next == 'doc':
+                if segs:
+                    # no document number, but ends with slash:
+                    if segs[0] == '':
+                        return url.here.up(), ()
                     else:
-                        return url.here.up().up(), ()
+                        # document number included
+                        next = segs[0]
+                        segs = segs[1:]
+                        if next.isdigit():
+                            id = int(next)
+                            doc = self.store.find(Document, Document.id==id).one()
+                            if doc is not None:
+                                return PastePage(self.store, doc), segs
+                            else:
+                                return url.here.up().up(), ()
+                else:
+                    # no document number no slash
+                    return url.here.up(), ()
 
         return rend.Page.locateChild(self, ctx, [next]+list(segs))
 
