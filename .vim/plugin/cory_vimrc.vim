@@ -29,7 +29,6 @@ fu! SetCoryOptions()
     set laststatus=2 " always show status
     set stl=%F\ %y\ %l/%L@%c\ %m%r
     set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
-
 endfu
 
 fu! SetCoryAutoCommands()
@@ -75,7 +74,6 @@ fu! SetCoryCommands()
 endfu
 
 fu! SetCoryMappings()
-
     " taglist.vim
     map <Leader>T :TlistToggle<CR>
 
@@ -120,7 +118,6 @@ fu! SetCoryMappings()
 
     " Q enters ex-mode which is annoying. kill that.
     map Q <Nop>
-
 endfu
 
 
