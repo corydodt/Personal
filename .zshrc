@@ -1,7 +1,7 @@
 source ~/.zsh/myPrompt
 source ~/.zsh/`uname`
 
-myColor=yellow # may also be "yellow bold" for example
+myColor=red # may also be "yellow bold" for example
 # colors are: white red yellow green magenta blue black cyan
 
 # If running interactively, then:
