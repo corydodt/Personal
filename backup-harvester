@@ -15,7 +15,7 @@ echo Backing up `hostname` on `date -I`
 
 failmail() {
     message="$1"
-    echo "$message" | mail -s "harvester backup failed; reason shown below" "$FAILADDRESS"
+    echo "$message" | mail -s `hostname -s`" backup failed; reason shown below" "$FAILADDRESS"
 }
 
 cd ~cdodt
