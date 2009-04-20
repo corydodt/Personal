@@ -55,12 +55,13 @@ RecentDownloads
 '
 # no longer backing up .kde4
 
-ROOTFILES='/etc/X11/xorg.conf
-/etc/modules
+ROOTFILES='/etc/modules
 /etc/modprobe.d/options
 /etc/vim
+/etc/udev/rules.d/50-android.rules
 '
 # no longer backing up /etc/hal/fdi/policy/appletouch.fdi
+# no longer backing up /etc/X11/xorg.conf
 
 dpkg-origins > packages.txt || failmail "Could not run dpkg-origins"
 
