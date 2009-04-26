@@ -22,10 +22,10 @@ cd ~cdodt
 
 TOHGFILES='.gvimrc
 .screenrc
-.xmodmaprc
 .zshrc
 .zsh
 '
+# no longer backing up: .xmodmaprc
 
 HOMEFILES='.compiz
 .config

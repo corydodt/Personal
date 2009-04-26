@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# map menu key with xmodmap, then turn off repeat for that key
+xmodmap -e "clear lock"
+xmodmap -e "keycode 67 = Escape"
+xmodmap -e "keycode 135 = Pointer_Button2"
+
+# freeze my desired keyboard repeats.
+xkbset perkeyrepeat 00ffffffdffffbbffadfffdfffdff7ef7fffffffffffffffffffffffffffffff
+# equivalent to these changes:
+#   xkbset -r 135   # no repeat on menu (so i can hold it down for middlemouse)
+#   xkbset r 113    # left arrow should repeat  
+#   xkbset r 116    # down arrow should repeat  
