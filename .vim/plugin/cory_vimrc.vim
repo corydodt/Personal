@@ -29,6 +29,8 @@ fu! SetCoryOptions()
     set laststatus=2 " always show status
     set stl=%F\ %y\ %l/%L@%c\ %m%r
     set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
+
+    set guitablabel=%M\ %N\ %t
 endfu
 
 fu! SetCoryAutoCommands()
@@ -119,7 +121,6 @@ fu! SetCoryMappings()
     " Q enters ex-mode which is annoying. kill that.
     map Q <Nop>
 endfu
-
 
 " Helpers for some VCS systems
 fu! DoSvnDiff()
