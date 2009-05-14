@@ -143,7 +143,7 @@ fu! TurnOnHgDiff2()
         let b:prevfoldnestmax = &foldnestmax
         let s:thispath = expand('%:t')
         below vnew
-        exe ':0r!hg cat "'.s:thispath.'"'
+        exe ':0r!hg cat "'.s:thispath.'" | sed \$d'
         setlocal previewwindow nomodified
         diffthis
         winc p
