@@ -101,6 +101,8 @@ fu! SetCoryMappings()
     map <Leader>` Yp:.,.s:.:\~:g<CR>
     "   title
     map <Leader><Leader>= Yp:.,.s:.:=:g<CR>YkPjj0
+    "   table-header-ize
+    map <Leader>! :call TableHeaderize()<CR>
 
     " tab helpers
     map <Leader>t :tab new<CR>
@@ -120,6 +122,49 @@ fu! SetCoryMappings()
 
     " Q enters ex-mode which is annoying. kill that.
     map Q <Nop>
+endfu
+
+" insert 3 border lines at the top and bottom of a block, and right below the
+" header row, for making an rst table.
+fu! TableHeaderize() range
+    let orig = getpos('.')
+    setl tw=0
+
+    try
+        let p1 = a:firstline
+        let p2 = a:lastline
+        let borderline = GetTableBorder(p1)
+        exe "norm o" . borderline
+        exe "norm kO" . borderline
+        call cursor(p2+2, 0)
+        exe "norm o" . borderline
+    finally
+        call cursor(orig)
+        setl tw<
+
+    endtry
+
+endfu
+
+" convert a bunch of space-separated words into a row of several column
+" borders
+fu! GetTableBorder(where)
+    call cursor(a:where, 0)
+    let line = getline('.')
+    let pos = 0
+    let lline = len(line)
+    let tmp = []
+
+    while pos < lline
+        let rest = line[pos : lline]
+        let matched = matchstr(rest, '\(.\{-}\s*\)\($\|\s\(\s\s\S\@=\)\)')
+        let pos = pos + len(matched)
+        call add(tmp, repeat('=', len(matched)-1))
+    endwhile
+
+    let tmp[-1] = tmp[-1] . '=========='
+
+    return join(tmp, ' ')
 endfu
 
 " Helpers for some VCS systems
