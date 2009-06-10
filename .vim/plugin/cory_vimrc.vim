@@ -94,13 +94,13 @@ fu! SetCoryMappings()
 
     " reST helpers
     "   underline a heading
-    map <Leader>- Yp:.,.s:.:-:g<CR>
+    map <Leader>- :.s:^\s*::<CR>Ypv$r-
     "   underline a heading at a different level
-    map <Leader>= Yp:.,.s:.:=:g<CR>
+    map <Leader>= :.s:^\s*::<CR>Ypv$r=
     "   underline a heading at a different level
-    map <Leader>` Yp:.,.s:.:\~:g<CR>
+    map <Leader>` :.s:^\s*::<CR>Ypv$r~
     "   title
-    map <Leader><Leader>= Yp:.,.s:.:=:g<CR>YkPjj0
+    map <Leader><Leader>= :.s:^\s*::<CR>Ypv$r=YkPjj0
     "   table-header-ize
     map <Leader>! :call TableHeaderize()<CR>
 
@@ -131,13 +131,27 @@ fu! TableHeaderize() range
     setl tw=0
 
     try
-        let p1 = a:firstline
-        let p2 = a:lastline
+        let p1 = '' + a:firstline
+        let p2 = '' + a:lastline
+
+        " save off the line indent because the border function needs
+        " everything left-edge-aligned
+        let indent = matchstr(getline(p1), '^\s*')
+        
+        exe '' . p1 ."," .p2 ."s/^\\s*//"
+
+        " get the border then paste it in three places
         let borderline = GetTableBorder(p1)
         exe "norm o" . borderline
-        exe "norm kO" . borderline
+        exe 'norm "bY'
+        exe 'norm k"bP'
         call cursor(p2+2, 0)
-        exe "norm o" . borderline
+
+        exe 'norm "bp'
+
+        " redent.
+        let cmd = printf("%d,%ds/^/^s/", p1, p2+3, indent)
+        sil exe cmd
     finally
         call cursor(orig)
         setl tw<
@@ -157,7 +171,7 @@ fu! GetTableBorder(where)
 
     while pos < lline
         let rest = line[pos : lline]
-        let matched = matchstr(rest, '\(.\{-}\s*\)\($\|\s\(\s\s\S\@=\)\)')
+        let matched = matchstr(rest, '\(.\{-}\s*\)\($\|\s\s\S\@=\)')
         let pos = pos + len(matched)
         call add(tmp, repeat('=', len(matched)-1))
     endwhile

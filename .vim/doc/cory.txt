@@ -34,6 +34,10 @@ you will like it as well.
       \\= to over-and-underline (use only for titles), or use \=, \- and \` to
       underline different levels of header.
 
+    * Simplified ReST table creation.  Select several lines of text that are
+      already tabular and use a mapping to instantly format it into the table
+      format used by ReST. |cory-table-bordering|
+
     * Includes these plugins:
         * |cory-yankring.txt| emacs-like ring buffer.  After pasting, press control+P to
           cycle through any old deletion and bring it back.
@@ -205,6 +209,14 @@ Underlining headings and titles~
     Underline a heading with ====
 \`
     Underline a heading with tildes
+  
+                                            *cory-table-bordering*
+Table bordering~
+{Visual}\!
+    For the selected lines, apply table borders above the first line, below
+    the last line, and below the header row, in the style recognized by
+    RestructuredText (but it also just looks nice).  Helps if the table has
+    already been formatted with the |table.vim| mappings, e.g. \\th then \\ta.
 
 Tabs~
 \t
@@ -214,10 +226,12 @@ Tabs~
 
 Actually part of yankring, but useful~
                                         *cory-yankring.txt*
-<C-N>
+<C-P>
     Cycle through the kill/yank ring, looking for the deleted text you want
     back.  For example, if you delete two items, then paste with |p|, then
-    press <C-N> once
+    press <C-P> once
+<C-N>
+    Like <C-P> but forwards instead of backwards.
 
 Actually part of matchit, but useful~
                                         *cory-matchit.txt*
@@ -232,6 +246,11 @@ Actually part of table, but useful~
     between columns like a spreadsheet program
 \\tt
     Toggle off <Tab>'s spreadsheet-like behavior
+\\ta
+    For a bunch of selected lines, try to reformat every line to be in table
+    columns.  Works best on ASCII text and works best if you use at least two
+    spaces between each column.  You must use \\th first to set the row that
+    the other rows will be formatted to match.
 
 Actually part of taglist, but useful~
                                         *cory-taglist.txt*
