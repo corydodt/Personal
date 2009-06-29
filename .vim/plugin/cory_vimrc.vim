@@ -85,8 +85,8 @@ fu! SetCoryMappings()
     map <Leader>x "+x
 
     " make error helpers
-    map <Leader>] :cn
-    map <Leader>[ :cp
+    map <Leader>] :cn<CR>
+    map <Leader>[ :cp<CR>
 
     " very useful shortcut
     map <Leader>. :normal .
