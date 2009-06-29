@@ -147,11 +147,12 @@ into your system path.
 Pretty up XML~
                                             *:PrettyXML*
 :PrettyXML  
-    Automatically tidy up XML.  This fixes formatting in the current buffer
-    and prints out errors if there are any.  (It would be better if it used
-    the error list, but for now it just spews them into your buffer.  Yuck.
-    Hit |U| to undo that when it happens.)  This requires that 'xmllint' be
-    installed, which is usually found in the 'libxml2-utils' package.
+    Error checks and automatically tidies up XML.  If there are no errors, the
+    tidying up happens in the current buffer.  If there are errors, uses the
+    quickfix list to jump to the errors.
+    
+    This requires that 'xmllint' be installed, which is usually found in the
+    'libxml2-utils' package.
 
 Run a buffer as a interpreted script~
 

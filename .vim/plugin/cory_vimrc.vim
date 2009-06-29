@@ -387,47 +387,36 @@ endfu
 
 
 fu! DoPrettyXML()
-    " save the filetype so we can restore it later
-    let l:origft = &ft
-    " Blank the filetype.  Certain xml filetypes have auto-closing behavior
-    " that interferes with inserting the fake tags (see below).
-    set ft=
-
-    " search for <?xml?> header or DOCTYPE.  If neither of these is present,
-    " the document *might* be fragment.
-    silent echo cursor(1,1)
     let l:notfragment = search('^<!DOCTYPE\|^<?xml', "w")
-    if l:notfragment == 0
-        " Insert fake tags around the entire document in case it is a fragment
-        " with more than one top-level node.  (Such documents are not
-        " parseable without this workaround.)
-        1
-        exe "norm! O<PrettyXML>"
-        exe "norm! Go</PrettyXML>"
+    let l:hasxmlheader = search('^<?xml', "w")
+
+    " write errors to one temp file and output to another.  decide whether to
+    " keep the output based on whether the error file has output
+    let l:tmpb = tempname()
+    let l:tmpe = tempname()
+    let l:tmpf = tempname()
+    let l:lines = getline(1,'$')
+
+    call writefile(l:lines, l:tmpb)
+
+    " run xmllint, routing errors and output to two separate files, and
+    " cleaning up error list on the way through
+    exe 'silent !xmllint --format ' . l:tmpb . ' 2>&1  > ' . l:tmpf . ' | egrep -o ":[0-9]+:.*" > ' l:tmpe
+    call delete(l:tmpb)
+
+    if getfsize(l:tmpf) > 0
+        exe 'sil %!cat ' . l:tmpf
+    else
+        " we stripped out the filename column of the the error file, now read from
+        " it with only two error fields because we munged the filename.
+        let l:origformat = &errorformat
+        setl efm=:%l:%m
+        exe 'cf ' . l:tmpe
+        setl efm=l:origformat
     endif
+    call delete(l:tmpf)
+    call delete(l:tmpe)
 
-
-    silent %!xmllint --format -
-
-    " xmllint will insert an <?xml?> header.  it's easy enough to delete
-    " if you don't want it.
-
-
-    if l:notfragment == 0
-        " delete the fake tags
-        2
-        exe "norm ddGdd"
-
-        " restore the 'normal' indentation, which is one extra level
-        " too deep due to the extra tags we wrapped around the document.
-        silent %<
-    endif
-
-    " back to home
-    1
-
-    " restore the filetype
-    exe "set ft=" . l:origft
 endfu
 
 
