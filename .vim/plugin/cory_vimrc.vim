@@ -73,6 +73,8 @@ fu! SetCoryCommands()
     command! RunBashBuffer call DoRunAnyBuffer("bash -", "sh")
     command! RunLuaBuffer call DoRunAnyBuffer("lua -", "lua")
     command! RunSQLiteBuffer call DoRunAnyBuffer("sqlite3", "sql")
+
+    command! PyFlake call DoPyFlakes()
 endfu
 
 fu! SetCoryMappings()
@@ -454,6 +456,13 @@ fu! EnableReST()
 
     setlocal makeprg=rst2html\ $RSTOPTS\ %:p\ %:p.html
     setlocal errorformat=%f:%l:\ %m
+endfu
+
+fu! DoPyFlakes()
+    let l:tmp = tempname()
+    exe 'sil !pyflakes %:p > ' . l:tmp
+    exe 'cfile ' . l:tmp
+    call delete(l:tmp)
 endfu
 
 

@@ -73,6 +73,9 @@ you will like it as well.
       backwards and forwards through error lists.  (This also works with e.g.
       |:helpgrep|)
 
+    * Command to run pyflakes on a file and cycle through error lists using
+      the quickfix list (\] and \[ to jump through the list)
+
 ==============================================================================
                                             *cory-commands*
 3. Commands~
@@ -108,6 +111,14 @@ Quickly insert boilerplate files~
     current buffer.  It uses twisted.python.usage as a basis
     and has most of the classes and main function set up for
     you. 
+
+Run pyflakes~
+
+                                            *:PyFlake*
+:PyFlake
+    Runs pyflakes on the current buffer, which should be a Python file.  Uses
+    the quickfix list so you can jump through the list of errors straight to
+    the line where the error occurred.
 
 
 Copy the current file's absolute path~
