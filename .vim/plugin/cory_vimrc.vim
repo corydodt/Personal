@@ -75,6 +75,8 @@ fu! SetCoryCommands()
     command! RunSQLiteBuffer call DoRunAnyBuffer("sqlite3", "sql")
 
     command! PyFlake call DoPyFlakes()
+
+    command! VersionCory echo 'Cory''s vim scripts v1.1'
 endfu
 
 fu! SetCoryMappings()
