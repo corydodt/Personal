@@ -140,7 +140,8 @@ fu! TableHeaderize() range
         " everything left-edge-aligned
         let indent = matchstr(getline(p1), '^\s*')
         
-        exe '' . p1 ."," .p2 ."s/^\\s*//"
+        let cmd1 = printf("%d,%ds/^\\s*//", p1, p2)
+        exe cmd1
 
         " get the border then paste it in three places
         let borderline = GetTableBorder(p1)
@@ -152,8 +153,8 @@ fu! TableHeaderize() range
         exe 'norm "bp'
 
         " redent.
-        let cmd = printf("%d,%ds/^/^s/", p1, p2+3, indent)
-        sil exe cmd
+        let cmd2 = printf("%d,%ds/^/%s/", p1, p2+3, indent)
+        sil exe cmd2
     finally
         call cursor(orig)
         setl tw<
