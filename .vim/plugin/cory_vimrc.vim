@@ -346,6 +346,10 @@ class Options(usage.Options):
     # def parseArgs(self, ...):
 
     # def postOptions(self):
+    #     """Recommended if there are subcommands:"""
+    #     if self.subCommand is None:
+    #         self.synopsis = "{replace} <subcommand>"
+    #         raise usage.UsageError("** Please specify a subcommand (see \"Commands\").")
 
 
 def run(argv=None):
@@ -355,7 +359,10 @@ def run(argv=None):
     try:
         o.parseOptions(argv[1:])
     except usage.UsageError, e:
-        print str(o)
+        if hasattr(o, 'subOptions'):
+            print str(o.subOptions)
+        else:
+            print str(o)
         print str(e)
         return 1
 
