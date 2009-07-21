@@ -34,6 +34,8 @@ def sitePackages():
         return site1
     else:
         for x in sys.path:
+            if x.endswith('dist-packages'):
+                return x
             if x.endswith('site-packages'):
                 return x
     assert 0, "No site-packages found anywhere :("
