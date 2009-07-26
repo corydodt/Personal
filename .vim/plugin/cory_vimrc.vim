@@ -68,7 +68,8 @@ fu! SetCoryCommands()
 
     command! Survey call DoPutSurvey()
     command! Usage call DoPutUsage()
-    command! PrettyXML call DoPrettyXML()
+    command! PrettyXML call DoPrettyXML(0)
+    command! PrettyHTML call DoPrettyXML(1)
     command! RunPyBuffer call DoRunAnyBuffer("python -", "python")
     command! RunBashBuffer call DoRunAnyBuffer("bash -", "sh")
     command! RunLuaBuffer call DoRunAnyBuffer("lua -", "lua")
@@ -389,7 +390,7 @@ fu! DoPutUsage()
 endfu
 
 
-fu! DoPrettyXML()
+fu! DoPrettyXML(htmlFlag)
     let l:notfragment = search('^<!DOCTYPE\|^<?xml', "w")
     let l:hasxmlheader = search('^<?xml', "w")
 
@@ -402,9 +403,15 @@ fu! DoPrettyXML()
 
     call writefile(l:lines, l:tmpb)
 
+    if a:htmlFlag
+        let l:flags = '--html --format'
+    else
+        let l:flags = '--format'
+    endif
+
     " run xmllint, routing errors and output to two separate files, and
     " cleaning up error list on the way through
-    exe 'silent !xmllint --format ' . l:tmpb . ' 2>&1  > ' . l:tmpf . ' | egrep -o ":[0-9]+:.*" > ' l:tmpe
+    exe 'silent !xmllint '. l:flags . ' ' . l:tmpb . ' 2>&1  > ' . l:tmpf . ' | egrep -o ":[0-9]+:.*" > ' l:tmpe
     call delete(l:tmpb)
 
     if getfsize(l:tmpf) > 0
