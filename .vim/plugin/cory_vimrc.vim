@@ -433,7 +433,7 @@ endfu
 
 " js static checking with :make
 fu! EnableJsLint()
-    setlocal makeprg=rhino\ ~/wc/Personal/jslint.js\ %:p
+    setlocal makeprg=rhino\ -f\ ~/wc/Personal/fulljslint.js\ ~/wc/Personal/rhino.js\ %:p
     setlocal errorformat=%l:%c:%m
 endfu
 
