@@ -404,7 +404,7 @@ fu! DoPrettyXML(htmlFlag)
     call writefile(l:lines, l:tmpb)
 
     if a:htmlFlag
-        let l:flags = '--html --format'
+        let l:flags = '--html --format --nocompact'
     else
         let l:flags = '--format'
     endif
