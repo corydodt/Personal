@@ -1,0 +1,10 @@
+#!/bin/bash
+
+while true; do
+    if [ ! -p /tmp/cory-daemon-pipe ]; then
+        rm -f /tmp/cory-daemon-pipe
+        mkfifo /tmp/cory-daemon-pipe
+    fi
+
+    bash - </tmp/cory-daemon-pipe
+done
