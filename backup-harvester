@@ -57,7 +57,7 @@ RecentDownloads
 
 ROOTFILES='/etc/modules
 /etc/vim
-/etc/udev/rules.d/50-android.rules
+/etc/udev/rules.d/99-android.rules
 /etc/pm/sleep.d/50cdd-fix-mousekeys
 '
 # no longer backing up /etc/modprobe.d/options

@@ -83,8 +83,7 @@ class Options(usage.Options):
     def printGroup_ubuntu(self, grouper):
         print '#' * 78
         print '## Canonical packages'
-        print '## Pipe the following into sudo dpkg --set-selections'''
-        print '## Then run sudo apt-get -u dselect-upgrade'''
+        print '## Pipe the following into dpkg --set-selections'''
         print ''
         for package in grouper:
             print '%s install' % (package[1],)

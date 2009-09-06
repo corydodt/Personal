@@ -71,6 +71,7 @@ fu! SetCoryCommands()
     command! PrettyXML call DoPrettyXML(0)
     command! PrettyHTML call DoPrettyXML(1)
     command! RunPyBuffer call DoRunAnyBuffer("python -", "python")
+    command! RunJythonBuffer call DoRunAnyBuffer("jython -", "python")
     command! RunBashBuffer call DoRunAnyBuffer("bash -", "sh")
     command! RunLuaBuffer call DoRunAnyBuffer("lua -", "lua")
     command! RunSQLiteBuffer call DoRunAnyBuffer("sqlite3", "sql")
@@ -117,6 +118,7 @@ fu! SetCoryMappings()
     map <Leader>b :RunBashBuffer<CR>
     map <Leader>l :RunLuaBuffer<CR>
     map <Leader>q :RunSQLiteBuffer<CR>
+    map <Leader>j :RunJythonBuffer<CR>
 
     " diffs
     map <Leader>D :call ToggleHgDiff2()<CR>
@@ -207,9 +209,9 @@ fu! TurnOnHgDiff2()
         let b:prevfoldminlines = &foldminlines
         let b:prevfoldnestmax = &foldnestmax
         let s:thispath = expand('%:t')
-        below vnew
+        exe 'sil below vnew DIFF-'.s:thispath
         exe ':0r!hg cat "'.s:thispath.'"'
-        $d " hg cat adds a final newline
+        $,$d  " hg cat adds a final newline
         setlocal previewwindow nomodified
         diffthis
         winc p
@@ -434,7 +436,7 @@ fu! DoRunAnyBuffer(interpreter, syntax)
     pclose!
     exe "setlocal ft=" . a:syntax
     exe "sil %y a | below new | sil put a | sil %!" . a:interpreter
-    setlocal previewwindow ro nomodifiable nomodified
+    setlocal previewwindow ro nomodified
     winc p
 endfu
 
