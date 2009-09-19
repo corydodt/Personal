@@ -87,15 +87,24 @@ div.compound .compound-last, div.compound .compound-middle {
   font-style: normal }
 
 .document div.figure {
-  margin-left: 2em ;
-  margin-right: 2em;
-  margin: 0 0 0.5em 1em ;
+  margin-top: 12px;
+  margin-bottom: 2em;
   border: thin solid #eff;
   padding: 0.5em ;
-  /* background-color: #ddd ; */
-  /* width: 40% ; */
-  float: right ;
-  clear: right;
+}
+
+.document div.figure[align=left] {
+    float: left;
+    clear: left;
+    margin-left: 0px;
+    margin-right: 20px;
+}
+
+.document div.figure[align=right] {
+    float: right;
+    clear: right;
+    margin-right: 0px;
+    margin-left: 20px;
 }
 
 .document div.footer, .document div.header {
