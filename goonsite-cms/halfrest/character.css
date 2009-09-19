@@ -88,7 +88,15 @@ div.compound .compound-last, div.compound .compound-middle {
 
 .document div.figure {
   margin-left: 2em ;
-  margin-right: 2em }
+  margin-right: 2em;
+  margin: 0 0 0.5em 1em ;
+  border: thin solid #eff;
+  padding: 0.5em ;
+  /* background-color: #ddd ; */
+  /* width: 40% ; */
+  float: right ;
+  clear: right;
+}
 
 .document div.footer, .document div.header {
   clear: both;
@@ -151,10 +159,21 @@ text-decoration: underline;
 }
 
 .document img.align-left {
-  clear: left }
+  clear: left;
+  margin-left: 0px;
+  margin-right: 20px;
+}
 
 .document img.align-right {
-  clear: right }
+  clear: right;
+  margin-right: 0px
+  margin-left: 20px;
+ }
+
+.document img.align-left, .document img.align-right {
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
 
 .document ol.simple, .document ul.simple {
   margin-bottom: 1em }
@@ -179,7 +198,9 @@ text-decoration: underline;
   margin-left: 50% }
 
 .document p.caption {
-  font-style: italic }
+  font-style: italic;
+  font-size: x-small;
+}
 
 .document p.credits {
   font-style: italic ;
