@@ -16,20 +16,20 @@ class GrammarTest(unittest.TestCase):
             self.assertEqual(parsed[0].name, name)
             self.assertEqual([a.name for a in parsed[0].actions], actions)
 
-        t = "see|do"
+        t = "see { do }"
         check1(grammar.parse(t), "see", ["do"])
 
-        t2 = "see | do1 ;do2"
-        check1(grammar.parse(t2), "see", ["do1", "do2"])
+        t2 = "t2 { do1 ;do2 }"
+        check1(grammar.parse(t2), "t2", ["do1", "do2"])
 
-        t3 = " see||"
-        check1(grammar.parse(t3), "see", [])
+        t3 = " t3 {}"
+        check1(grammar.parse(t3), "t3", [])
 
     def test_connection(self):
         """
         Can connect two elements
         """
-        t = "see|do->bar"
+        t = "see { do>>bar }"
         p = grammar.parse(t)
         self.assertEqual(p[0].actions[0].target, "bar")
 
@@ -53,3 +53,11 @@ class GrammarTest(unittest.TestCase):
         t2 = r"this\\has\\slashies"
         p = grammar.Parser(t2).apply("selector")
         self.assertEqual(p, r'this\\has\\slashies')
+
+    def test_multipleStates(self):
+        """
+        A set of multiple ui states is parseable
+        """
+        t = "see { do->bar }\nbar {}"
+    test_multipleStates.todo = "todo"
+

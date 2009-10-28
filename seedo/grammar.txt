@@ -3,39 +3,38 @@ vim:set ft=pymeta:""")
 
 t :x          ::=  <token x>
 ws            ::=  <spaces>
-word          ::=  (<letter>|'_'):a (<letter>|'_'|<digit>)*:b                 
+word          ::=  <ws> (<letter>|'_'):a (<letter>|'_'|<digit>)*:b
                  =>  a + ''.join(b)
-escape :x     ::=  '\\' <exactly x>:x                                 
+escape :x     ::=  '\\' <exactly x>:x
                  =>  r'\%s' % (x,)
 
-pipe          ::=  <t '|'>
+openBrace     ::=  <t '{'>
+closeBrace    ::=  <t '}'>
 doublePipe    ::=  <t '||'>
 semi          ::=  <t ';'>
 
-name          ::=  (<ws> <word>)*:nw
+name          ::=  <word>:nw1 <word>*:nw !(nw.insert(0, nw1))
                  =>  ' '.join(nw)
 
-target        ::=  <arrow> <name>:out                                           
+target        ::=  <arrow> <name>:out
                  =>  out
-parenContent  ::=  (<escape ')'>|<escape '\\'>|(~')' <anything>))*:x  
+parenContent  ::=  (<escape ')'>|<escape '\\'>|(~')' <anything>))*:x
                  =>  ''.join(x)
-selector      ::=  <parenContent>  
+selector      ::=  <parenContent>
 eventCall     ::=  <t '.'> <word>:name <t '('> <parenContent>:pc <t ')'>
                  => '.%s(%s)' % (name, pc)
 event         ::=  <t '('> <selector>:s <t ')'> <eventCall>:ec
                  =>  (s, ec)
-action        ::=  <name>:name <event>?:ev <target>?:out                        
+action        ::=  <name>:name <event>?:ev <target>?:out
                  =>  Action(name, ev, out)
-actions :add  ::=  <action>:a1 !(add(a1)) (<semi> <action>:a !(add(a)))*
+actions :add  ::=  <action>:a1 !(add(a1)) (<semi> <action>:a !(add(a)))* <semi>?
 
 stateID       ::=  <t '#'> <word>
-state         ::=  <name>:name <stateID>*:ids                                   
+stateIntro    ::=  <name>:name <stateID>*:ids
                  =>  UIState(name, ids)
-uiState       ::=  <state>:st <doublePipe>                                      
-                 =>  st
-uiState       ::=  <state>:st <pipe> <actions (st.addAction)>                   
+uiState       ::=  <stateIntro>:st <openBrace> <actions (st.addAction)>? <closeBrace>
                  =>  st
 
-uiTests       ::=  <uiState>*
-           
-arrow         ::=  <t '->'>
+uiTests       ::=  <uiState>+
+
+arrow         ::=  <t '>>'>
