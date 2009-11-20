@@ -16,3 +16,6 @@ echo "====="
 
 xinput list-props $SYNID
 
+gconftool-2 -s /desktop/gnome/accessibility/keyboard/mousekeys_enable --type boolean true
+echo
+echo mousekeys_enable=`gconftool-2 -g /desktop/gnome/accessibility/keyboard/mousekeys_enable`
