@@ -1,0 +1,10 @@
+#!/bin/bash
+rstCSS=`pwd`/rst.css
+
+# check for the existence of rst.css in the same directory; if it exists,
+# pass it to rst2html as an option.
+if [ -e $rstCSS ]; then
+    RSTOPTS='--stylesheet-path='$rstCSS
+fi
+rst2html $RSTOPTS $1 $1.html   
+

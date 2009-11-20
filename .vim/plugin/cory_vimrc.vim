@@ -447,15 +447,7 @@ fu! EnableJsLint()
 endfu
 
 fu! EnableReST()
-    let l:rstCSS = expand('%:p:h') . '/rst.css'
-
-    " check for the existence of rst.css in the same directory; if it exists,
-    " pass it to rst2html as an option.
-    if len(glob(l:rstCSS)) | let $RSTOPTS='--stylesheet-path=rst.css'
-    else | let $RSTOPTS=''
-    endif
-
-    setlocal makeprg=rst2html\ $RSTOPTS\ %:p\ %:p.html
+    setlocal makeprg=vimrst2html\ %
     setlocal errorformat=%f:%l:\ %m
 endfu
 
