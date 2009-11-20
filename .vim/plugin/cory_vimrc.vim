@@ -55,7 +55,6 @@ fu! SetCoryCommands()
     command! HgDiff call DoHgDiff()
     command! Gather call DoGather()
     command! Abspath call Copyabspath()
-    command! Htmlbp call DoHtmlBP()
 
     " examples: 
     " :Pp twisted.internet  " replace the current buffer
@@ -66,8 +65,6 @@ fu! SetCoryCommands()
     command! -nargs=1 Ppn exe ':new '.system('pp <args>')
     command! -nargs=1 Ppv exe ':vs '.system('pp <args>')
 
-    command! Survey call DoPutSurvey()
-    command! Usage call DoPutUsage()
     command! PrettyXML call DoPrettyXML(0)
     command! PrettyHTML call DoPrettyXML(1)
     command! RunPyBuffer call DoRunAnyBuffer("python -", "python")
@@ -265,131 +262,136 @@ endfu
 
 
 
-fu! PutHtml()
-    " just insert the html page
-    insert
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<!-- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> -->
-<html xmlns='http://www.w3.org/1999/xhtml'>
-  <!-- vi:set ft=html: -->
-  <head>
-    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
-    <title>{Press 's' to type a title here}</title>
-    <style type='text/css'>
-/* styles here */
-    </style>
-    <script type='text/javascript' language='javascript'>
-// <![CDATA[
-// scripts here
-// ]]>
-    </script>
-  </head>
-  <body>
-    <!-- stuff here -->
-  </body>
-</html>
-.
-endfu
-
-fu! DoHtmlBP()
-    " insert the HTML page then select the title interactively
-    call PutHtml()
-    exe "norm ?{Press\<Cr>v/}\<Cr>"
-    set ft=html
-endfu
-
-fu! PutTac()
-    insert
-# vi:ft=python
-from twisted.application import service, internet
-from nevow import tags as T, rend, loaders, appserver
-
-class FIXMEPage(rend.Page):
-    LOADER
-
-application = service.Application('FIXME')
-svc = internet.TCPServer(8080, appserver.NevowSite(FIXMEPage()))
-svc.setServiceParent(application)
-.
-endfu
+iab htmlbp 
+\<ESC>:set paste
+\<CR>i<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+\<CR><!-- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> -->
+\<CR><html xmlns='http://www.w3.org/1999/xhtml'>
+\<CR>  <!-- vi:set ft=html: -->
+\<CR>  <head>
+\<CR>    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+\<CR>    <title>{Press 's' to type a title here}</title>
+\<CR>    <style type='text/css'>
+\<CR>/* styles here */
+\<CR>    </style>
+\<CR>    <script type='text/javascript' language='javascript'>
+\<CR>// <![CDATA[
+\<CR>// scripts here
+\<CR>// ]]>
+\<CR>    </script>
+\<CR>  </head>
+\<CR>  <body>
+\<CR>    <!-- stuff here -->
+\<CR>  </body>
+\<CR></html>
+\<ESC>:set nopaste
+\<CR>?{Press
+\<CR>v/}
+\<CR>:set ft=html<CR>
 
 
-fu! PutSurvey()
-    insert
-<survey name="Blank Survey" state="dev">
-
-    <radio label="q1" title="Choose your favorite fruit">
-        <comment>Choose one</comment>
-        <row label="r1">Orange</row>
-        <row label="r2">Banana</row>
-        <row label="r3">Apple</row>
-    </radio>
-
-    <exec>
-setMarker("qualified")
-</exec>
-
-</survey>
-.
-endfu
-
-fu! DoPutSurvey()
-    setlocal nofoldenable
-    call PutSurvey()
-    set ft=xml
-endfu
+iabbrev surveybp 
+\<ESC>:setlocal nofoldenable
+\<CR>:set paste
+\<CR>i<survey name="Blank Survey" state="dev">
+\<CR>
+\<CR>    <radio label="q1" title="Choose your favorite fruit">
+\<CR>        <comment>Choose one</comment>
+\<CR>        <row label="r1">Orange</row>
+\<CR>        <row label="r2">Banana</row>
+\<CR>        <row label="r3">Apple</row>
+\<CR>    </radio>
+\<CR>
+\<CR>    <exec>
+\<CR>setMarker("qualified")
+\<CR></exec>
+\<CR>
+\<CR></survey>
+\<ESC>:set ft=xml
+\<CR>:set nopaste<CR>
 
 
-fu! PutUsage()
-    insert
-# vi:ft=python
-import sys, os
+iab usagebp 
+\<ESC>:setlocal nofoldenable
+\<CR>:set paste
+\<CR>i# vi:ft=python
+\<CR>import sys, os
+\<CR>
+\<CR>from twisted.python import usage
+\<CR>
+\<CR>
+\<CR>class Options(usage.Options):
+\<CR>    synopsis = "{Press 's' and type a new synopsis}"
+\<CR>    optParameters = [[long, short, default, help], ...]
+\<CR>
+\<CR>    # def parseArgs(self, ...):
+\<CR>
+\<CR>    # def postOptions(self):
+\<CR>    #     """Recommended if there are subcommands:"""
+\<CR>    #     if self.subCommand is None:
+\<CR>    #         self.synopsis = "{replace} <subcommand>"
+\<CR>    #         raise usage.UsageError("** Please specify a subcommand (see \"Commands\").")
+\<CR>
+\<CR>
+\<CR>def run(argv=None):
+\<CR>    if argv is None:
+\<CR>        argv = sys.argv
+\<CR>    o = Options()
+\<CR>    try:
+\<CR>        o.parseOptions(argv[1:])
+\<CR>    except usage.UsageError, e:
+\<CR>        if hasattr(o, 'subOptions'):
+\<CR>            print str(o.subOptions)
+\<CR>        else:
+\<CR>            print str(o)
+\<CR>        print str(e)
+\<CR>        return 1
+\<CR>
+\<CR>    ...
+\<CR>
+\<CR>    return 0
+\<CR>
+\<CR>
+\<CR>if __name__ == '__main__': sys.exit(run())
+\<ESC>:set nopaste
+\<CR>:set ft=python
+\<CR>?{Press
+\<CR>v/}<CR>
 
-from twisted.python import usage
+iab pluginbp 
+\<ESC>:set paste
+\<CR>:set nofoldenable
+\<CR>i"""
+\<CR>{Press s to write a docstring!}
+\<CR>"""
+\<CR>from hermes.plugins.plugutil import PluginHandler
+\<CR>from hermes.ajax import json, ajaxJSON
+\<CR>
+\<CR>
+\<CR>class YourPluginApp(PluginHandler):
+\<CR>    name = 'yourplugin'
+\<CR>    
+\<CR>    def getFilters(self):
+\<CR>        return {
+\<CR>            }
+\<CR>
+\<CR>    def getRequestHandler(self):
+\<CR>        return self
+\<CR>                                                            
+\<CR>    def getAjaxFunctions(self):
+\<CR>        return [('someAJAXFunction', self.someAJAXFunction)]
+\<CR>
+\<CR>    def reloadMe(self):
+\<CR>        from hermes.plugins import timetrack as me
+\<CR>        reload(me)
+\<CR>
+\<CR># create an instance of your plugin application
+\<CR>yourPluginApp = YourPluginApp()
+\<ESC>:set nopaste
+\<CR>:set ft=python
+\<CR>/{Press
+\<CR>v/}<CR>
 
-
-class Options(usage.Options):
-    synopsis = "{Press 's' and type a new synopsis}"
-    optParameters = [[long, short, default, help], ...]
-
-    # def parseArgs(self, ...):
-
-    # def postOptions(self):
-    #     """Recommended if there are subcommands:"""
-    #     if self.subCommand is None:
-    #         self.synopsis = "{replace} <subcommand>"
-    #         raise usage.UsageError("** Please specify a subcommand (see \"Commands\").")
-
-
-def run(argv=None):
-    if argv is None:
-        argv = sys.argv
-    o = Options()
-    try:
-        o.parseOptions(argv[1:])
-    except usage.UsageError, e:
-        if hasattr(o, 'subOptions'):
-            print str(o.subOptions)
-        else:
-            print str(o)
-        print str(e)
-        return 1
-
-    ...
-
-    return 0
-
-
-if __name__ == '__main__': sys.exit(run())
-.
-endfu
-
-fu! DoPutUsage()
-    setlocal nofoldenable
-    call PutUsage()
-    set ft=python
-    exe "norm ?{Press\<Cr>v/}\<Cr>"
-endfu
 
 
 fu! DoPrettyXML(htmlFlag)
