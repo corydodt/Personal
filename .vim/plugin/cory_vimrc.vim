@@ -285,9 +285,10 @@ iab htmlbp
 \<CR>  </body>
 \<CR></html>
 \<ESC>:set nopaste
+\<CR>:set ft=html
 \<CR>?{Press
 \<CR>v/}
-\<CR>:set ft=html<CR>
+\<CR>h
 
 
 iabbrev surveybp 
@@ -390,8 +391,7 @@ iab pluginbp
 \<ESC>:set nopaste
 \<CR>:set ft=python
 \<CR>/{Press
-\<CR>v/}<CR>
-
+\<CR>v/}<CR>h
 
 
 fu! DoPrettyXML(htmlFlag)
