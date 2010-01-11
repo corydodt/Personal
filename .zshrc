@@ -74,11 +74,14 @@ umask 002
 
 DEBEMAIL=launchpad@spam.goonmill.org
 DEBFULLNAME="Cory Dodt"
-export DEBEMAIL
+export DEBEMAIL DEBFULLNAME
 
 export PATH=$PATH:~/bin:~/wc/Twisted/bin:~/wc/Divmod/Axiom/bin
 
 HISTFILE=~/.zsh_history
 SAVEHIST=3456
 HISTSIZE=34556
+
+export EDITOR=vim
+
 setopt -oSHARE_HISTORY

@@ -8,10 +8,10 @@ fu! SetCoryOptions()
 
     set virtualedit=block
 
-    " temp files 
+    " temp files
     set nobackup nowritebackup
     " 2 path separators == use abspath in filename for uniqueness
-    "   (see :help 'directory' ) 
+    "   (see :help 'directory' )
     set directory=/tmp//
     " colors/fonts
     set nohlsearch
@@ -56,7 +56,7 @@ fu! SetCoryCommands()
     command! Gather call DoGather()
     command! Abspath call Copyabspath()
 
-    " examples: 
+    " examples:
     " :Pp twisted.internet  " replace the current buffer
     " :Pp! twisted.internet  " replace the current buffer, even if modified
     " :Ppn py2exe.build_exe  " horiz-split and put file in new buffer
@@ -75,7 +75,7 @@ fu! SetCoryCommands()
 
     command! PyFlake call DoPyFlakes()
 
-    command! VersionCory echo 'Cory''s vim scripts v1.1'
+    command! VersionCory echo 'Cory''s vim scripts v2009.12'
 endfu
 
 fu! SetCoryMappings()
@@ -141,7 +141,7 @@ fu! TableHeaderize() range
         " save off the line indent because the border function needs
         " everything left-edge-aligned
         let indent = matchstr(getline(p1), '^\s*')
-        
+
         let cmd1 = printf("%d,%ds/^\\s*//", p1, p2)
         exe cmd1
 
@@ -225,10 +225,10 @@ fu! TurnOffHgDiff2()
         let &foldmethod = b:prevfoldmethod
         let &foldexpr = b:prevfoldexpr
         let &foldlevel = b:prevfoldlevel
-        let &foldlevelstart = b:prevfoldlevelstart 
-        let &foldcolumn = b:prevfoldcolumn 
-        let &foldminlines = b:prevfoldminlines 
-        let &foldnestmax = b:prevfoldnestmax 
+        let &foldlevelstart = b:prevfoldlevelstart
+        let &foldcolumn = b:prevfoldcolumn
+        let &foldminlines = b:prevfoldminlines
+        let &foldnestmax = b:prevfoldnestmax
     endif
 endfu
 
@@ -363,7 +363,7 @@ iab pluginbp
 \<ESC>:set paste
 \<CR>:set nofoldenable
 \<CR>i"""
-\<CR>{Press s to write a docstring!}
+\<CR>{Press s to write a module docstring!}
 \<CR>"""
 \<CR>from hermes.plugins.plugutil import PluginHandler
 \<CR>from hermes.ajax import json, ajaxJSON
@@ -371,14 +371,14 @@ iab pluginbp
 \<CR>
 \<CR>class YourPluginApp(PluginHandler):
 \<CR>    name = 'yourplugin'
-\<CR>    
+\<CR>
 \<CR>    def getFilters(self):
 \<CR>        return {
 \<CR>            }
 \<CR>
 \<CR>    def getRequestHandler(self):
 \<CR>        return self
-\<CR>                                                            
+\<CR>
 \<CR>    def getAjaxFunctions(self):
 \<CR>        return [('someAJAXFunction', self.someAJAXFunction)]
 \<CR>
@@ -388,6 +388,25 @@ iab pluginbp
 \<CR>
 \<CR># create an instance of your plugin application
 \<CR>yourPluginApp = YourPluginApp()
+\<ESC>:set nopaste
+\<CR>:set ft=python
+\<CR>/{Press
+\<CR>v/}<CR>h
+
+
+iab unittestbp 
+\<ESC>:set paste
+\<CR>:set nofoldenable
+\<CR>i"""
+\<CR>{Press s to write a module docstring!}
+\<CR>"""
+\<CR>from twisted.trial import unittest
+\<CR>
+\<CR>class FOOTest(unittest.TestCase):
+\<CR>    """DOCSTRING HERE PLS"""
+\<CR>    # def setUp(self):
+\<CR>
+\<CR>    # def test_...
 \<ESC>:set nopaste
 \<CR>:set ft=python
 \<CR>/{Press
