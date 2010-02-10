@@ -42,7 +42,7 @@ Desktop
 .java
 .libao
 .local
-.openoffice.org2
+.openoffice.org
 packages.txt
 .prism
 .purple
@@ -52,7 +52,6 @@ packages.txt
 .mozilla
 RecentDownloads
 .Skype
-.tomboy
 '
 # no longer backing up .kde4
 
