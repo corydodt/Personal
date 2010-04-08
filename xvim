@@ -1,0 +1,24 @@
+#!/bin/bash
+xvim () {
+	if [ "$#" -eq 0 ]
+	then
+		command gvim
+	elif [ "$#" -gt 1 ]
+	then
+		command gvim "$@"
+	else
+		if [ "$1" = "-" ]
+		then
+			tf=`tempfile -pvim-r_ -d/tmp` 
+			cat > $tf
+			(
+				command gvim --remote-tab-silent-wait $tf
+				rm -f $tf
+			) > /dev/null 2>&1 &
+		else
+			command gvim --remote-tab-silent "$1"
+		fi
+	fi
+}
+
+xvim "$@"
