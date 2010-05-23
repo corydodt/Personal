@@ -8,6 +8,7 @@ Last change: 2009 Jan 13
 2. Features                    |cory-features|
 3. Commands                    |cory-commands|
 4. Mappings                    |cory-mappings|
+5. Overriding Settings         |cory-override|
 
 ==============================================================================
                                             *cory-intro*
@@ -290,6 +291,50 @@ Type 'usagebp' to write a boilerplate Python command-line script into the
 current buffer.  It uses twisted.python.usage as a basis and has most of the
 classes and main function set up for you. 
 
+
+==============================================================================
+                                        *cory-override*
+5. Overriding settings~
+
+This script makes some choices for you regarding indentation, syntax
+highlighting, color scheme and so on.  You can override any of these, but you
+must tell vimtoys that you want to override these settings.  To do so, use
+'let' to create a list variable in your .vimrc:
+
+    let g:vtoverride = ["indent", "colorscheme"]
+
+This would allow you to override any settings in the 'indent' and
+'colorscheme' sections of the vimtoys default config.
+
+Here are the settings, grouped by the g:vtoverride variable that is required
+to override them.
+
+Just include one of these in g:vtoverride, and then set it to whatever you
+want.
+
+"indent"
+        textwidth, shiftwidth, tabstop, shifttabstop, expandtab
+
+"cursor"
+        virtualedit, backspace, whichwrap
+
+"temp"
+        nobackup, nowritebackup, directory
+
+"syntax"
+        filetype plugin on, syn on
+
+"appearance"
+        visualbell, nohlsearch, number, guitablabel
+
+"colorscheme"
+        colorscheme
+
+"status"
+        laststatus, statusline
+
+"misc"
+        tags, modeline, g:yankring_history_file
 
 ==============================================================================
 vim:tw=78:ts=4:et:ft=help:si:

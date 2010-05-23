@@ -1,36 +1,63 @@
 fu! SetCoryOptions()
-    " indenting
-    set tw=78
-    set sw=4 ts=4 sts=4 expandtab
-    set modeline
-    filetype indent on
-    let g:yankring_history_file='.yankring_history'
+    " a list of variables which the user wants to override
+    if !exists("g:vtoverride")
+        let g:vtoverride = []
+    endif
 
-    set virtualedit=block
+    " indenting
+    if index(g:vtoverride, "indent") < 0
+        set tw=78
+        set sw=4 ts=4 sts=4 expandtab
+        filetype indent on
+    endif
+
+    " cursor movement/selection
+    if index(g:vtoverride, "cursor") < 0
+        set virtualedit=block
+        set backspace=eol,indent,start
+        set whichwrap=b,s,<,>,h,l,~,[,] " these movements permit line wrapping
+    endif
 
     " temp files
-    set nobackup nowritebackup
-    " 2 path separators == use abspath in filename for uniqueness
-    "   (see :help 'directory' )
-    set directory=/tmp//
-    " colors/fonts
-    set nohlsearch
-    filetype plugin on
-    syn on
-    " colorscheme koehler
-    " colorscheme peachpuff
-    colorscheme greener
+    if index(g:vtoverride, "temp") < 0
+        set nobackup nowritebackup
+        " 2 path separators == use abspath in filename for uniqueness
+        "   (see :help 'directory' )
+        set directory=/tmp//
+    endif
 
-    " misc
-    set visualbell
-    set backspace=eol,indent,start
-    set whichwrap=b,s,<,>,h,l,~,[,] " these movements permit line wrapping
-    set nu " line numbers
-    set laststatus=2 " always show status
-    set stl=%F\ %y\ %l/%L@%c\ %m%r
-    set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
+    " syntax highlighting
+    if index(g:vtoverride, "syntax") < 0
+        filetype plugin on
+        syn on
+    endif
 
-    set guitablabel=%M\ %N\ %t
+    " ui appearance
+    if index(g:vtoverride, "appearance") < 0
+        set visualbell
+        set nohlsearch
+        set nu " line numbers
+        set guitablabel=%M\ %N\ %t
+    endif
+
+    " color scheme
+    if index(g:vtoverride, "colorscheme") < 0
+        colorscheme greener
+    endif
+
+    " status line
+    if index(g:vtoverride, "status") < 0
+        set laststatus=2 " always show status
+        set stl=%F\ %y\ %l/%L@%c\ %m%r
+    endif
+
+    " misc - very little reason to change any of these
+    if index(g:vtoverride, "misc") < 0
+        set tags=./tags,tags,../tags,../../tags,../../../tags,../../../../tags
+        set modeline
+        let g:yankring_history_file='.yankring_history'
+    endif
+
 endfu
 
 fu! SetCoryAutoCommands()
