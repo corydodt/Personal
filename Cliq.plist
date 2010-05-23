@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>AudioList</key>
+		<array>
+			<dict>
+				<key>AudioBitrate</key>
+				<string>128</string>
+				<key>AudioEncoder</key>
+				<string>AAC (faac)</string>
+				<key>AudioMixdown</key>
+				<string>Stereo</string>
+				<key>AudioSamplerate</key>
+				<string>48</string>
+				<key>AudioTrack</key>
+				<integer>1</integer>
+				<key>AudioTrackDRCSlider</key>
+				<real>0</real>
+				<key>AudioTrackDescription</key>
+				<string>No Audio</string>
+			</dict>
+		</array>
+		<key>ChapterMarkers</key>
+		<true />
+		<key>Default</key>
+		<false />
+		<key>FileFormat</key>
+		<string>MP4 file</string>
+		<key>Folder</key>
+		<false />
+		<key>Mp4HttpOptimize</key>
+		<false />
+		<key>Mp4LargeFile</key>
+		<false />
+		<key>Mp4iPodCompatible</key>
+		<false />
+		<key>PictureAutoCrop</key>
+		<false />
+		<key>PictureBottomCrop</key>
+		<integer>0</integer>
+		<key>PictureDeblock</key>
+		<integer>4</integer>
+		<key>PictureDecomb</key>
+		<integer>0</integer>
+		<key>PictureDecombCustom</key>
+		<string></string>
+		<key>PictureDecombDeinterlace</key>
+		<true />
+		<key>PictureDeinterlace</key>
+		<integer>0</integer>
+		<key>PictureDeinterlaceCustom</key>
+		<string></string>
+		<key>PictureDenoise</key>
+		<integer>0</integer>
+		<key>PictureDenoiseCustom</key>
+		<string></string>
+		<key>PictureDetelecine</key>
+		<integer>0</integer>
+		<key>PictureDetelecineCustom</key>
+		<string></string>
+		<key>PictureHeight</key>
+		<integer>320</integer>
+		<key>PictureKeepRatio</key>
+		<true />
+		<key>PictureLeftCrop</key>
+		<integer>0</integer>
+		<key>PictureLooseCrop</key>
+		<false />
+		<key>PictureModulus</key>
+		<string>16</string>
+		<key>PicturePAR</key>
+		<string>0</string>
+		<key>PicturePARHeight</key>
+		<integer>1</integer>
+		<key>PicturePARWidth</key>
+		<integer>1</integer>
+		<key>PictureRightCrop</key>
+		<integer>0</integer>
+		<key>PictureTopCrop</key>
+		<integer>0</integer>
+		<key>PictureWidth</key>
+		<integer>480</integer>
+		<key>PresetBuildNumber</key>
+		<integer>2009112300</integer>
+		<key>PresetDescription</key>
+		<string></string>
+		<key>PresetName</key>
+		<string>Cliq</string>
+		<key>SubtitleList</key>
+		<array>
+		</array>
+		<key>Type</key>
+		<integer>1</integer>
+		<key>UsesPictureFilters</key>
+		<integer>1</integer>
+		<key>UsesPictureSettings</key>
+		<integer>1</integer>
+		<key>VideoAvgBitrate</key>
+		<integer>480</integer>
+		<key>VideoEncoder</key>
+		<string>H.264 (x264)</string>
+		<key>VideoFramerate</key>
+		<string>Same as source</string>
+		<key>VideoGrayScale</key>
+		<false />
+		<key>VideoQualitySlider</key>
+		<real>20</real>
+		<key>VideoQualityType</key>
+		<integer>1</integer>
+		<key>VideoTargetSize</key>
+		<integer>700</integer>
+		<key>VideoTurboTwoPass</key>
+		<false />
+		<key>VideoTwoPass</key>
+		<false />
+		<key>anamorphic</key>
+		<true />
+		<key>par_height</key>
+		<integer>0</integer>
+		<key>par_width</key>
+		<integer>0</integer>
+		<key>x264Option</key>
+		<string>cabac=0:ref=2:me=umh:bframes=0:subme=6:8x8dct=0</string>
+	</dict>
+</array>
+</plist>

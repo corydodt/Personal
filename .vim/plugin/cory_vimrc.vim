@@ -75,7 +75,7 @@ fu! SetCoryCommands()
 
     command! PyFlake call DoPyFlakes()
 
-    command! VersionCory echo 'Cory''s vim scripts v2009.12'
+    command! VersionCory echo 'Cory''s vim scripts v2010.05'
 endfu
 
 fu! SetCoryMappings()
