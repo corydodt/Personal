@@ -26,17 +26,16 @@
 :Abspath	cory.txt	/*:Abspath*
 :HgDiff	cory.txt	/*:HgDiff*
 :HgDiff2	cory.txt	/*:HgDiff2*
-:Htmlbp	cory.txt	/*:Htmlbp*
 :MatchDebug	matchit.txt	/*:MatchDebug*
 :Pp	cory.txt	/*:Pp*
 :Ppn	cory.txt	/*:Ppn*
 :Ppv	cory.txt	/*:Ppv*
+:PrettyHTML	cory.txt	/*:PrettyHTML*
 :PrettyXML	cory.txt	/*:PrettyXML*
 :PyFlake	cory.txt	/*:PyFlake*
 :RunBashBuffer	cory.txt	/*:RunBashBuffer*
 :RunPyBuffer	cory.txt	/*:RunPyBuffer*
 :RunSQLiteBuffer	cory.txt	/*:RunSQLiteBuffer*
-:Survey	cory.txt	/*:Survey*
 :SvnDiff	cory.txt	/*:SvnDiff*
 :TlistAddFiles	taglist.txt	/*:TlistAddFiles*
 :TlistAddFilesRecursive	taglist.txt	/*:TlistAddFilesRecursive*
@@ -54,7 +53,6 @@
 :TlistUndebug	taglist.txt	/*:TlistUndebug*
 :TlistUnlock	taglist.txt	/*:TlistUnlock*
 :TlistUpdate	taglist.txt	/*:TlistUpdate*
-:Usage	cory.txt	/*:Usage*
 MatchError	matchit.txt	/*MatchError*
 Tlist_Get_Tag_Prototype_By_Line()	taglist.txt	/*Tlist_Get_Tag_Prototype_By_Line()*
 Tlist_Get_Tagname_By_Line()	taglist.txt	/*Tlist_Get_Tagname_By_Line()*
@@ -99,11 +97,13 @@ b:match_tail	matchit.txt	/*b:match_tail*
 b:match_wholeBR	matchit.txt	/*b:match_wholeBR*
 b:match_word	matchit.txt	/*b:match_word*
 b:match_words	matchit.txt	/*b:match_words*
+cory-abbreviations	cory.txt	/*cory-abbreviations*
 cory-commands	cory.txt	/*cory-commands*
 cory-features	cory.txt	/*cory-features*
 cory-intro	cory.txt	/*cory-intro*
 cory-mappings	cory.txt	/*cory-mappings*
 cory-matchit.txt	cory.txt	/*cory-matchit.txt*
+cory-override	cory.txt	/*cory-override*
 cory-table-bordering	cory.txt	/*cory-table-bordering*
 cory-table.txt	cory.txt	/*cory-table.txt*
 cory-taglist.txt	cory.txt	/*cory-taglist.txt*
@@ -111,6 +111,7 @@ cory-yankring.txt	cory.txt	/*cory-yankring.txt*
 cory.txt	cory.txt	/*cory.txt*
 g%	matchit.txt	/*g%*
 global-example	yankring.txt	/*global-example*
+htmlbp	cory.txt	/*htmlbp*
 matchit	matchit.txt	/*matchit*
 matchit-%	matchit.txt	/*matchit-%*
 matchit-\1	matchit.txt	/*matchit-\\1*
@@ -140,6 +141,8 @@ multiple-items-example	yankring.txt	/*multiple-items-example*
 o_[%	matchit.txt	/*o_[%*
 o_]%	matchit.txt	/*o_]%*
 o_g%	matchit.txt	/*o_g%*
+pluginbp	cory.txt	/*pluginbp*
+surveybp	cory.txt	/*surveybp*
 table.txt	table.txt	/*table.txt*
 taglist-commands	taglist.txt	/*taglist-commands*
 taglist-debug	taglist.txt	/*taglist-debug*
@@ -158,6 +161,8 @@ taglist-session	taglist.txt	/*taglist-session*
 taglist-todo	taglist.txt	/*taglist-todo*
 taglist-using	taglist.txt	/*taglist-using*
 taglist.txt	taglist.txt	/*taglist.txt*
+unittestbp	cory.txt	/*unittestbp*
+usagebp	cory.txt	/*usagebp*
 v_[%	matchit.txt	/*v_[%*
 v_]%	matchit.txt	/*v_]%*
 v_a%	matchit.txt	/*v_a%*
