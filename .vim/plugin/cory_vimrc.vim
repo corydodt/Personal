@@ -233,15 +233,17 @@ fu! TurnOnHgDiff2()
         let b:prevfoldminlines = &foldminlines
         let b:prevfoldnestmax = &foldnestmax
         let s:thispath = expand('%:t')
-        " open all folds - workaround bug that catches last folded section
-        " in the diff
         exe 'sil below vnew DIFF-'.s:thispath
         exe ':0r!hg cat "'.s:thispath.'"'
+        " open all folds - workaround bug that catches last folded section
+        " in the diff
         norm zR
         $,$d  " hg cat adds a final newline
         setlocal previewwindow nomodified
         diffthis
+        norm zM
         winc p
+        norm zM
         diffthis
         let b:diffIsOn = 1
     endif
