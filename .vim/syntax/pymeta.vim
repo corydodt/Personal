@@ -37,7 +37,7 @@ syn region subExpression  start=/(/ end=/)/ contained
 syn region pymetaTerminal start=/</ end=/>/
 syn region pymetaExec     start=/!(/ end=/)/ contains=subExpression
 syn region pymetaFilter   start=/?(/ end=/)/ contains=subExpression
-syn region cddComment     start=/COMMENT::=!("""/ end=/""")/
+syn region cddComment     start=/#/ end=/$/
 syn region pymetaChrLiteral start=/'/ end=/'/
 
 hi link pymetaExec       Special
