@@ -1,4 +1,9 @@
 #!/bin/bash
+
+vimtab() {
+    command gvim --remote-tab-silent-wait "$@"
+}
+
 xvim () {
 	if [ "$#" -eq 0 ]
 	then
@@ -12,13 +17,13 @@ xvim () {
 			tf=`tempfile -pvim-r_ -d/tmp` 
 			cat > $tf
 			(
-				command gvim --remote-tab-silent-wait $tf
+				vimtab "$tf"
 				rm -f $tf
 			) > /dev/null 2>&1 &
 		else
-			command gvim --remote-tab-silent "$1"
+			vimtab "$1" &
 		fi
 	fi
 }
 
-xvim "$@"
+xvim "$@" 2> /dev/null
