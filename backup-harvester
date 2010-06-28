@@ -24,8 +24,8 @@ TOHGFILES='.gvimrc
 .screenrc
 .zshrc
 .zsh
+/usr/local/bin/xvim
 '
-# no longer backing up: .xmodmaprc
 
 HOMEFILES='.compiz
 .config
@@ -40,10 +40,11 @@ Desktop
 .hgrc
 .HotheadGames
 .java
-.libao
 .local
+.maptool
 .openoffice.org
 packages.txt
+.pdbrc
 .prism
 .purple
 .pydistutils.cfg
@@ -52,17 +53,15 @@ packages.txt
 .mozilla
 RecentDownloads
 .Skype
+.WorldOfGoo
 '
-# no longer backing up .kde4
 
 ROOTFILES='/etc/modules
 /etc/vim
 /etc/udev/rules.d/99-android.rules
 /etc/pm/sleep.d/50cdd-fix-mousekeys
+/usr/local/bin/xvim
 '
-# no longer backing up /etc/modprobe.d/options
-# no longer backing up /etc/hal/fdi/policy/appletouch.fdi
-# no longer backing up /etc/X11/xorg.conf
 
 dpkg-origins > packages.txt || failmail "Could not run dpkg-origins"
 
