@@ -41,8 +41,8 @@ Open Source Developer
 ---------------------
 *Freelance*
 
-This is stuff I do for fun, or because it fills a need.  Nevertheless, it is
-developed with a professional approach.
+This is stuff I do for enjoyment, or because it fills a need.  Nevertheless,
+it is developed with a professional approach.
 
 Achievements
 ~~~~~~~~~~~~
@@ -72,14 +72,15 @@ Director of Software Development
 --------------------------------
 *Decipher, Inc.*
 
-* Jan. 2007–
+  Jan. 2007–
 
 Senior management reporting directly to the two CEOs.  My job is to
 motivate a growing team of 15+ developers to implement awesome software.  In
 the meantime, I also still write some of the code myself.  I prioritize,
 design, cut scope, provide support and a friendly technical face on sales
 calls to customers, and guide the executives on new management techniques that
-will get products developed sooner, better, and funner.
+will get products developed sooner and better, by employees who enjoy a
+balanced life.
 
 Achievements
 ~~~~~~~~~~~~
@@ -104,7 +105,7 @@ Computer Programmer
 -------------------
 *California PASS Program*
 
-* May 2002–Jan. 2007
+  May 2002–Jan. 2007
 
 Software architect for the major technology efforts in the program, including
 the customer-facing learning application and the developer-facing course
@@ -136,7 +137,7 @@ Development Manager
 -------------------
 *PeopleSoft, Inc.*
 
-* July 1997–January 2002
+  July 1997–January 2002
 
 As a Development Manager I had positions starting with an internship in
 Technology Certification, moving into a Development Manager role in
@@ -169,8 +170,9 @@ Achievements
 Education
 =========
 
-B.A. in Psychology, December 1997
-University of California at Berkeley
+B.A. in Psychology: *University of California at Berkeley*
+
+    December 1997
 
 Miscellany
 ==========

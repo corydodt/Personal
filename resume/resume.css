@@ -27,6 +27,14 @@ h3 {
     font-size: 14px;
 }
 
+h1 {
+    margin-left: -40px;
+}
+
+h2 {
+    margin-left: -20px;
+}
+
 .borderless, table.borderless td, table.borderless th {
   border: 0 }
 
