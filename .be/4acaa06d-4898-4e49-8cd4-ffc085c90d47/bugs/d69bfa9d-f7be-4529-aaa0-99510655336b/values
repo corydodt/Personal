@@ -1,0 +1,18 @@
+creator: Cory Dodt <corymercurial@spam.goonmill.org>
+
+
+reporter: Cory Dodt <corymercurial@spam.goonmill.org>
+
+
+severity: minor
+
+
+status: open
+
+
+summary: dpkg-origins should by default list only manually-installed packages, not
+  all
+
+
+time: Sun, 04 Jul 2010 17:20:18 +0000
+
