@@ -209,6 +209,12 @@ Underlining headings and titles~
 \`
     Underline a heading with tildes
   
+Number lines~
+\#
+    Number all the lines that begin with printable characters, skipping
+    indented lines.  You can also safely renumber lines this way if you
+    reorder.
+
                                             *cory-table-bordering*
 Table bordering~
 {Visual}\!

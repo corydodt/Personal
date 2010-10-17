@@ -102,7 +102,9 @@ fu! SetCoryCommands()
 
     command! PyFlake call DoPyFlakes()
 
-    command! VersionCory echo 'Cory''s vim scripts v2010.05'
+    command! VersionCory echo 'Cory''s vim scripts v2010.10'
+
+    command! -range InsertLineNums call InsertLineNumbers(<line1>,<line2>)
 endfu
 
 fu! SetCoryMappings()
@@ -133,6 +135,8 @@ fu! SetCoryMappings()
     map <Leader><Leader>= :.s:^\s*::<CR>Ypv$r=YkPjj0
     "   table-header-ize
     map <Leader>! :call TableHeaderize()<CR>
+    "   number lines
+    map <Leader># :InsertLineNums<CR>
 
     " tab helpers
     map <Leader>t :tab new<CR>
@@ -519,23 +523,24 @@ call SetCoryMappings()
 
 
 " add a line number prefix to every line in the range, skipping indented lines
-command! -range InsertLineNums call InsertLineNumbers(<line1>,<line2>)
 function! InsertLineNumbers(l1, l2)
     let ln1 = a:l1
     let ln2 = a:l2
     let lineToInsert = 1
     let lineLen = ln2 - ln1
     let cellSize = len(string(lineLen))
-    let renumberWidth = NumberedCellSize(ln1, ln2)
     while ln1 <= ln2
-        let currLine = getline(ln1)[renumberWidth :]
-        if currLine =~ '^\S'
+        let currLine = getline(ln1)
+        let renumberWidth = NumberedCellSize(currLine)
+        if currLine[renumberWidth :] =~ '^\S'
+            let currLine = currLine[renumberWidth :]
             let padding = repeat(' ', cellSize - len(string(lineToInsert)) + 1)
             let newLine = ' '.lineToInsert.".".padding.currLine
             let lineToInsert = lineToInsert + 1
         else
-            let padding = repeat(' ', cellSize + 2)
-            let newLine = padding.currLine
+            let padding = repeat(' ', cellSize + 3)
+            let _currLine = substitute(currLine, '^\s*', '', '')
+            let newLine = padding._currLine
         endif
         call setline(ln1, newLine)
         let ln1 = ln1 + 1
@@ -543,22 +548,13 @@ function! InsertLineNumbers(l1, l2)
 endfunction
 
 " return the maximum text width of the line numbers in a range of lines
-fu! NumberedCellSize(l1, l2)
-    let ln1 = a:l1
-    let ln2 = a:l2
+fu! NumberedCellSize(currLine)
     let lastCellSize = 0
-    while ln1 <= ln2
-        let currLine = getline(ln1)
-        let numMatch = matchlist(currLine, '^\( \+\d\+\)\. ')
-        if len(numMatch) > 0
-            let _size = len(numMatch[1]) + 2
-            if _size > lastCellSize
-                let lastCellSize = _size
-            endif
-        endif
-        let ln1 = ln1 + 1
-    endwhile
-    return lastCellSize
+    let numMatch = matchlist(a:currLine, '^\( \+\d\+\. *\)')
+    if len(numMatch) > 0
+        return len(numMatch[1])
+    endif
+    return 0
 endfu
 
 

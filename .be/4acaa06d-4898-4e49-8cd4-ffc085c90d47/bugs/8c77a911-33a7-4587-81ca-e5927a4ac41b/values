@@ -7,7 +7,7 @@ reporter: Cory Dodt <corymercurial@spam.goonmill.org>
 severity: minor
 
 
-status: open
+status: fixed
 
 
 summary: macro to number lines in vim
