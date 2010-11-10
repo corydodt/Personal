@@ -12,7 +12,10 @@
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
     <title n:render="title"><n:slot name="title" /> - Halfrest</title>
 
-    <link rel='stylesheet' type='text/css' href='/static/halfrest.css' />
+    <link rel='stylesheet' type='text/css' media='screen' href=
+      '/static/halfrest.css' />
+    <link rel='stylesheet' type='text/css' media='print' href=
+      '/static/halfrest-print.css' />
     <link rel='stylesheet' type='text/css' href='/static/character.css' />
   </head>
   <body class="primary-1">
@@ -22,7 +25,7 @@
         <h2>Paste your character here</h2>
       </div>
 
-      <div n:pattern="miniTitle">
+      <div n:pattern="miniTitle" class="miniTitle">
         <strong>HalfReST Character Pastebin</strong>&nbsp;&nbsp;&nbsp;
         <a title="paste a new character" href="/a/halfrest/">new</a>
       </div>
@@ -75,7 +78,7 @@
       </form>
 
       <div class="conversion document secondary-b-4" n:pattern="displayDoc">
-        <a style="float:right" target="halfrest" href="print">print</a>
+        <a class="printLink" style="float:right" target="halfrest" href="print">print</a>
         <h1 class="title" n:render="title"><n:slot name="title" /></h1>
         <n:slot name="displayDoc" />
       </div>
