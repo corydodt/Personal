@@ -17,24 +17,6 @@ if [ "$PS1" ]; then
     alias pvim='(tf=`tempfile -pvim-r_ -d/tmp`; cat > $tf && command gvim --remote-tab-silent-wait $tf; rm -f $tf) >/dev/null 2>&1 &'
     alias gvim='echo \*\* no gvim 1>&2 && false'
 
-    xvim() {
-        if [ "$#" -eq 0 ]; then
-            command gvim
-        elif [ "$#" -gt 1 ]; then
-            command gvim "$@"
-        else 
-            if [ "$1" = "-" ]; then
-                tf=`tempfile -pvim-r_ -d/tmp`
-                cat > $tf
-                (command gvim --remote-tab-silent-wait $tf ; rm -f $tf ) > /dev/null 2>&1 &
-            else
-                command gvim --remote-tab-silent "$1"
-            fi
-        fi
-
-    }
-
-
     # If this is an xterm set the title to user@host:dir
     case $TERM in
       cygwin*|xterm*)
@@ -74,11 +56,14 @@ umask 002
 
 DEBEMAIL=launchpad@spam.goonmill.org
 DEBFULLNAME="Cory Dodt"
-export DEBEMAIL
+export DEBEMAIL DEBFULLNAME
 
 export PATH=$PATH:~/bin:~/wc/Twisted/bin:~/wc/Divmod/Axiom/bin
 
 HISTFILE=~/.zsh_history
 SAVEHIST=3456
 HISTSIZE=34556
+
+export EDITOR=vim
+
 setopt -oSHARE_HISTORY

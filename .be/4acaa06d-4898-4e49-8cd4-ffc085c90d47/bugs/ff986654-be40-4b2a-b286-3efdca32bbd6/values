@@ -1,0 +1,17 @@
+creator: Cory Dodt <corymercurial@spam.goonmill.org>
+
+
+reporter: Cory Dodt <corymercurial@spam.goonmill.org>
+
+
+severity: minor
+
+
+status: closed
+
+
+summary: fix the \D problem deleting the last folded section
+
+
+time: Mon, 31 May 2010 01:36:20 +0000
+

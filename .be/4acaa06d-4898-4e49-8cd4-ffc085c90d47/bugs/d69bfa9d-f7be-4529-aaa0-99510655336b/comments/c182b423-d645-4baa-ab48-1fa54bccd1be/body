@@ -1,0 +1,5 @@
+There are now apt APIs available to tell whether a package was selected
+automatically (as a dependency) or manually (you requested that application
+specifically).
+
+dpkg-origins should, by default, log only the manually requested ones.

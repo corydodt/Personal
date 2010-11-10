@@ -98,11 +98,12 @@ class Options(usage.Options):
             if not status.startswith('install ok'):
                 continue
             cpkg = cache[package]
-            if cpkg.candidateOrigin is None:
+            if not cpkg.versions[0].origins:
+                import pudb; pudb.set_trace()
                 yield (None, package, version)
             else:
                 # FIXME - is it always the first?
-                site = cpkg.candidateOrigin[0].site
+                site = cpkg.versions[0].origins[0].site
                 yield (site, package, version)
 
 

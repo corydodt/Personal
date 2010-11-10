@@ -8,6 +8,7 @@ Last change: 2009 Jan 13
 2. Features                    |cory-features|
 3. Commands                    |cory-commands|
 4. Mappings                    |cory-mappings|
+5. Overriding Settings         |cory-override|
 
 ==============================================================================
                                             *cory-intro*
@@ -80,8 +81,6 @@ you will like it as well.
                                             *cory-commands*
 3. Commands~
 
-
-
 Version control helpers~
 
                                             *:HgDiff*
@@ -95,22 +94,6 @@ Version control helpers~
                                             *:SvnDiff*
 :SvnDiff
     Same, for Subversion
-
-Quickly insert boilerplate files~
-
-                                            *:Htmlbp*
-:Htmlbp
-    Write a blank HTML file into the current buffer,
-    complete with doctype, script and style tags.
-                                            *:Survey*
-:Survey
-    Write a blank survey.xml file into the current buffer
-                                            *:Usage*
-:Usage
-    Write a boilerplate Python command-line script into the
-    current buffer.  It uses twisted.python.usage as a basis
-    and has most of the classes and main function set up for
-    you. 
 
 Run pyflakes~
 
@@ -153,6 +136,10 @@ Pretty up XML~
     
     This requires that 'xmllint' be installed, which is usually found in the
     'libxml2-utils' package.
+
+                                            *:PrettyHTML*
+:PrettyHTML  
+    Like PrettyXML but less strict, works on HTML files.
 
 Run a buffer as a interpreted script~
 
@@ -222,6 +209,12 @@ Underlining headings and titles~
 \`
     Underline a heading with tildes
   
+Number lines~
+\#
+    Number all the lines that begin with printable characters, skipping
+    indented lines.  You can also safely renumber lines this way if you
+    reorder.
+
                                             *cory-table-bordering*
 Table bordering~
 {Visual}\!
@@ -270,5 +263,84 @@ Actually part of taglist, but useful~
     Turn on or off the taglist pane on the left
 
 ==============================================================================
+                                        *cory-abbreviations*
+4. Abbreviations~
 
+Abbreviations in vim are what you might call "snippets" in other editors.
+Cory's Vimtoys has several of these defined.
+
+Quickly insert boilerplate files~
+
+These are implemented as abbreviations.  To use, in edit mode, TYPE THE
+ABBREVIATION and press space, OR ctrl+space (if you don't actually want a
+space at the end).
+
+All of these abbreviations end with 'bp' (for "boilerplate").
+
+                                            *htmlbp*
+Type 'htmlbp' to write a blank HTML file into the current buffer, complete with
+doctype, script and style tags.
+
+                                            *surveybp*
+Type 'surveybp' to get a blank survey.xml file in the current buffer.
+
+                                            *unittestbp*
+Type 'unittestbp' to get a complete pyunit-style unit test file in the current
+buffer.
+
+                                            *pluginbp*
+Type 'pluginbp' to write a boilerplate plugin application (using
+hermes.plugapps API) into the current buffer.
+
+                                            *usagebp*
+Type 'usagebp' to write a boilerplate Python command-line script into the
+current buffer.  It uses twisted.python.usage as a basis and has most of the
+classes and main function set up for you. 
+
+
+==============================================================================
+                                        *cory-override*
+5. Overriding settings~
+
+This script makes some choices for you regarding indentation, syntax
+highlighting, color scheme and so on.  You can override any of these, but you
+must tell vimtoys that you want to override these settings.  To do so, use
+'let' to create a list variable in your .vimrc:
+
+    let g:vtoverride = ["indent", "colorscheme"]
+
+This would allow you to override any settings in the 'indent' and
+'colorscheme' sections of the vimtoys default config.
+
+Here are the settings, grouped by the g:vtoverride variable that is required
+to override them.
+
+Just include one of these in g:vtoverride, and then set it to whatever you
+want.
+
+"indent"
+        textwidth, shiftwidth, tabstop, shifttabstop, expandtab
+
+"cursor"
+        virtualedit, backspace, whichwrap
+
+"temp"
+        nobackup, nowritebackup, directory
+
+"syntax"
+        filetype plugin on, syn on
+
+"appearance"
+        visualbell, nohlsearch, number, guitablabel
+
+"colorscheme"
+        colorscheme
+
+"status"
+        laststatus, statusline
+
+"misc"
+        tags, modeline, g:yankring_history_file
+
+==============================================================================
 vim:tw=78:ts=4:et:ft=help:si:
