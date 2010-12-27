@@ -6,3 +6,4 @@ hgext.fetch =
 hgext.convert =
 # hgext.purge =
 hgext.transplant =
+hgext.record =
