@@ -19,8 +19,6 @@ else
     done
     tags+=(new New)
 
-    for t in "${tags[@]}"; do echo $t; done
-
     COLUMNS=$(tput cols)
     LINES=$(tput lines)
     selection=`whiptail --menu $'\n\nChoose a screen\n\n\n\n\n\n\n\n\n\n\n' $LINES $COLUMNS 5 "${tags[@]}" 2>&1 > /dev/tty`
