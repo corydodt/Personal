@@ -1,9 +1,25 @@
 source ~/.zsh/myPrompt
 source ~/.zsh/`uname`
 
-myColor=red # may also be "yellow bold" for example
+myColor=white\ bold  # may also be "yellow bold" for example
 # colors are: white red yellow green magenta blue black cyan
 
+
+umask 002
+
+DEBEMAIL=launchpad@spam.goonmill.org
+DEBFULLNAME="Cory Dodt"
+export DEBEMAIL DEBFULLNAME
+
+export PATH=$PATH:~/bin:~/wc/Twisted/bin:~/wc/Divmod/Axiom/bin
+
+HISTFILE=~/.zsh_history
+SAVEHIST=3456
+HISTSIZE=34556
+
+export EDITOR=vim
+
+setopt -oSHARE_HISTORY
 # If running interactively, then:
 if [ "$PS1" ]; then
     # enable color support of ls and also add handy aliases
@@ -43,7 +59,7 @@ if [ "$PS1" ]; then
 
 
     if ! echo $STY | cut -d. -f1 | xargs ps -p 2> /dev/null | grep -i screen > /dev/null 2>&1; then
-        exec screen -RR -D
+        exec screenpick
     fi
 
     if [ $(id -u) -ne 0 ] && which keychain >/dev/null 2>&1; then
@@ -51,19 +67,3 @@ if [ "$PS1" ]; then
         eval `keychain --nogui --eval ~/.ssh/id_dsa`
     fi
 fi
-
-umask 002
-
-DEBEMAIL=launchpad@spam.goonmill.org
-DEBFULLNAME="Cory Dodt"
-export DEBEMAIL DEBFULLNAME
-
-export PATH=$PATH:~/bin:~/wc/Twisted/bin:~/wc/Divmod/Axiom/bin
-
-HISTFILE=~/.zsh_history
-SAVEHIST=3456
-HISTSIZE=34556
-
-export EDITOR=vim
-
-setopt -oSHARE_HISTORY
