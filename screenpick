@@ -1,0 +1,33 @@
+#!/bin/bash
+
+status=`screen -q -ls;echo $?`
+if [ "$status" == 9 ]; then
+    # no screens
+    echo screen -RR -D
+    exit 0
+fi
+
+
+screens=`screen -ls | grep '^'$'\t'`
+
+
+unset tags; i=0
+export IFS=$'\n'
+for screen in $screens; do
+    tags+=(`echo "$screen" | awk '{print $1}'`)
+    tags+=(`echo "$screen" | sed 's/^\s*//;s/\s*$//;s/\t/ /g'`)
+done
+tags+=(new New)
+
+for t in "${tags[@]}"; do echo $t; done
+
+COLUMNS=$(tput cols)
+LINES=$(tput lines)
+selection=`whiptail --menu $'\n\nChoose a screen\n\n\n\n\n\n\n\n\n\n\n' $LINES $COLUMNS 5 "${tags[@]}" 2>&1 > /dev/tty`
+
+if [ "$selection" == "new" ]; then
+    screen
+else
+    screen -d -r $selection
+fi
+
