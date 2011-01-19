@@ -37,13 +37,13 @@ if [ "$PS1" ]; then
     case $TERM in
       cygwin*|xterm*)
         precmd() {
-            echo -ne "\033]0;${USER}@${HOST}: ${PWD}\007"
+            echo -ne "\033k`uname -n`\033\\"
             myPrompt $myColor
         }
         ;;
       screen*)
         precmd() {
-            echo -ne "\033]0;${USER}@${HOST}: ${PWD} ${WINDOW}\007"
+            echo -ne "\033k`uname -n`\033\\"
             myPrompt $myColor
         }
         ;;

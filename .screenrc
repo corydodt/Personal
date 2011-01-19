@@ -5,3 +5,4 @@ msgwait 1.5
 hardstatus on
 hardstatus alwayslastline
 hardstatus string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %m/%d %C%a "
+shelltitle '% |zsh'
