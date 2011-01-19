@@ -29,6 +29,7 @@ if [ "$PS1" ]; then
     fi
     eval `dircolors -b ~/.dircolors`
     
+    alias ls='ls -F --color'
     alias vim='vim -X'
     alias pvim='(tf=`tempfile -pvim-r_ -d/tmp`; cat > $tf && command gvim --remote-tab-silent-wait $tf; rm -f $tf) >/dev/null 2>&1 &'
     alias gvim='echo \*\* no gvim 1>&2 && false'
