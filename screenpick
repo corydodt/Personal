@@ -5,7 +5,7 @@
 # choose an existing session or start a new one.
 
 status=`screen -q -ls;echo $?`
-if [ "$status" == 9 ]; then
+if [ "$status" == 10 -o "$status" == 9 ]; then
     selection="new"
 
 else
