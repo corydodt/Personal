@@ -4,8 +4,8 @@
 # screen session is already running, display a console menu. You can either
 # choose an existing session or start a new one.
 
-status=`screen -q -ls;echo $?`
-if [ "$status" == 10 -o "$status" == 9 ]; then
+_status=`screen -ls | egrep '(Attached|Detached)'`
+if [ -z "$_status" ]; then
     selection="new"
 
 else
@@ -25,8 +25,8 @@ else
 fi
 
 if [ "$selection" == "new" ]; then
-    screen
+    exec screen
 else
-    screen -d -r $selection
+    exec screen -d -r $selection
 fi
 
