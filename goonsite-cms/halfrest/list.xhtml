@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns='http://www.w3.org/1999/xhtml' xmlns:n=
+  "http://nevow.com/ns/nevow/0.1">
+  <!-- vi:set ft=html: -->
+  <head >
+    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
+    <title>Halfrest Document List</title>
+
+    <link rel='stylesheet' type='text/css' media='screen' href=
+      'http://goonmill.org/static/halfrest.css' />
+  </head>
+  <body class="primary-1">
+    <div id="middle" class="secondary-b-5">
+
+      <div class="miniTitle">
+        <strong>HalfReST Character Pastebin</strong>&nbsp;&nbsp;&nbsp;
+        <a title="paste a new character" href="/a/halfrest/">new</a>
+        <a title="paste a new character" href="/a/halfrest/list">list</a>
+      </div>
+
+      <div class="conversion document secondary-b-4">
+        <ul n:render="listItems">
+          <li n:pattern="listItem"><a><n:attr name=
+            "href">/a/halfrest/doc/<n:slot name="docID" /></n:attr><n:slot name=
+            "description" /></a></li>
+        </ul>
+      </div>
+
+    </div>
+  </body>
+</html>

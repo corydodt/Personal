@@ -11,7 +11,7 @@ from storm import locals
 from nevow import rend, loaders, static, url, util as nevowutil, tags as T
 from nevow.inevow import IRequest
 
-from . import converter, TEMPLATE, CHARSHEET_T, CREATE_SCRIPT
+from . import converter, LIST_TEMPLATE, TEMPLATE, CHARSHEET_T, CREATE_SCRIPT
 
 
 def bootstrap(store):
@@ -37,6 +37,26 @@ class Document(object):
         Return body and title of converted document
         """
         return converter.convert(self.text, parts=True)
+
+
+class ListPage(rend.Page):
+    addSlash = True
+    docFactory = loaders.xmlfile(LIST_TEMPLATE)
+
+    def __init__(self, store, doc=None, *a, **kw):
+        self.store = store
+
+    def render_listItems(self, ctx, data):
+        for doc in self.store.find(Document):
+            pat = ctx.tag.onePattern('listItem')
+            pat.fillSlots('docID', doc.id)
+            _, title = doc.convertParts()
+            title = title or 'Unnamed document'
+            who = doc.who or 'Unnamed author'
+            desc = '%s by %s at %s' % (title, who, doc.date14)
+            pat.fillSlots('description', desc)
+            ctx.tag[ pat ]
+        return ctx.tag
 
 
 class PastePage(rend.Page):
@@ -119,7 +139,9 @@ class PastePage(rend.Page):
             if next == 'source':
                 return static.Data(self.doc.text.encode('utf-8'), 'text/plain; charset=utf-8'), segs
         else:
-            if next == 'doc':
+            if next == 'list':
+                return ListPage(self.store), segs
+            elif next == 'doc':
                 if segs:
                     # no document number, but ends with slash:
                     if segs[0] == '':

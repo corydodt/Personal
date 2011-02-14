@@ -1,8 +1,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns='http://www.w3.org/1999/xhtml' xmlns:n=
   "http://nevow.com/ns/nevow/0.1">
-  <!-- vi:set ft=html: -->
-  <head >
+  <!-- vi:set ft=html fdm=marker fmr=[[[,]]]: -->
+  <head > <!-- [[[ -->
     <script type="text/javascript" src="/static/prototype.js"></script>
 
     <script type="text/javascript" src=
@@ -17,21 +17,23 @@
     <link rel='stylesheet' type='text/css' media='print' href=
       '/static/halfrest-print.css' />
     <link rel='stylesheet' type='text/css' href='/static/character.css' />
-  </head>
+  </head> <!-- ]]] -->
   <body class="primary-1">
     <div id="middle" class="secondary-b-5" n:render="pastebin">
       <div n:pattern="mainTitle">
         <h1>HalfReST Character Pastebin</h1>
         <h2>Paste your character here</h2>
+        <a title="paste a new character" href="/a/halfrest/list">list</a>
       </div>
 
       <div n:pattern="miniTitle" class="miniTitle">
         <strong>HalfReST Character Pastebin</strong>&nbsp;&nbsp;&nbsp;
         <a title="paste a new character" href="/a/halfrest/">new</a>
+        <a title="paste a new character" href="/a/halfrest/list">list</a>
       </div>
 
       <form enctype="multipart/form-data" accept-charset="utf-8" n:pattern=
-        "form" method="post">
+        "form" method="post"> <!-- [[[ -->
         <div class="source secondary-b-4" n:render="source">
           <div class="editControls" n:pattern="editControls">
 
@@ -68,7 +70,9 @@
               "paste a character sheet template into the text area" />    
 
             <input type="submit" name="convert" value="convert" title=
-              "save this character and convert it to nice-looking html" />    
+              "save this character and convert it to nice-looking html" />  
+              If you forgot to answer the <strong>math question</strong>, hit your
+                browser's <strong>Back button</strong> and try again.
 
             <input type="hidden" name="_charset_" /> <!-- for getPOSTCharset -->
 
@@ -77,7 +81,7 @@
               "docID" /></n:attr></input>
           </div>
         </div>
-      </form>
+      </form> <!-- ]]] -->
 
       <div class="conversion document secondary-b-4" n:pattern="displayDoc">
         <a class="printLink" style="float:right" target="halfrest" href="print">print</a>
