@@ -14,5 +14,5 @@ STYLESHEET     =   '/static/character.css'
 CHARSHEET_T    =   open(RESOURCE('Charsheet_template.txt')).read()
 CREATE_SCRIPT  =   """  
 CREATE TABLE document (id INTEGER PRIMARY KEY, text VARCHAR, who VARCHAR,
-               title VARCHAR, date14 INTEGER);
+               date14 INTEGER, title VARCHAR);
 """
