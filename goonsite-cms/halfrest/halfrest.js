@@ -1,10 +1,12 @@
 document.observe('dom:loaded', function() {
 
     var bindInsertTemplate, bindTextArea, bindEditBox, insertButton, ta,
-        timer;
+        timer, anti, convertButton;
 
     ta = $$('.textareaMain')[0];
+    anti = $$('.textareaMain')[0];
     insertButton = $$('.insertTemplateButton')[0];
+    convertButton = $$('.convertButton')[0];
 
     bindEditBox = function() {
         var edit;
@@ -17,6 +19,17 @@ document.observe('dom:loaded', function() {
         }
     };
     bindEditBox();
+
+    bindAntispam = function() {
+        timer = setInterval(function() {
+            if (anti.value == '' && convertButton.disabled) {
+                convertButton.enable();
+            } else if (anti.value != '' && !convertButton.disabled) {
+                convertButton.disable();
+            }
+        }, 500);
+    }
+    bindAntispam();
 
     bindTextarea = function() {
         timer = setInterval(function() {

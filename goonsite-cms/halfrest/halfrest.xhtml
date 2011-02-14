@@ -62,17 +62,15 @@
               "who">author</label><input id="who" type="text" name=
               "who"><n:attr name="value"><n:slot name=
               "who" /></n:attr></input>
-              <label for="antispam">2 + 17 =</label><input id="antispam" type=
+              <img src="http://goonmill.org/static/0218t3yhrf.png" /><input id="antispam" type=
                 "text" name="antispam" /></div>
 
             <input class="insertTemplateButton" type="button" value=
               "insert a template..." name="template" title=
               "paste a character sheet template into the text area" />    
 
-            <input type="submit" name="convert" value="convert" title=
+            <input class="convertButton" type="submit" name="convert" value="convert" title=
               "save this character and convert it to nice-looking html" />  
-              If you forgot to answer the <strong>math question</strong>, hit your
-                browser's <strong>Back button</strong> and try again.
 
             <input type="hidden" name="_charset_" /> <!-- for getPOSTCharset -->
 
@@ -90,8 +88,8 @@
       </div>
 
       <div class="templates">
-        <textarea class="sheetTemplate"><n:slot name=
-          "sheetTemplate" /></textarea>
+        <input type="hidden" class="sheetTemplate"><n:attr name="value"><n:slot name=
+          "sheetTemplate" /></n:attr></input>
       </div>
 
     </div>
