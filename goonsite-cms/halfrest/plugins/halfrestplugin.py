@@ -10,14 +10,14 @@ from twisted.plugin import IPlugin
 from goonsite.app import IAppFactory
 from goonsite.database import dbopen
 
-from halfrest.page import PastePage
+from halfrest.page import PastePage, bootstrap
 from halfrest import DBFILE
 
 class HalfrestFactory(object):
     implements(IPlugin, IAppFactory)
     name = "halfrest"
     title = "HalfReST character formatter"
-    store = dbopen(DBFILE)
+    store = dbopen(DBFILE, bootstrapHook=bootstrap)
 
     def getResource(self):
         return PastePage(self.store)

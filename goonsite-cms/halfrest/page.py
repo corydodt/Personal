@@ -19,6 +19,7 @@ def bootstrap(store):
     Create tables when needed
     """
     store.execute(CREATE_SCRIPT)
+    store.commit()
 
 
 class Document(object):
