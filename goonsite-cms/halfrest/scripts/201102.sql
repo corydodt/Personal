@@ -1,0 +1,2 @@
+-- Feb 13 2011
+ALTER TABLE document ADD COLUMN title VARCHAR;

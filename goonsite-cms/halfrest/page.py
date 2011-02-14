@@ -28,6 +28,7 @@ class Document(object):
     text = locals.Unicode()
     date14 = locals.Int()
     who = locals.Unicode()
+    title = locals.Unicode()
 
     def convert(self):
         return converter.convert(self.text)
@@ -50,8 +51,7 @@ class ListPage(rend.Page):
         for doc in self.store.find(Document):
             pat = ctx.tag.onePattern('listItem')
             pat.fillSlots('docID', doc.id)
-            _, title = doc.convertParts()
-            title = title or 'Unnamed document'
+            title = doc.title or 'Unnamed document'
             who = doc.who or 'Unnamed author'
             desc = '%s by %s at %s' % (title, who, doc.date14)
             pat.fillSlots('description', desc)
@@ -89,6 +89,8 @@ class PastePage(rend.Page):
                 doc = Document()
             charset = nevowutil.getPOSTCharset(ctx)
             doc.text = req.args['text'][0].decode(charset)
+            _, _title = doc.convertParts()
+            doc.title = _title.decode(charset)
             doc.who = req.args['who'][0].decode(charset)
             doc.date14 = int(datetime.datetime.now().strftime('%Y%m%d%H%M%S'))
             self.store.add(doc)
