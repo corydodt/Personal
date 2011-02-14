@@ -57,6 +57,10 @@ class PastePage(rend.Page):
         req = IRequest(ctx)
         # accept form post when 'convert' was clicked.
         if 'convert' in req.args:
+            # spammers can fuck right off
+            if req.args.get('antispam') != ['19']:
+                return url.here
+
             docID = None
             if 'docID' in req.args and req.args['docID'][0] != '':
                 docID = int(req.args['docID'][0])
