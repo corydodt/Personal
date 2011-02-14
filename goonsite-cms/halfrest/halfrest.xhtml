@@ -3,12 +3,11 @@
   "http://nevow.com/ns/nevow/0.1">
   <!-- vi:set ft=html fdm=marker fmr=[[[,]]]: -->
   <head > <!-- [[[ -->
-    <script type="text/javascript" src="/static/prototype.js"></script>
-
     <script type="text/javascript" src=
-      "/static/scriptaculous.js?load=effects"></script>  
+      "https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 
-    <script type="text/javascript" src="/static/halfrest.js"></script>
+    <script type="text/javascript"
+      src="/static/halfrest.js"></script>
     <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
     <title n:render="title"><n:slot name="title" /> - Halfrest</title>
 
@@ -69,7 +68,7 @@
               "insert a template..." name="template" title=
               "paste a character sheet template into the text area" />    
 
-            <input class="convertButton" type="submit" name="convert" value="convert" title=
+            <input disabled="disabled" class="convertButton" type="submit" name="convert" value="convert" title=
               "save this character and convert it to nice-looking html" />  
 
             <input type="hidden" name="_charset_" /> <!-- for getPOSTCharset -->
