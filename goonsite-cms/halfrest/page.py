@@ -4,6 +4,7 @@ The pages in halfrest
 TODO: ReST syntax highlighting using e.g. Helene or codepress
 """
 
+import re
 import datetime
 
 from storm import locals
@@ -12,6 +13,8 @@ from nevow import rend, loaders, static, url, util as nevowutil, tags as T
 from nevow.inevow import IRequest
 
 from . import converter, LIST_TEMPLATE, TEMPLATE, CHARSHEET_T, CREATE_SCRIPT
+
+ANTISPAM_ANSWERS = "unitedstates unitedstatesofamerica america usa us usofa".split()
 
 
 def bootstrap(store):
@@ -78,7 +81,8 @@ class PastePage(rend.Page):
         # accept form post when 'convert' was clicked.
         if 'convert' in req.args:
             # spammers can fuck right off
-            if req.args.get('antispam') != ['19']:
+            antispam = re.sub(r'(\s|[.,;-])', '', req.args.get('antispam')[0].lower())
+            if antispam not in ANTISPAM_ANSWERS:
                 return url.here
 
             docID = None
