@@ -48,7 +48,7 @@ class ListPage(rend.Page):
         self.store = store
 
     def render_listItems(self, ctx, data):
-        for doc in self.store.find(Document):
+        for doc in self.store.find(Document).order_by(locals.Desc(Document.date14)):
             pat = ctx.tag.onePattern('listItem')
             pat.fillSlots('docID', doc.id)
             title = doc.title or 'Unnamed document'
