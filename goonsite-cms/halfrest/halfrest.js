@@ -4,7 +4,7 @@ document.observe('dom:loaded', function() {
         timer, anti, convertButton;
 
     ta = $$('.textareaMain')[0];
-    anti = $$('.textareaMain')[0];
+    anti = $('antispam');
     insertButton = $$('.insertTemplateButton')[0];
     convertButton = $$('.convertButton')[0];
 
@@ -22,10 +22,10 @@ document.observe('dom:loaded', function() {
 
     bindAntispam = function() {
         timer = setInterval(function() {
-            if (anti.value == '' && convertButton.disabled) {
-                convertButton.enable();
-            } else if (anti.value != '' && !convertButton.disabled) {
+            if (anti.value == '' && !convertButton.disabled) {
                 convertButton.disable();
+            } else if (anti.value != '' && convertButton.disabled) {
+                convertButton.enable();
             }
         }, 500);
     }
