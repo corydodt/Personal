@@ -1,6 +1,7 @@
 $(function () {
-    var $ta, $insertButton, $convertButton, $anti, $edit;
+    var $ta, $insertButton, $convertButton, $anti, $edit, $deleter;
 
+    // antispam must be answered before you can convert
     $anti = $('#antispam');
     $convertButton = $('.convertButton');
     setInterval(function () {
@@ -12,6 +13,7 @@ $(function () {
         }
     }, 500);
 
+    // you may not use "insert template" if there is already content present
     $ta = $('.textareaMain');
     setInterval(function () {
         var hasText = ($ta.val() != '');
@@ -22,43 +24,38 @@ $(function () {
         }
     }, 500);
 
+    // enable the control to show the edit box
     $edit = $('.source').find('.editControls');
-    if ($edit !== undefined) {
+    if ($edit.length > 0) {
         $edit.find('.textareaHandle').click(function () {
             $ta.parents('.textareaContainer').removeClass('hidden');
             $edit.addClass('hidden');
         });
     }
 
+    // enable the template insert
     $insertButton = $('.insertTemplateButton');
     $insertButton.click(function () {
-        $insertButton.disable();
-        var sheet;
-        sheet = $('.sheetTemplate').val();
+        $insertButton.attr('disabled', 'disabled');
         if ($ta.val() == '') {
-            $ta.val() = sheet;
+            $ta.val($('.sheetTemplate').val());
         }
-
-        if ($ta.val() != '') {
-            $insertButton.disable();
-        }
-        return false;
     });
 
-    var $deleter, $deleteInput, title, ok;
+    // enable delete
     $deleter = $('.deleteThis');
-    $deleteInput = $('.deleteInput');
-
     $deleter.click(function () {
+        var title, ok;
         title = $deleter.attr('rel');
         ok = confirm("Really delete " + title + "?");
         if (!ok) {
             return false;
         } else {
-           $deleteInput.value = "delete";
+           $('.deleteInput').val("delete");
            document.forms[0].submit();  
            return true;
         }
     });
 
 });
+
