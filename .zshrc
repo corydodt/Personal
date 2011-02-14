@@ -5,6 +5,8 @@ myColor=white\ bold  # may also be "yellow bold" for example
 # colors are: white red yellow green magenta blue black cyan
 
 
+export PATH=$PATH:~/bin:~/wc/Twisted/bin:~/wc/Divmod/Axiom/bin
+
 # If running interactively, then:
 if [ "$PS1" ]; then
     # enable color support of ls and also add handy aliases
@@ -57,8 +59,6 @@ umask 002
 DEBEMAIL=launchpad@spam.goonmill.org
 DEBFULLNAME="Cory Dodt"
 export DEBEMAIL DEBFULLNAME
-
-export PATH=$PATH:~/bin:~/wc/Twisted/bin:~/wc/Divmod/Axiom/bin
 
 HISTFILE=~/.zsh_history
 SAVEHIST=3456
