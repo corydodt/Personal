@@ -5,21 +5,6 @@ myColor=white\ bold  # may also be "yellow bold" for example
 # colors are: white red yellow green magenta blue black cyan
 
 
-umask 002
-
-DEBEMAIL=launchpad@spam.goonmill.org
-DEBFULLNAME="Cory Dodt"
-export DEBEMAIL DEBFULLNAME
-
-export PATH=$PATH:~/bin:~/wc/Twisted/bin:~/wc/Divmod/Axiom/bin
-
-HISTFILE=~/.zsh_history
-SAVEHIST=3456
-HISTSIZE=34556
-
-export EDITOR=vim
-
-setopt -oSHARE_HISTORY
 # If running interactively, then:
 if [ "$PS1" ]; then
     # enable color support of ls and also add handy aliases
@@ -29,7 +14,6 @@ if [ "$PS1" ]; then
     fi
     eval `dircolors -b ~/.dircolors`
     
-    alias ls='ls -F --color'
     alias vim='vim -X'
     alias pvim='(tf=`tempfile -pvim-r_ -d/tmp`; cat > $tf && command gvim --remote-tab-silent-wait $tf; rm -f $tf) >/dev/null 2>&1 &'
     alias gvim='echo \*\* no gvim 1>&2 && false'
@@ -38,13 +22,11 @@ if [ "$PS1" ]; then
     case $TERM in
       cygwin*|xterm*)
         precmd() {
-            echo -ne "\033k`uname -n`\033\\"
             myPrompt $myColor
         }
         ;;
       screen*)
         precmd() {
-            echo -ne "\033k`uname -n`\033\\"
             myPrompt $myColor
         }
         ;;
@@ -68,3 +50,22 @@ if [ "$PS1" ]; then
         eval `keychain --nogui --eval ~/.ssh/id_dsa`
     fi
 fi
+
+
+umask 002
+
+DEBEMAIL=launchpad@spam.goonmill.org
+DEBFULLNAME="Cory Dodt"
+export DEBEMAIL DEBFULLNAME
+
+export PATH=$PATH:~/bin:~/wc/Twisted/bin:~/wc/Divmod/Axiom/bin
+
+HISTFILE=~/.zsh_history
+SAVEHIST=3456
+HISTSIZE=34556
+
+export EDITOR=vim
+
+setopt -oSHARE_HISTORY
+
+bindkey -e # emacs
