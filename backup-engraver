@@ -22,30 +22,15 @@ echo Backing up `hostname` on `date -I`
 #           in the destination)
 
 
-dayNumber() {
-    echo $((`date +%s`/3600/24))
-}
-
-isEvenDay() {
-    if [ $((`dayNumber`%2)) -eq 0 ];
-    then return 0
-    else return 1
-    fi
-}
-
-if isEvenDay; then
-    MOUNTPOINT=/mnt/s3backup2
-else
-    MOUNTPOINT=/mnt/s3backup1
-fi
+MOUNTPOINT=/mnt/xvdc
 
 
 # returns true if $MOUNTPOINT is mounted correctly
 isMounted() {
     ROOT_MOUNT=`mountpoint -d /`
-    S3BACKUP_MOUNT=`mountpoint -d $MOUNTPOINT`
+    BACKUP_MOUNT=`mountpoint -d $MOUNTPOINT`
     if mountpoint -q $MOUNTPOINT; then
-        if [ "$ROOT_MOUNT" != "$S3BACKUP_MOUNT" ]; then
+        if [ "$ROOT_MOUNT" != "$BACKUP_MOUNT" ]; then
             return 0
         fi
     fi
@@ -54,12 +39,11 @@ isMounted() {
 
 
 ARGS="-Cav -F --inplace --delete --log-file=/var/log/backup-engraver.log"
-## ARGS="-CrlpgoDv --size-only --inplace --delete --log-file=/var/log/backup-engraver.log"
 RSYNC="rsync $ARGS"
 
 # this sleep is absolutely necessary because mount is asynchronous and it takes
 # a while for jungledisk to connect
-if ! isMounted; then mount $MOUNTPOINT; sleep 60; fi
+if ! isMounted; then mount $MOUNTPOINT; sleep 6; fi
 
 echo AFTER MOUNT: ....
 mount
@@ -88,11 +72,11 @@ sync
 # don't keep $MOUNTPOINT mounted, less chance of disaster leaking into it
 # (e.g. sudo rm -rf /* will happily erase backups too, if they are mounted)
 # -z = lazy umount (will work even when resource is in use)
-fusermount -z -u $MOUNTPOINT
+umount $MOUNTPOINT
 echo "$MOUNTPOINT complete and disconnected"
 
 # again, asynchronous, we wait to finish up
-sleep 60
+sleep 6
 
 # still mounted? that's an error
 if isMounted; then exit 1; fi
