@@ -1,4 +1,4 @@
-#!/bin/bash -x 
+#!/bin/bash
 
 # Run the given command; if it fails, email each address with the output
 
