@@ -22,7 +22,7 @@ echo Backing up `hostname` on `date -I`
 #           in the destination)
 
 
-MOUNTPOINT=/mnt/xvdc
+MOUNTPOINT=/mnt/strongspace
 
 
 # returns true if $MOUNTPOINT is mounted correctly
@@ -42,7 +42,7 @@ ARGS="-Cav -F --inplace --delete --log-file=/var/log/backup-engraver.log"
 RSYNC="rsync $ARGS"
 
 # this sleep is absolutely necessary because mount is asynchronous and it takes
-# a while for jungledisk to connect
+# a while to connect
 if ! isMounted; then mount $MOUNTPOINT; sleep 6; fi
 
 echo AFTER MOUNT: ....
@@ -50,8 +50,8 @@ mount
 
 
 if ! isMounted; then
-    echo "** Couldn't mount jungledisk; did it fail earlier and keep running?" 1>&2
-    PIDS=`pgrep -f jungledisk`
+    echo "** Couldn't mount strongspace; did it fail earlier and keep running?" 1>&2
+    PIDS=`pgrep -f sshfs`
     if [ -n "$PIDS" ]; then 
         echo "$PIDS" | xargs ps -o pid= -o args= -p | xargs -i printf '** %s\n' "{}" 1>&2
     fi
