@@ -6,3 +6,5 @@ hardstatus on
 hardstatus alwayslastline
 hardstatus string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %m/%d %C%a "
 shelltitle '% |zsh'
+setenv SCREEN_RUN_HOST $SCREEN_HOST
+setenv LC_SCREEN_RUN_HOST $SCREEN_HOST
