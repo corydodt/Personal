@@ -1,9 +1,18 @@
 [ui]
 username = Cory Dodt <corymercurial@spam.goonmill.org>
 
+[merge-tools]
+# gvim.executable = gvimdiff
+# gvim.args = --nofork $base $local $other
+# meld.executable = meld
+# meld.args = $base $local $other
+kdiff3.executable = kdiff3
+kdiff3.args = --auto -m -o $local $base $local $other
+
 [extensions]
-hgext.fetch =
+hgext.fetch = 
+hgext.record = 
+hgext.transplant = 
+# hgext.hgshelve = /usr/share/pyshared/hgext/hgshelve.py
 hgext.progress =
 hgext.mq = 
-hgext.transplant =
-hgext.record =
