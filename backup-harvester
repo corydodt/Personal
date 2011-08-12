@@ -4,23 +4,23 @@ set -e
 
 export PATH=$PATH:/home/cdodt/bin
 
-ARGS="-Cav -F --inplace --delete"
-RSYNC="rsync $ARGS"
-REMOTEDIR=backups/`hostname -s`
-DEST="goonmill.org:/home/cdodt/$REMOTEDIR/"
+args="-Cav -F --inplace --delete"
+rsync="rsync $args"
+remoteDir=backups/`hostname -s`
+dest="corydodt.strongspace.com:/strongspace/corydodt/home/$remoteDir/"
 
-FAILADDRESS="corydodt+hello@gmail.com"
+failAddress="corydodt+hello@gmail.com"
 
 echo Backing up `hostname` on `date -I`
 
 failmail() {
     message="$1"
-    echo "$message" | mail -s `hostname -s`" backup failed; reason shown below" "$FAILADDRESS"
+    echo "$message" | mail -s `hostname -s`" backup failed; reason shown below" "$failAddress"
 }
 
 cd ~cdodt
 
-TOHGFILES='.gvimrc
+toHGFiles='.gvimrc
 .screenrc
 .zshrc
 .zsh
@@ -29,7 +29,7 @@ TOHGFILES='.gvimrc
 /usr/local/bin/xvim
 '
 
-HOMEFILES='.compiz
+homeFiles='.compiz
 .config
 backgrounds
 bin
@@ -56,26 +56,23 @@ RecentDownloads
 .WorldOfGoo
 '
 
-ROOTFILES='/etc/modules
+rootFiles='/etc/modules
 /etc/vim
-/etc/udev/rules.d/99-android.rules
-/etc/pm/sleep.d/50cdd-fix-mousekeys
 /usr/local/bin/xvim
 '
 
 dpkg-origins > packages.txt || failmail "Could not run dpkg-origins"
 
-$RSYNC $TOHGFILES ~/wc/Personal/  # don't fail if this doesn't work
+$rsync $toHGFiles ~/wc/Personal/  # don't fail if this doesn't work
 
-ssh goonmill.org 'mkdir -p '$REMOTEDIR || failmail "Could not create backups dir"
-$RSYNC $TOHGFILES $DEST || failmail "Could not rsync TOHGFILES"
-$RSYNC $HOMEFILES $DEST || failmail "Could not rsync HOMEFILES"
-$RSYNC $ROOTFILES $DEST || failmail "Could not rsync ROOTFILES"
+$rsync $toHGFiles $dest || failmail "Could not rsync toHGFiles"
+$rsync $homeFiles $dest || failmail "Could not rsync homeFiles"
+$rsync $rootFiles $dest || failmail "Could not rsync rootFiles"
 
 # some stupid programs insist on removing all write permissions.  i guess this
 # is a security feature for firefox extensions to prevent sploits in
 # extensions mutating other extensions?  whatever, in my backup, it will be
 # all writeable.  firefox seems to "fix" (by removing) the +w permission on
 # loading anyway, so this won't cause any problems.
-ssh goonmill.org 'chmod -R u+w '$REMOTEDIR
+ssh goonmill.org 'chmod -R u+w '$remoteDir
 
