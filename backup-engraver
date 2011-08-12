@@ -2,6 +2,11 @@
 
 set -e
 
+if [ `id` != '0' ]; then
+    echo "** Must be root to run $0" 1>&2
+    exit 1
+fi
+
 echo Backing up `hostname` on `date -I`
 
 # =============================
@@ -22,61 +27,19 @@ echo Backing up `hostname` on `date -I`
 #           in the destination)
 
 
-MOUNTPOINT=/mnt/strongspace
+dest="corydodt@corydodt.strongspace.com:/strongspace/corydodt/home/backups"
 
 
-# returns true if $MOUNTPOINT is mounted correctly
-isMounted() {
-    ROOT_MOUNT=`mountpoint -d /`
-    BACKUP_MOUNT=`mountpoint -d $MOUNTPOINT`
-    if mountpoint -q $MOUNTPOINT; then
-        if [ "$ROOT_MOUNT" != "$BACKUP_MOUNT" ]; then
-            return 0
-        fi
-    fi
-    return 1
-}
-
-
-ARGS="-Cav -F --inplace --delete --log-file=/var/log/backup-engraver.log"
-RSYNC="rsync $ARGS"
-
-# this sleep is absolutely necessary because mount is asynchronous and it takes
-# a while to connect
-if ! isMounted; then mount $MOUNTPOINT; sleep 6; fi
-
-echo AFTER MOUNT: ....
-mount
-
-
-if ! isMounted; then
-    echo "** Couldn't mount strongspace; did it fail earlier and keep running?" 1>&2
-    PIDS=`pgrep -f sshfs`
-    if [ -n "$PIDS" ]; then 
-        echo "$PIDS" | xargs ps -o pid= -o args= -p | xargs -i printf '** %s\n' "{}" 1>&2
-    fi
-    exit 1
-fi
+args=(-Cav -F --inplace --delete --log-file=/var/log/backup-engraver.log)
+sshOptions=(-e "ssh -o IdentityFile=/home/cdodt/.ssh/id_dsa")
+rsync=(rsync "${args[@]}" "${sshOptions[@]}")
 
 
 touch /var/log/backup-engraver.log
 chmod 600 /var/log/backup-engraver.log
 
-$RSYNC /var $MOUNTPOINT/engraver.goonmill.org
-$RSYNC /home $MOUNTPOINT/engraver.goonmill.org
-$RSYNC /etc $MOUNTPOINT/engraver.goonmill.org
-$RSYNC /usr/local $MOUNTPOINT/engraver.goonmill.org/usr
-$RSYNC /usr/share/moin $MOUNTPOINT/engraver.goonmill.org/usr/share
-sync
-
-# don't keep $MOUNTPOINT mounted, less chance of disaster leaking into it
-# (e.g. sudo rm -rf /* will happily erase backups too, if they are mounted)
-# -z = lazy umount (will work even when resource is in use)
-umount $MOUNTPOINT
-echo "$MOUNTPOINT complete and disconnected"
-
-# again, asynchronous, we wait to finish up
-sleep 6
-
-# still mounted? that's an error
-if isMounted; then exit 1; fi
+"${rsync[@]}" /var $dest/engraver.goonmill.org
+"${rsync[@]}" /home $dest/engraver.goonmill.org
+"${rsync[@]}" /etc $dest/engraver.goonmill.org
+"${rsync[@]}" /usr/local $dest/engraver.goonmill.org/usr
+"${rsync[@]}" /usr/share/moin $dest/engraver.goonmill.org/usr/share
