@@ -2,6 +2,9 @@
 
 set -e
 
+
+dateFolder=`date +%a`
+
 if [ `id` != '0' ]; then
     echo "** Must be root to run $0" 1>&2
     exit 1
@@ -27,7 +30,7 @@ echo Backing up `hostname` on `date -I`
 #           in the destination)
 
 
-dest="corydodt@corydodt.strongspace.com:/strongspace/corydodt/home/backups"
+dest="corydodt@corydodt.strongspace.com:/strongspace/corydodt/home/backups/${dateFolder}"
 
 
 args=(-Cav -F --inplace --delete --log-file=/var/log/backup-engraver.log)
