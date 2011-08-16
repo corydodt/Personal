@@ -1,11 +1,10 @@
 source ~/.zsh/myPrompt
 source ~/.zsh/`uname`
 
-myColor=white\ bold  # may also be "yellow bold" for example
+myColor=red # may also be "yellow bold" for example
 # colors are: white red yellow green magenta blue black cyan
-
-
-export PATH=$PATH:~/bin:~/wc/Twisted/bin:~/wc/Divmod/Axiom/bin
+#
+SCREEN_HOST=`hostname`
 
 # If running interactively, then:
 if [ "$PS1" ]; then
@@ -16,6 +15,7 @@ if [ "$PS1" ]; then
     fi
     eval `dircolors -b ~/.dircolors`
     
+    alias ls='ls -F --color'
     alias vim='vim -X'
     alias pvim='(tf=`tempfile -pvim-r_ -d/tmp`; cat > $tf && command gvim --remote-tab-silent-wait $tf; rm -f $tf) >/dev/null 2>&1 &'
     alias gvim='echo \*\* no gvim 1>&2 && false'
@@ -60,6 +60,8 @@ DEBEMAIL=launchpad@spam.goonmill.org
 DEBFULLNAME="Cory Dodt"
 export DEBEMAIL DEBFULLNAME
 
+export PATH=$PATH:~/bin
+
 HISTFILE=~/.zsh_history
 SAVEHIST=3456
 HISTSIZE=34556
@@ -67,5 +69,3 @@ HISTSIZE=34556
 export EDITOR=vim
 
 setopt -oSHARE_HISTORY
-
-bindkey -e # emacs

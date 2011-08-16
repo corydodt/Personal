@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd ~
+sshfs -s corydodt.strongspace.com:/strongspace/corydodt/home Strongspace
