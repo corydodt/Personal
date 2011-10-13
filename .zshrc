@@ -1,10 +1,13 @@
 source ~/.zsh/myPrompt
 source ~/.zsh/`uname`
+source ~/.zsh/mapping
 
 myColor=red # may also be "yellow bold" for example
 # colors are: white red yellow green magenta blue black cyan
 #
 SCREEN_HOST=`hostname`
+
+export PATH=$PATH:~/bin
 
 # If running interactively, then:
 if [ "$PS1" ]; then
@@ -49,7 +52,7 @@ if [ "$PS1" ]; then
 
     if [ $(id -u) -ne 0 ] && which keychain >/dev/null 2>&1; then
         # eval `keychain --eval ~/.ssh/id_dsa 70221D07` # don't use a gpg key that often
-        eval `keychain --nogui --eval ~/.ssh/id_dsa`
+        # eval `keychain --nogui --eval ~/.ssh/id_dsa`
     fi
 fi
 
@@ -59,8 +62,6 @@ umask 002
 DEBEMAIL=launchpad@spam.goonmill.org
 DEBFULLNAME="Cory Dodt"
 export DEBEMAIL DEBFULLNAME
-
-export PATH=$PATH:~/bin
 
 HISTFILE=~/.zsh_history
 SAVEHIST=3456
