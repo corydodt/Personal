@@ -449,6 +449,85 @@ iab unittestbp
 \<CR>v/}<CR>h
 
 
+iab txpluginbp 
+\<ESC>:set paste
+\<CR>:set nofoldenable
+\<CR>i"""
+\<CR>Twistd plugin to {Press s to write a module docstring!}
+\<CR>"""
+\<CR>from zope.interface import implements
+\<CR>
+\<CR>from twisted.python import usage, log, logfile
+\<CR>from twisted.plugin import IPlugin
+\<CR>from twisted.application.service import IServiceMaker, MultiService
+\<CR>from twisted.application import strports
+\<CR>
+\<CR>from THINGIE import THINGIEFactory 
+\<CR>
+\<CR>
+\<CR>LOG_WRAP = 3*10**6
+\<CR>
+\<CR>
+\<CR>class Options(usage.Options):
+\<CR>    optParameters = [['port', 'p', '17766', 'Port to run on'],
+\<CR>                     ['logWrap', None, LOG_WRAP,
+\<CR>                         'Number of bytes, log files will grow no larger than this'],
+\<CR>                     ]
+\<CR>
+\<CR>    ## optFlags  = []
+\<CR>
+\<CR>    def postOptions(self):
+\<CR>        self['logWrap'] = int(self['logWrap'])
+\<CR>
+\<CR>class THINGIEMaker(object):
+\<CR>    """
+\<CR>    Framework boilerplate class: This is used by twistd to get the service
+\<CR>    class.
+\<CR>
+\<CR>    Basically exists to hold the IServiceMaker interface so twistd can find
+\<CR>    the right makeService method to call.
+\<CR>    """
+\<CR>    implements(IServiceMaker, IPlugin)
+\<CR>    tapname = "THINGIE"
+\<CR>    description = "THINGIE description"
+\<CR>    options = Options
+\<CR>
+\<CR>    def makeService(self, options):
+\<CR>        """
+\<CR>        Construct the THINGIE
+\<CR>        """
+\<CR>        master = MultiService()
+\<CR>
+\<CR>
+\<CR>        factory = THINGIEFactory()
+\<CR>
+\<CR>
+\<CR>        port = 'tcp:%s' % (options['port'],)
+\<CR>        myService = strports.service(port, factory)
+\<CR>        master.addService(myService)
+\<CR>
+\<CR>        # Handle logging ourselves so logs get rotated
+\<CR>        if options.parent['logfile']:
+\<CR>            raise usage.UsageError("** do not use --logfile option, it is ignored")
+\<CR>        if not options.parent['nodaemon']:
+\<CR>            log.startLogging(logfile.LogFile('THINGIE.log', '.',
+\<CR>                rotateLength=options['logWrap'],
+\<CR>                maxRotatedFiles=30))
+\<CR>
+\<CR>        return master
+\<CR>
+\<CR># Now construct an object which *provides* the relevant interfaces
+\<CR>
+\<CR># The name of this variable is irrelevant, as long as there is *some*
+\<CR># name bound to a provider of IPlugin and IServiceMaker.
+\<CR>
+\<CR>serviceMaker = THINGIEMaker()
+\<ESC>:set nopaste
+\<CR>:set ft=python
+\<CR>/{Press
+\<CR>v/}<CR>h
+
+
 fu! DoPrettyXML(htmlFlag)
     let l:notfragment = search('^<!DOCTYPE\|^<?xml', "w")
     let l:hasxmlheader = search('^<?xml', "w")
