@@ -1,6 +1,7 @@
-source ~/.zsh/myPrompt
-source ~/.zsh/`uname`
-source ~/.zsh/mapping
+zsh_locals=($(echo ~/.zsh.d/*))
+for source in ${zsh_locals[@]}; do
+    source $source
+done
 
 myColor=red # may also be "yellow bold" for example
 # colors are: white red yellow green magenta blue black cyan
