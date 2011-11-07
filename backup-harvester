@@ -31,7 +31,7 @@ cd ~cdodt
 toHGFiles='.gvimrc
 .screenrc
 .zshrc
-.zsh
+.zsh.d
 .hgrc
 .sqliterc
 /usr/local/bin/xvim

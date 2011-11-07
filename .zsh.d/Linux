@@ -1,2 +1,4 @@
-alias ls='ls --color=auto -F'
-alias open='gnome-open'
+if [ "$(uname)" = Linux ]; then
+    alias ls='ls --color=auto -F'
+    alias open='gnome-open'
+fi

@@ -1,0 +1,4 @@
+l () {
+        locate -ir '/home/cdodt/Dropbox/Art/'".*$1"
+}
+

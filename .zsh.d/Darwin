@@ -1,3 +1,5 @@
-alias dircolors=gdircolors
-export PATH="$PATH":/opt/local/bin
-alias ls='gls --color=auto -F'
+if [ "$(uname)" = "Darwin" ]; then
+    alias dircolors=gdircolors
+    export PATH="$PATH":/opt/local/bin
+    alias ls='gls --color=auto -F'
+fi
