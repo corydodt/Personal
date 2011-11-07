@@ -95,10 +95,9 @@ fu! SetCoryCommands()
     command! PrettyXML call DoPrettyXML(0)
     command! PrettyHTML call DoPrettyXML(1)
     command! RunPyBuffer call DoRunAnyBuffer("python -", "python")
-    command! RunJythonBuffer call DoRunAnyBuffer("jython -", "python")
     command! RunBashBuffer call DoRunAnyBuffer("bash -", "sh")
-    command! RunLuaBuffer call DoRunAnyBuffer("lua -", "lua")
     command! RunSQLiteBuffer call DoRunAnyBuffer("sqlite3", "sql")
+    command! RunMakeBM call DoRunAnyBuffer("makebm.js", "javascript")
 
     command! PyFlake call DoPyFlakes()
 
@@ -144,9 +143,8 @@ fu! SetCoryMappings()
 
     map <Leader>p :RunPyBuffer<CR>:winc p<cr>:set filetype=pylog<cr>:winc p<cr>
     map <Leader>b :RunBashBuffer<CR>
-    map <Leader>l :RunLuaBuffer<CR>
     map <Leader>q :RunSQLiteBuffer<CR>
-    map <Leader>j :RunJythonBuffer<CR>
+    map <Leader>B :RunMakeBM<CR>
 
     " diffs
     map <Leader>D :call ToggleHgDiff2()<CR>

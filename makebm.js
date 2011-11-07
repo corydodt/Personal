@@ -1,9 +1,8 @@
 #!/usr/bin/rhino -strict -f
+"use strict";
 importPackage(java.io);
 importPackage(java.lang);
 
-System.out.println('1');
- 
 // "in" is a keyword in JavaScript. 
 // In JavaScript you could query for an attribute using [] syntax: 
 var reader = new BufferedReader( new InputStreamReader(System['in']) );
@@ -22,8 +21,8 @@ function MakeBM() {
     // Standardize newlines
     Text = Text.replace(/\r/g, '\n');
 
-    // Remove comments
-    Text = RemoveComments(Text);
+//    // Remove comments
+//    Text = removeComments(Text);
 
     // No multiple spaces
     Text = Text.replace(/[\t ]+/g, ' ');
@@ -76,8 +75,6 @@ function MakeBM() {
     if ( (Text.substring(0, 12) + Text.substring(TextLength - 5)) != '(function(){})();' ) Text = '(function(){' + Text + '})();';
     Text = 'javascript:' + Text;
 
-    /////////////// document.BMMaker.Output.value = Text;
-    System.out.println('99');
     System.out.println(Text);
 
 }
@@ -105,88 +102,53 @@ function MakeReplaces(Text) {
     http://james.padolsey.com/javascript/removing-comments-in-javascript/
 */
 
-function RemoveComments(str) {
-    str = ('__' + str + '__').split('');
-    var mode = {
-        singleQuote: false,
-        doubleQuote: false,
-        regex: false,
-        blockComment: false,
-        lineComment: false,
-        condComp: false 
-    };
-    for (var i = 0, l = str.length; i < l; i++) {
+function removeComments(str) {
  
-        if (mode.regex) {
-            if (str[i] === '/' && str[i-1] !== '\\') {
-                mode.regex = false;
-            }
-            continue;
-        }
+    var uid = '_' + +new Date(),
+        primatives = [],
+        primIndex = 0;
  
-        if (mode.singleQuote) {
-            if (str[i] === "'" && str[i-1] !== '\\') {
-                mode.singleQuote = false;
-            }
-            continue;
-        }
+    return (
+        str
+        /* Remove strings */
+        .replace(/(['"])(\\\1|.)+?\1/g, function(match){
+            primatives[primIndex] = match;
+            return (uid + '') + primIndex++;
+        })
  
-        if (mode.doubleQuote) {
-            if (str[i] === '"' && str[i-1] !== '\\') {
-                mode.doubleQuote = false;
-            }
-            continue;
-        }
+        /* Remove Regexes */
+        .replace(/([^\/])(\/(?!\*|\/)(\\\/|.)+?\/[gim]{0,3})/g, function(match, $1, $2){
+            primatives[primIndex] = $2;
+            return $1 + (uid + '') + primIndex++;
+        })
  
-        if (mode.blockComment) {
-            if (str[i] === '*' && str[i+1] === '/') {
-                str[i+1] = '';
-                mode.blockComment = false;
-            }
-            str[i] = '';
-            continue;
-        }
+        /*
+        - Remove single-line comments that contain would-be multi-line delimiters
+            E.g. // Comment /* <--
+        - Remove multi-line comments that contain would be single-line delimiters
+            E.g. /* // <-- 
+       */
+        .replace(/\/\/.*?\/?\*.+?(?=\n|\r|$)|\/\*[\s\S]*?\/\/[\s\S]*?\*\//g, '')
  
-        if (mode.lineComment) {
-            if (str[i+1] === '\n' || str[i+1] === '\r') {
-                mode.lineComment = false;
-            }
-            str[i] = '';
-            continue;
-        }
+        /*
+        Remove single and multi-line comments,
+        no consideration of inner-contents
+       */
+        .replace(/\/\/.+?(?=\n|\r|$)|\/\*[\s\S]+?\*\//g, '')
  
-        if (mode.condComp) {
-            if (str[i-2] === '@' && str[i-1] === '*' && str[i] === '/') {
-                mode.condComp = false;
-            }
-            continue;
-        }
+        /*
+        Remove multi-line comments that have a replaced ending (string/regex)
+        Greedy, so no inner strings/regexes will stop it.
+       */
+        .replace(RegExp('\\/\\*[\\s\\S]+' + uid + '\\d+', 'g'), '')
  
-        mode.doubleQuote = str[i] === '"';
-        mode.singleQuote = str[i] === "'";
+        /* Bring back strings & regexes */
+        .replace(RegExp(uid + '(\\d+)', 'g'), function(match, n){
+            return primatives[n];
+        })
+    );
  
-        if (str[i] === '/') {
- 
-            if (str[i+1] === '*' && str[i+2] === '@') {
-                mode.condComp = true;
-                continue;
-            }
-            if (str[i+1] === '*') {
-                str[i] = '';
-                mode.blockComment = true;
-                continue;
-            }
-            if (str[i+1] === '/') {
-                str[i] = '';
-                mode.lineComment = true;
-                continue;
-            }
-            mode.regex = true;
- 
-        }
- 
-    }
-    return str.join('').slice(2, -2);
 }
+
 
 MakeBM();
