@@ -37,17 +37,14 @@ toHGFiles='.gvimrc
 /usr/local/bin/xvim
 '
 
-homeFiles='.compiz
-.config
+homeFiles='.config
 bin
-cory.kdb
 Desktop
 .dput.cf
 .gnupg
 .gconf
 .gnome2
 .hgrc
-.HotheadGames
 .local
 .maptool
 .openoffice.org
@@ -60,7 +57,6 @@ packages.txt
 .mozilla
 RecentDownloads
 .Skype
-.revenge_of_the_titans_1.80
 '
 
 rootFiles='/etc/modules
