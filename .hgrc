@@ -16,3 +16,4 @@ hgext.transplant =
 # hgext.hgshelve = /usr/share/pyshared/hgext/hgshelve.py
 hgext.progress =
 hgext.mq = 
+hgext.graphlog =
