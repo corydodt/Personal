@@ -99,7 +99,8 @@ fu! SetCoryCommands()
     command! RunSQLiteBuffer call DoRunAnyBuffer("sqlite3", "sql")
     command! RunMakeBM call DoRunAnyBuffer("makebm.js", "javascript")
 
-    command! PyFlake call DoPyFlakes()
+    command! PyFlake call DoErrorCheck('pyflakes')
+    " command! Rhino call DoErrorCheck('rhino')
 
     command! VersionCory echo 'Cory''s vim scripts v2010.10'
 
@@ -585,9 +586,9 @@ fu! EnableReST()
     setlocal errorformat=%f:%l:\ %m
 endfu
 
-fu! DoPyFlakes()
+fu! DoErrorCheck(interpreter)
     let l:tmp = tempname()
-    exe 'sil !pyflakes %:p > ' . l:tmp
+    exe 'sil !' . a:interpreter . ' %:p > ' . l:tmp
     exe 'cfile ' . l:tmp
     call delete(l:tmp)
 endfu

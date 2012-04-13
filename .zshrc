@@ -48,7 +48,7 @@ if [ "$PS1" ]; then
 
 
     if ! echo $STY | cut -d. -f1 | xargs ps -p 2> /dev/null | grep -i screen > /dev/null 2>&1; then
-        exec screenpick
+        which screenpick && exec screenpick
     fi
 
     if [ $(id -u) -ne 0 ] && which keychain >/dev/null 2>&1; then
