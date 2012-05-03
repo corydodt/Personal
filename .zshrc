@@ -1,3 +1,5 @@
+. /etc/profile
+
 zsh_locals=($(echo ~/.zsh.d/*))
 for source in ${zsh_locals[@]}; do
     source $source
