@@ -1,29 +1,45 @@
 #!/bin/bash
 
 vimtab() {
+    command gvim --remote-tab-silent "$@"
+}
+
+waittab() {
     command gvim --remote-tab-silent-wait "$@"
 }
 
-xvim () {
-    if [ "$#" -eq 0 ]
+args="$@"
+
+# directories don't open correctly with my vimrc, so add a path element after
+# them.
+convertedArgs=()
+for a in "${args}"; do
+    if [ -d "$a" ]; then
+        a="${a}/."
+    fi
+    convertedArgs+="${a}"
+done
+
+xvim_ () {
+    if [ "${#convertedArgs}" -eq 0 ]
     then
-        command gvim
-    elif [ "$#" -gt 1 ]
+        vimtab
+    elif [ "${#convertedArgs}" -gt 1 ]
     then
-        command gvim "$@"
+        vimtab "${convertedArgs[@]}"
     else
-        if [ "$1" = "-" ]
+        if [ "${convertedArgs[0]}" = "-" ]
         then
             tf=`tempfile -pvim-r_ -d/tmp` 
             cat > $tf
             (
-                vimtab "$tf"
+                waittab "$tf"
                 rm -f $tf
             ) > /dev/null 2>&1 &
         else
-            vimtab "$1" &
+            vimtab "${convertedArgs[0]}"
         fi
     fi
 }
 
-xvim "$@" 2> /dev/null
+xvim_ "${convertedArgs[@]}" 2> /dev/null
