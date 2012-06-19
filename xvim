@@ -10,36 +10,31 @@ waittab() {
 
 args="$@"
 
+if [ "${#args}" -eq 0 ]; then
+    args="."
+fi
+
 # directories don't open correctly with my vimrc, so add a path element after
 # them.
 convertedArgs=()
-for a in "${args}"; do
+for a in ${args}; do
     if [ -d "$a" ]; then
         a="${a}/."
     fi
-    convertedArgs+="${a}"
+    convertedArgs+=( "${a}" )
 done
 
 xvim_ () {
-    if [ "${#convertedArgs}" -eq 0 ]
-    then
-        vimtab
-    elif [ "${#convertedArgs}" -gt 1 ]
-    then
-        vimtab "${convertedArgs[@]}"
+    if [ "${#convertedArgs[@]}" -eq 1 -a "${convertedArgs[0]}" = "-" ]; then
+        tf=`tempfile -pvim-r_ -d/tmp`
+        cat > $tf
+        (
+            waittab "$tf"
+            rm -f $tf
+        ) > /dev/null 2>&1 &
     else
-        if [ "${convertedArgs[0]}" = "-" ]
-        then
-            tf=`tempfile -pvim-r_ -d/tmp` 
-            cat > $tf
-            (
-                waittab "$tf"
-                rm -f $tf
-            ) > /dev/null 2>&1 &
-        else
-            vimtab "${convertedArgs[0]}"
-        fi
+        vimtab "${convertedArgs[@]}"
     fi
 }
 
-xvim_ "${convertedArgs[@]}" 2> /dev/null
+xvim_ "${convertedArgs[@]}"
