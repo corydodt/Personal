@@ -1,11 +1,15 @@
 #!/bin/bash
 
+
 vimtab() {
-    command gvim --remote-tab-silent "$@"
+    # a bug in gvim remote means directories don't open until you have visited
+    # another buffer. Adding +e (edit file) seems to refresh the tab and fix
+    # that.
+    command gvim --remote-tab-silent +e "$@"
 }
 
 waittab() {
-    command gvim --remote-tab-silent-wait "$@"
+    command gvim --remote-tab-silent-wait +e "$@"
 }
 
 args="$@"
@@ -25,7 +29,7 @@ for a in ${args}; do
 done
 
 xvim_ () {
-    if [ "${#convertedArgs[@]}" -eq 1 -a "${convertedArgs[0]}" = "-" ]; then
+    if [ "${#convertedArgs[@]}" -eq 1 ] && [ "${convertedArgs[0]}" = "-" ]; then
         tf=`tempfile -pvim-r_ -d/tmp`
         cat > $tf
         (
