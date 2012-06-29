@@ -79,8 +79,7 @@ echo $toHGFiles $homeFiles $rootFiles \
     --asynchronous-upload \
     --include-filelist /dev/stdin \
     --exclude / \
---dry-run \
-    / $dest
+    / $dest \
 || failmail "duplicity failed :("
 
 dpkg-origins > packages.txt || failmail "Could not run dpkg-origins"
