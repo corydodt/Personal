@@ -1,0 +1,87 @@
+#!/bin/bash -x
+
+set -e
+
+if [ -z "$SUDO_USER" ]; then
+    exec sudo "$0" "$@"
+fi
+
+. /root/dupe-env
+
+if [ -z "$home" -o -z "$passphrase" -o -z "$gpgKeyID" -o -z "$identityFile" ]; then
+    echo "** Environment not set up correctly, please set home, passphrase, gpgKeyID, identityFile" 1>&2
+    exit 1
+fi
+
+export HOME="$home"
+export PASSPHRASE="$passphrase"
+
+
+
+remoteDir=home/`hostname -f`/duplicity
+dest="scp://corydodt@corydodt.strongspace.com/$remoteDir/"
+
+
+failmail() {
+    message="$1"
+    echo "$message" | mail -s `hostname -s`" backup failed; reason shown below" "$failAddress"
+}
+
+toHGFiles=\
+'/home/cdodt/.gvimrc
+/home/cdodt/.screenrc
+/home/cdodt/.zshrc
+/home/cdodt/.zsh.d
+/home/cdodt/.hgrc
+/home/cdodt/.sqliterc
+'
+
+homeFiles=\
+'/home/cdodt/.config
+/home/cdodt/bin
+/home/cdodt/Desktop
+/home/cdodt/.dput.cf
+/home/cdodt/.gnupg
+/home/cdodt/.gconf
+/home/cdodt/.gnome2
+/home/cdodt/.hgrc
+/home/cdodt/.local
+/home/cdodt/.maptool
+/home/cdodt/.openoffice.org
+/home/cdodt/packages.txt
+/home/cdodt/.pdbrc
+/home/cdodt/.purple
+/home/cdodt/.pydistutils.cfg
+/home/cdodt/.pypirc
+/home/cdodt/.ssh
+/home/cdodt/.mozilla
+/home/cdodt/RecentDownloads
+/home/cdodt/.Skype
+/home/cdodt/wc/c/Personal
+'
+
+rootFiles=\
+'/etc/modules
+/etc/vim
+/usr/local/bin/xvim
+'
+
+
+echo Backing up `hostname` on `date -I`
+
+
+sshOptions="-oIdentityFile=$identityFile -oControlMaster=no"
+echo $toHGFiles $homeFiles $rootFiles \
+| duplicity --encrypt-key="$gpgKeyID" \
+    -v6 \
+    --volsize 50 \
+    --ssh-options "$sshOptions" \
+    --asynchronous-upload \
+    --include-filelist /dev/stdin \
+    --exclude / \
+--dry-run \
+    / $dest
+|| failmail "duplicity failed :("
+
+dpkg-origins > packages.txt || failmail "Could not run dpkg-origins"
+
