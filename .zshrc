@@ -1,3 +1,5 @@
+. /etc/profile
+
 zsh_locals=($(echo ~/.zsh.d/*))
 for source in ${zsh_locals[@]}; do
     source $source
@@ -32,13 +34,21 @@ if [ "$PS1" ]; then
         }
         ;;
       screen*)
-        precmd() {
-            myPrompt $myColor
-        }
+         :
+         precmd() {
+             myPrompt $myColor
+             echo -ne "\033]83;title zsh\007"
+         }
+
+         preexec() {
+             echo -ne "\033]83;title '${2[0,25]}'\007"
+         }
+
         ;;
       *)
         ;;
     esac
+
     #if [ -n "$SSH_CLIENT" -a -z "$DISPLAY" ]; then
     #  export DISPLAY=`echo $SSH_CLIENT | cut -d\  -f 1`:0
     #fi
@@ -48,7 +58,7 @@ if [ "$PS1" ]; then
 
 
     if ! echo $STY | cut -d. -f1 | xargs ps -p 2> /dev/null | grep -i screen > /dev/null 2>&1; then
-        exec screenpick
+        which screenpick && exec screenpick
     fi
 
     if [ $(id -u) -ne 0 ] && which keychain >/dev/null 2>&1; then
