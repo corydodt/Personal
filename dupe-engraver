@@ -1,0 +1,33 @@
+#!/bin/bash -x
+
+if [ -z "$SUDO_USER" ]; then
+    exec sudo "$0" "$@"
+fi
+
+
+set -e
+
+. /root/dupe-env
+
+if [ -z "$home" -o -z "$passphrase" -o -z "$gpgKeyID" -o -z "$identityFile" ]; then 
+    echo "** Environment not set up correctly, please set HOME PASSPHRASE and gpgKeyID" 1>&2
+    exit 1
+fi
+
+export HOME="$home"
+export PASSPHRASE="$passphrase"
+
+
+find / \( -path '/*/.cache/*' -o -path '/*/Dropbox/*' -prune \) \
+    -o -path '/etc/*' -print \
+    -o -path '/home/*' -print \
+    -o -path '/var/*' -print \
+    -o -path '/usr/share/moin/*' -print | \
+duplicity --encrypt-key="$gpgKeyID" \
+    -v5 \
+    --volsize 50 \
+    --ssh-options "-o 'IdentityFile $identityFile'" \
+    --asynchronous-upload \
+    --include-filelist /dev/stdin \
+    --exclude / \
+    / scp://corydodt@corydodt.strongspace.com/home/engraver.goonmill.org/duplicity
