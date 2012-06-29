@@ -10,7 +10,7 @@ set -e
 . /root/dupe-env
 
 if [ -z "$home" -o -z "$passphrase" -o -z "$gpgKeyID" -o -z "$identityFile" ]; then 
-    echo "** Environment not set up correctly, please set HOME PASSPHRASE and gpgKeyID" 1>&2
+    echo "** Environment not set up correctly, please set home, passphrase, gpgKeyID, identifyFile" 1>&2
     exit 1
 fi
 
