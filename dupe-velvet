@@ -31,53 +31,51 @@ toHGFiles=\
 '/home/cdodt/.gvimrc
 /home/cdodt/.screenrc
 /home/cdodt/.zshrc
-/home/cdodt/.zsh.d
+/home/cdodt/.zsh.d/
 /home/cdodt/.hgrc
 /home/cdodt/.sqliterc
 '
 
 homeFiles=\
-'/home/cdodt/.config
-/home/cdodt/bin
-/home/cdodt/Desktop
+'/home/cdodt/.config/
+/home/cdodt/bin/
+/home/cdodt/Desktop/
 /home/cdodt/.dput.cf
-/home/cdodt/.gnupg
-/home/cdodt/.gconf
-/home/cdodt/.gnome2
+/home/cdodt/.gnupg/
+/home/cdodt/.gconf/
+/home/cdodt/.gnome2/
 /home/cdodt/.hgrc
-/home/cdodt/.local
-/home/cdodt/.maptool
-/home/cdodt/.openoffice.org
+/home/cdodt/.local/
+/home/cdodt/.maptool/
+/home/cdodt/.openoffice.org/
 /home/cdodt/packages.txt
 /home/cdodt/.pdbrc
-/home/cdodt/.purple
+/home/cdodt/.purple/
 /home/cdodt/.pydistutils.cfg
 /home/cdodt/.pypirc
-/home/cdodt/.ssh
-/home/cdodt/.mozilla
-/home/cdodt/RecentDownloads
-/home/cdodt/.Skype
-/home/cdodt/wc/c/Personal
+/home/cdodt/.ssh/
+/home/cdodt/.mozilla/
+/home/cdodt/RecentDownloads/
+/home/cdodt/.Skype/
+/home/cdodt/wc/c/Personal/
 '
 
 rootFiles=\
 '/etc/modules
-/etc/vim
-/usr/local/bin/xvim
+/etc/vim/
 '
-
 
 echo Backing up `hostname` on `date -I`
 
-
 sshOptions="-oIdentityFile=$identityFile -oControlMaster=no"
-echo $toHGFiles $homeFiles $rootFiles \
+echo $toHGFiles$homeFiles$rootFiles | xargs printf '%s\n' | xargs find \
 | duplicity --encrypt-key="$gpgKeyID" \
+    --name "ROOT" \
     -v6 \
     --volsize 50 \
     --ssh-options "$sshOptions" \
     --asynchronous-upload \
-    --include-filelist /dev/stdin \
+    --include-filelist-stdin \
     --exclude / \
     / $dest \
 || failmail "duplicity failed :("
