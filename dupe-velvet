@@ -7,19 +7,25 @@ if [ -z "$SUDO_USER" ]; then
 fi
 
 . /root/dupe-env
+. /root/dupe-filelist
 
-if [ -z "$home" -o -z "$passphrase" -o -z "$gpgKeyID" -o -z "$identityFile" ]; then
-    echo "** Environment not set up correctly, please set home, passphrase, gpgKeyID, identityFile" 1>&2
+if [    -z "$home"         \
+     -o -z "$passphrase"   \
+     -o -z "$gpgKeyID"     \
+     -o -z "$identityFile" \
+     -o -z "$name"         \
+     -o -z "$dest"         \
+     -o -z "$basedir"      \
+     ]; then
+    echo "** Environment not set up correctly, please set name, dest, home, passphrase, gpgKeyID, identityFile" 1>&2
     exit 1
 fi
 
 export HOME="$home"
 export PASSPHRASE="$passphrase"
 
-
-
-remoteDir=home/`hostname -f`/duplicity
-dest="scp://corydodt@corydodt.strongspace.com/$remoteDir/"
+duplicityOptions=( --encrypt-key=$gpgKeyID --name=$name $dest )
+sshOptions="-oIdentityFile=$identityFile -oControlMaster=no"
 
 
 failmail() {
@@ -27,58 +33,79 @@ failmail() {
     echo "$message" | mail -s `hostname -s`" backup failed; reason shown below" "$failAddress"
 }
 
-toHGFiles=\
-'/home/cdodt/.gvimrc
-/home/cdodt/.screenrc
-/home/cdodt/.zshrc
-/home/cdodt/.zsh.d/
-/home/cdodt/.hgrc
-/home/cdodt/.sqliterc
-'
 
-homeFiles=\
-'/home/cdodt/.config/
-/home/cdodt/bin/
-/home/cdodt/Desktop/
-/home/cdodt/.dput.cf
-/home/cdodt/.gnupg/
-/home/cdodt/.gconf/
-/home/cdodt/.gnome2/
-/home/cdodt/.hgrc
-/home/cdodt/.local/
-/home/cdodt/.maptool/
-/home/cdodt/.openoffice.org/
-/home/cdodt/packages.txt
-/home/cdodt/.pdbrc
-/home/cdodt/.purple/
-/home/cdodt/.pydistutils.cfg
-/home/cdodt/.pypirc
-/home/cdodt/.ssh/
-/home/cdodt/.mozilla/
-/home/cdodt/RecentDownloads/
-/home/cdodt/.Skype/
-/home/cdodt/wc/c/Personal/
-'
 
-rootFiles=\
-'/etc/modules
-/etc/vim/
-'
+run-duplicity() {
+    sub="$1"
+    shift
+    if [ "$sub" == "AUTO" ]; then
+        # AUTO means either inc or full as appropriate. duplicity does that if
+        # you leave the option blank
+      sub=""
+    fi
+    duplicity $sub -v6 --ssh-options "$sshOptions" "$@"
+}
+    
+backup() {
+    if [ `type -t fileList` != "function" ]; then
+        echo "** /root/dupe-filelist should contain a function named fileList that prints the files to back up, one per line"
+        exit 1
+    fi
 
-echo Backing up `hostname` on `date -I`
+    echo Backing up `hostname` on `date -I`
 
-sshOptions="-oIdentityFile=$identityFile -oControlMaster=no"
-echo $toHGFiles$homeFiles$rootFiles | xargs printf '%s\n' | xargs find \
-| duplicity --encrypt-key="$gpgKeyID" \
-    --name "ROOT" \
-    -v6 \
-    --volsize 50 \
-    --ssh-options "$sshOptions" \
-    --asynchronous-upload \
-    --include-filelist-stdin \
-    --exclude / \
-    / $dest \
-|| failmail "duplicity failed :("
+    dpkg-origins > packages.txt || failmail "Could not run dpkg-origins"
 
-dpkg-origins > packages.txt || failmail "Could not run dpkg-origins"
+    listFiles | run-duplicity AUTO \
+        --volsize 50 \
+        --asynchronous-upload \
+        --include-filelist-stdin \
+        --exclude "$basedir" \
+        --full-if-older-than 1M \
+        "$basedir" "${duplicityOptions[@]}" ; ok=$?
 
+    if [ $ok -ne 0 ]; then
+        failmail "duplicity failed :("
+    else
+        listFiles | run-duplicity verify \
+            --include-filelist-stdin \
+            --exclude "$basedir" \
+            "${duplicityOptions[@]}" "$basedir" && \
+        run-duplicity remove-older-than 1W \
+            --force \
+            "${duplicityOptions[@]}"
+    fi
+}
+
+list() {
+    unset tags
+
+    # files=$(run-duplicity list-current-files "${duplicityOptions[@]}")
+    run-duplicity list-current-files "${duplicityOptions[@]}"
+    # IFS=$'\n'
+    # for f in $files; do
+    #     tags+=($f); tags+=($f)
+    # done
+    # 
+    #
+    # selection=`whiptail --radiolist $'\n\nFiles at '"$dest in $name"$'\n' $LINES $COLUMNS 5 "${tags[@]}" 2>&1 > /dev/tty`
+    # echo "duplicity restore --file-to-restore '$selection' --ssh-options="$sshOptions" ${duplicityOptions[@]} /tmp"
+}
+
+restore () {
+    :
+}
+
+cleanup () {
+    run-duplicity cleanup "$@" "${duplicityOptions[@]}"
+}
+
+if [ `basename "$0"` == "list-velvet" ]; then
+    list
+elif [ `basename "$0"` == "restore-velvet" ]; then
+    restore
+elif [ `basename "$0"` == "cleanup-velvet" ]; then
+    cleanup "$@"
+else
+    backup
+fi

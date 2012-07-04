@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name          4chan Accidentally the Whole Thread
 // @namespace     http://www.example.com/4chan.accidentally.the.whole.thread/
-// @author        xant
+// @author        4chan Accidentally the Whole Thread Corporation
 // @description   In reply mode in any thread, expands images for the entire thread. REQUIRES 4CHAN OFFICIAL EXTENSION
 // @match         http://boards.4chan.org/*
 // @require       https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js
