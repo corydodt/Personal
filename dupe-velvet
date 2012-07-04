@@ -7,7 +7,6 @@ if [ -z "$SUDO_USER" ]; then
 fi
 
 . /root/dupe-env
-. /root/dupe-filelist
 
 if [    -z "$home"         \
      -o -z "$passphrase"   \
@@ -47,8 +46,9 @@ run-duplicity() {
 }
     
 backup() {
-    if [ `type -t fileList` != "function" ]; then
-        echo "** /root/dupe-filelist should contain a function named fileList that prints the files to back up, one per line"
+    . /root/dupe-filelist
+    if [ "`type -t listFiles`" != "function" ]; then
+        echo "** /root/dupe-filelist should contain a function named listFiles that prints the files to back up, one per line"
         exit 1
     fi
 
