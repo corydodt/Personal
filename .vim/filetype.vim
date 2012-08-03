@@ -3,4 +3,5 @@ augroup filetypedetect
     au BufNewFile,BufRead styles   setf v2style
     au BufNewFile,BufRead *.n3     setf n3
     au BufNewFile,BufRead *.jst    setf javascript
+    au BufNewFile,BufRead *.sls    setf yaml
 augroup END
