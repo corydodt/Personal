@@ -1,4 +1,4 @@
-#!/usr/bin/rhino -strict -f
+#!/usr/bin/rhino -f
 "use strict";
 importPackage(java.io);
 importPackage(java.lang);
