@@ -94,37 +94,35 @@ window.thePen = new Pen();
 
 function HighlightStorage() {
     this.markings = {};
+    this.count = 0;
 }
 HighlightStorage.prototype = {
     add: function _a_add(marking) {
-        this.markings[HighlightStorage.count] = marking;
-        HighlightStorage.count++;
+        this.markings[this.count] = marking;
+        this.count++;
     },
     save: function _a_save() {
-        var saveCounter = 0;
         var out = {};
-        for (var marking in this.markings) {
-            if (! this.markings.hasOwnProperty(marking)) {
+        for (var n in this.markings) {
+            if (! this.markings.hasOwnProperty(n)) {
                 continue;
             }
-            var marking = this.markings[marking];
+            var marking = this.markings[n];
             var rng = marking.range;
             var css1 = $(rng.startContainer).getPath();
             var css2 = $(rng.endContainer).getPath();
-            out["" + saveCounter] = [
+            out[n] = [
                 [css1, rng.startOffset], 
                 [css2, rng.endOffset],
                 {bgStyle: marking.bgStyle,
                  fgStyle: marking.fgStyle
                 }]; 
-            saveCounter++;
         }
         var ret = JSON.stringify(out);
         localStorage[LOCALSTORAGE_MARKINGS] = ret;
         return ret;
     }
 };
-HighlightStorage.count = 0;
 HighlightStorage.load = function _a_load(stored) {
     "Get all markings from disk.";
     var storage = new HighlightStorage();
@@ -172,15 +170,15 @@ jQuery.fn.getPath = function _a_getPath() {
 var LOCALSTORAGE_ROOT = 'http://goonmill.org/hatt';
 var LOCALSTORAGE_MARKINGS = LOCALSTORAGE_ROOT + '/markings';
 
-// localStorage[LOCALSTORAGE_MARKINGS] = '{"0": [["#apache-config", 0], ["#apache-config", 4], {"bgStyle": "yellow", "fgStyle": null }]}';
+localStorage[LOCALSTORAGE_MARKINGS] = '{"0": [["#apache-config", 0], ["#apache-config", 4], {"bgStyle": "yellow", "fgStyle": null }]}';
 
 
 window.theStorage = HighlightStorage.load(localStorage[LOCALSTORAGE_MARKINGS]);
-for (var marking in theStorage.markings) {
-    if (! theStorage.markings.hasOwnProperty(marking)) {
+for (var n in theStorage.markings) {
+    if (! theStorage.markings.hasOwnProperty(n)) {
         continue;
     }
-    var marking = theStorage.markings[marking];
+    var marking = theStorage.markings[n];
     marking.display();
 }
 
