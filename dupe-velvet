@@ -1,0 +1,111 @@
+#!/bin/bash -x
+
+set -e
+
+if [ -z "$SUDO_USER" ]; then
+    exec sudo "$0" "$@"
+fi
+
+. /root/dupe-env
+
+if [    -z "$home"         \
+     -o -z "$passphrase"   \
+     -o -z "$gpgKeyID"     \
+     -o -z "$identityFile" \
+     -o -z "$name"         \
+     -o -z "$dest"         \
+     -o -z "$basedir"      \
+     ]; then
+    echo "** Environment not set up correctly, please set name, dest, home, passphrase, gpgKeyID, identityFile" 1>&2
+    exit 1
+fi
+
+export HOME="$home"
+export PASSPHRASE="$passphrase"
+
+duplicityOptions=( --encrypt-key=$gpgKeyID --name=$name $dest )
+sshOptions="-oIdentityFile=$identityFile -oControlMaster=no"
+
+
+failmail() {
+    message="$1"
+    echo "$message" | mail -s `hostname -s`" backup failed; reason shown below" "$failAddress"
+}
+
+
+
+run-duplicity() {
+    sub="$1"
+    shift
+    if [ "$sub" == "AUTO" ]; then
+        # AUTO means either inc or full as appropriate. duplicity does that if
+        # you leave the option blank
+      sub=""
+    fi
+    duplicity $sub -v6 --ssh-options "$sshOptions" "$@"
+}
+    
+backup() {
+    . /root/dupe-filelist
+    if [ "`type -t listFiles`" != "function" ]; then
+        echo "** /root/dupe-filelist should contain a function named listFiles that prints the files to back up, one per line"
+        exit 1
+    fi
+
+    echo Backing up `hostname` on `date -I`
+
+    dpkg-origins > packages.txt || failmail "Could not run dpkg-origins"
+
+    listFiles | run-duplicity AUTO \
+        --volsize 50 \
+        --asynchronous-upload \
+        --include-filelist-stdin \
+        --exclude "$basedir" \
+        --full-if-older-than 1M \
+        "$basedir" "${duplicityOptions[@]}" ; ok=$?
+
+    if [ $ok -ne 0 ]; then
+        failmail "duplicity failed :("
+    else
+        listFiles | run-duplicity verify \
+            --include-filelist-stdin \
+            --exclude "$basedir" \
+            "${duplicityOptions[@]}" "$basedir" && \
+        run-duplicity remove-older-than 1W \
+            --force \
+            "${duplicityOptions[@]}"
+    fi
+}
+
+list() {
+    unset tags
+
+    # files=$(run-duplicity list-current-files "${duplicityOptions[@]}")
+    run-duplicity list-current-files "${duplicityOptions[@]}"
+    # IFS=$'\n'
+    # for f in $files; do
+    #     tags+=($f); tags+=($f)
+    # done
+    # 
+    #
+    # selection=`whiptail --radiolist $'\n\nFiles at '"$dest in $name"$'\n' $LINES $COLUMNS 5 "${tags[@]}" 2>&1 > /dev/tty`
+    # echo "duplicity restore --file-to-restore '$selection' --ssh-options="$sshOptions" ${duplicityOptions[@]} /tmp"
+}
+
+restore () {
+    :
+}
+
+cleanup () {
+    run-duplicity cleanup "$@" "${duplicityOptions[@]}"
+}
+
+if [ `basename "$0"` == "list-velvet" ]; then
+    list
+elif [ `basename "$0"` == "restore-velvet" ]; then
+    restore
+elif [ `basename "$0"` == "cleanup-velvet" ]; then
+    cleanup "$@"
+else
+    backup
+fi
