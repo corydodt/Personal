@@ -29,7 +29,7 @@ echo Backing up `hostname` on `date -I`
 
 
 dateFolder=`date +%u%a`
-dest="corydodt@corydodt.strongspace.com:/strongspace/corydodt/home/backups/${dateFolder}"
+dest="corydodt@corydodt.strongspace.com:/strongspace/corydodt/home/`hostname -f`/backups/${dateFolder}"
 
 
 args=(-Cav -F --inplace --delete --log-file=/var/log/backup-engraver.log)
@@ -40,8 +40,8 @@ rsync=(rsync "${args[@]}" "${sshOptions[@]}")
 touch /var/log/backup-engraver.log
 chmod 600 /var/log/backup-engraver.log
 
-"${rsync[@]}" /var $dest/engraver.goonmill.org
-"${rsync[@]}" /home $dest/engraver.goonmill.org
-"${rsync[@]}" /etc $dest/engraver.goonmill.org
-"${rsync[@]}" /usr/local $dest/engraver.goonmill.org/usr
-"${rsync[@]}" /usr/share/moin $dest/engraver.goonmill.org/usr/share
+"${rsync[@]}" /var $dest
+"${rsync[@]}" /home $dest
+"${rsync[@]}" /etc $dest
+"${rsync[@]}" /usr/local $dest/usr
+"${rsync[@]}" /usr/share/moin $dest/usr/share

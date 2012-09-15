@@ -22,8 +22,9 @@ find / \( -path '/*/.cache/*' -o -path '/*/Dropbox/*' -prune \) \
     -o -path '/etc/*' -print \
     -o -path '/home/*' -print \
     -o -path '/var/*' -print \
-    -o -path '/usr/share/moin/*' -print | \
-duplicity --encrypt-key="$gpgKeyID" \
+    -o -path '/usr/local/*' -print \
+    -o -path '/usr/share/moin/*' -print \
+| duplicity --encrypt-key="$gpgKeyID" \
     -v5 \
     --volsize 50 \
     --ssh-options "-o 'IdentityFile $identityFile'" \
