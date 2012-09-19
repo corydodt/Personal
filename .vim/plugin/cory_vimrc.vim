@@ -299,20 +299,30 @@ endfu
 
 iab htmlbp 
 \<ESC>:set paste
-\<CR>i<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-\<CR><!-- <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd"> -->
-\<CR><html xmlns='http://www.w3.org/1999/xhtml'>
-\<CR>  <!-- vi:set ft=html: -->
+\<CR>i<!DOCTYPE html>
+\<CR><html>
 \<CR>  <head>
 \<CR>    <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
 \<CR>    <title>{Press 's' to type a title here}</title>
 \<CR>    <style type='text/css'>
-\<CR>/* styles here */
+\<CR>body, html { width: 100%; }
+\<CR>body { margin: 30px;
+\<CR>  padding: 0px;
+\<CR>  border: 0px;
+\<CR>  font-family: georgia,serif; 
+\<CR>}
+\<CR>h1, h2, h3 { 
+\<CR>  margin: 0px 0px 8px -30px;
+\<CR>  border-left: 30px solid #669;
+\<CR>  color: white;
+\<CR>  background-color: #669;
+\<CR>  font-family: verdana,sans-serif;
+\<CR>}
 \<CR>    </style>
+\<CR>    <script src=
+\<CR>      "https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 \<CR>    <script type='text/javascript' language='javascript'>
-\<CR>// <![CDATA[
 \<CR>// scripts here
-\<CR>// ]]>
 \<CR>    </script>
 \<CR>  </head>
 \<CR>  <body>
