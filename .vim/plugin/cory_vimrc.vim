@@ -105,6 +105,9 @@ fu! SetCoryCommands()
     command! VersionCory echo 'Cory''s vim scripts v2010.10'
 
     command! -range InsertLineNums call InsertLineNumbers(<line1>,<line2>)
+
+    command! W call SudoSave()
+    command! -nargs=1 Sav call SudoSaveAs(<f-args>)
 endfu
 
 fu! SetCoryMappings()
@@ -288,6 +291,14 @@ fu! DoGather()
     exe ':0r!gather "'.s:thispath.'" | dos2unix'
 endfu
 
+fu! SudoSaveAs(newName)
+    exe 'w !sudo tee ' . a:newName . ' > /dev/null'
+    exe 'sil e!  ' . a:newName
+endfu
+
+fu! SudoSave()
+    w !sudo tee % > /dev/null
+endfu
 
 
 fu! Copyabspath()
