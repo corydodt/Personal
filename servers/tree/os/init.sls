@@ -59,5 +59,13 @@ updatedb:
 unzip: pkg.installed
 zip: pkg.installed
 p7zip-full: pkg.installed
-
 rsync: pkg.installed
+mercurial: pkg.installed
+zsh: pkg.installed
+python-dev: pkg.installed
+make: pkg.installed
+python-pip: pkg.installed
+rkhunter: pkg.installed
+snort: pkg.installed
+elinks: pkg.installed
+openntpd: pkg.installed

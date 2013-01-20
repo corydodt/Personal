@@ -19,7 +19,5 @@ postfix:
         - require:
             - pkg: postfix
 
-mutt:
-    pkg:
-        - installed
-
+mutt: pkg.installed
+postgrey: pkg.installed
