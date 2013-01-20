@@ -1,0 +1,6 @@
+# serve plain old static files off /var/www/goonmill.org/static/
+# vi:set ft=nginx:
+location /static/ {
+    alias /var/www/goonmill.org/static/;
+    autoindex on;
+}
