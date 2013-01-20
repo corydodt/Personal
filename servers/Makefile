@@ -5,7 +5,7 @@ SHELL = /bin/bash
 all: $(OBJS)
 
 $(OBJS):
-	cp -ruvns ~/Dropbox/Personal/salt-master/* .
+	cp -ruvns ~/Dropbox/sysadmin-cory/salt-master/* .
 
 samples = pillar/duty.sls pillar/backup.sls
 
