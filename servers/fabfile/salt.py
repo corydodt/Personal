@@ -62,9 +62,7 @@ def renderMinionConfig():
     """
     Return a file-like object containing the /etc/salt/minion config
     """
-    pillarData = {'saltmaster':
-            {'domain': SALT_DOMAIN },
-            }
+    pillarData = {'domain': SALT_DOMAIN }
     text = util.renderTemplate('tree/os/minion', pillar=pillarData,
             )
     return StringIO(text.encode('utf-8'))
