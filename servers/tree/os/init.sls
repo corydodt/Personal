@@ -69,3 +69,10 @@ rkhunter: pkg.installed
 snort: pkg.installed
 elinks: pkg.installed
 openntpd: pkg.installed
+vim: pkg.installed
+screen: pkg.installed
+subversion: pkg.installed
+pngcrush: pkg.installed
+libxml2-utils: pkg.installed
+diffstat: pkg.installed
+nginx: pkg.installed

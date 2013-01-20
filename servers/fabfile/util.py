@@ -272,6 +272,7 @@ def rsyncMigrate(fromHost):
             "/etc/logrotate.d "
             "/etc/ssh/ssh_host* "
             "/etc/cron.d "
+            "/etc/nginx "
             "/usr/local "
             "/var/spool/cron "
             "/etc/apache2 " +
