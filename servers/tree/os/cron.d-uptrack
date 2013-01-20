@@ -1,0 +1,15 @@
+# Replaced by Ksplice Uptrack on 2011-10-27
+# /etc/cron.d/uptrack: cron job for the Uptrack client
+#
+# PLEASE DO NOT MODIFY THIS CRON JOB.
+# Instead, contact Ksplice Support at support@ksplice.com.
+#
+# The offsets below are chosen specifically to distribute server load
+# and allow for Uptrack server maintenance windows. This cron job
+# also only contacts the Uptrack server every Nth time it runs,
+# depending on a load control setting on the Uptrack server.
+#
+# If you would like to adjust the frequency with which your
+# systems check for updates, please contact Ksplice Support at
+# support@ksplice.com
+7,37 * * * * root export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin && [ -x /usr/sbin/uptrack-upgrade ] && /usr/sbin/uptrack-upgrade --cron

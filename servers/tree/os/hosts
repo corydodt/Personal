@@ -1,0 +1,3 @@
+{{ salt['network.interfaces']().eth0.inet[0].address }} {{ grains.host }}.decipherinc.com {{ grains.host }}
+127.0.0.1 {{ grains.host }}.decipherinc.com {{ grains.host }}
+127.0.0.1 localhost.localdomain localhost

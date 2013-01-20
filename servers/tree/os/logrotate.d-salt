@@ -1,0 +1,9 @@
+/var/log/salt/minion {
+    daily
+    rotate 10
+#        missingok
+    nocreate
+    compress
+    copytruncate
+}
+
