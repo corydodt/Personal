@@ -10,7 +10,6 @@ from fabric.api import (local as l, run as r, sudo)
 from fabfile import util
 
 SALT_MINION_HOME = '/home/salt-minion'
-SALT_PILLAR_ROOT = SALT_MINION_HOME + '/pillar'
 SALT_TREE_ROOT = SALT_MINION_HOME + '/tree'
 SALT_DOMAIN = 'goonmill.org'
 
