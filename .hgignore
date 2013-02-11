@@ -6,7 +6,8 @@
 (/|\\|^)Thumbs.db$
 (/|\\|^).DS_Store$
 resume/corydodt.html
-.be/id-cache
+^\.be/id-cache$
 servers/pillar/backup.sls
 servers/pillar/duty.sls
 servers/fabric.log
+^\.zsh\.d/cdpath$

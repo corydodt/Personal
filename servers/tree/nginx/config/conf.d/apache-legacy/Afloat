@@ -1,0 +1,1 @@
+RewriteRule ^/afloat/44cc/?$ https://goonmill.org/afloat/44cc/app/ [R,L]

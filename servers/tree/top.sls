@@ -14,6 +14,7 @@ base:
     - os
     - ssh
     - mail
+    - nginx
 
 {% else %}
 

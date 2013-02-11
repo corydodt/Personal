@@ -1,0 +1,1 @@
+RewriteRule ^/afloat/44cc/(.+) http://localhost:7780/VHOST/https/goonmill.org:443/44cc/$1 [P,L]

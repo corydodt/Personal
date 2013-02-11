@@ -1,0 +1,21 @@
+# use the goonsite CMS
+# vim:set ft=nginx:
+server {
+    server_name localhost;
+	server_name  goonmill.org;
+	server_name  www.goonmill.org;
+	server_name  mail.goonmill.org;
+
+	access_log  /var/log/nginx/goonsite.access.log;
+    include /etc/nginx/conf.d/localhost/*;
+
+    # this should go last. (static dirs defined under localhost/ above)
+    location / { proxy_pass         http://127.0.0.1:800/;
+        # vhostmonster is just broken.  do it in the web server.
+        #   the following allows posts that cause a redirect to redirect to
+        #   the correct url.
+        proxy_redirect http://127.0.0.1:800 http://goonmill.org;
+        proxy_redirect http://goonmill.org:800 http://goonmill.org;
+    }
+    include /etc/nginx/conf.d/reverse_proxy;
+}

@@ -1,0 +1,5 @@
+# vim:set ft=nginx:
+location /millwheel {
+    alias /var/www/htdocs/millwheel;
+    index index.html index.htm;
+}

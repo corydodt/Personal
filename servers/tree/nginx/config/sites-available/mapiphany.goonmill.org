@@ -1,0 +1,8 @@
+# vim:set ft=nginx:
+server {
+	server_name mapiphany.goonmill.org;
+
+	access_log  /var/log/nginx/mapiphany.goonmill.org.access.log;
+
+    root        /usr/local/Mapiphany;
+}

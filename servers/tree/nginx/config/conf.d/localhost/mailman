@@ -1,0 +1,4 @@
+# vi:set ft=nginx:
+location /pipermail/ {
+    alias /var/lib/mailman/archives/public/;
+}
