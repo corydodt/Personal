@@ -75,5 +75,4 @@ subversion: pkg.installed
 pngcrush: pkg.installed
 libxml2-utils: pkg.installed
 diffstat: pkg.installed
-nginx: pkg.installed
 exuberant-ctags: pkg.installed
