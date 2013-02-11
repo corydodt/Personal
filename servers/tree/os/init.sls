@@ -56,24 +56,63 @@ updatedb:
         - require:
             - pkg: locate
 
-unzip: pkg.installed
-zip: pkg.installed
-p7zip-full: pkg.installed
-rsync: pkg.installed
-mercurial: pkg.installed
-zsh: pkg.installed
-python-dev: pkg.installed
-make: pkg.installed
-python-pip: pkg.installed
-rkhunter: pkg.installed
-snort: pkg.installed
-elinks: pkg.installed
-openntpd: pkg.installed
-vim: pkg.installed
-screen: pkg.installed
-subversion: pkg.installed
-pngcrush: pkg.installed
-libxml2-utils: pkg.installed
-diffstat: pkg.installed
-nginx: pkg.installed
-exuberant-ctags: pkg.installed
+
+# todo:
+# - install dropbox from their deb
+# - upgrade it if necessary (website deb sometimes out-of-date from repo)
+# - dropbox start -i
+# - set dropbox fs.inotify.max_user_watches = 100000
+
+utility server maintenance packages:
+    pkg:
+        - installed
+        - names:
+            - unzip
+            - zip
+            - p7zip-full
+            - rsync
+            - vim
+            - exuberant-ctags
+            - iotop
+            - screen
+            - snort
+            - zsh
+            - rkhunter
+            - elinks
+            - openntpd
+            - libxml2-utils
+            - python-pip
+
+general development packages:
+    pkg:
+        - installed
+        - names:
+            - make
+            - python-dev
+            - subversion
+            - diffstat
+            - mercurial
+
+
+wiki packages:
+    pkg:
+        - installed
+        - names:
+            - python-moinmoin
+
+# pngcrush: pkg.installed ### i forget why i needed this....
+
+goon-site packages:
+    pkg:
+        - installed
+        - names:
+            - nginx
+            - python-nevow
+            - python-docutils
+
+Fabric:
+    pip:
+        - installed
+        - require:
+            - pkg: python-pip
+
