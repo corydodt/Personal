@@ -71,7 +71,7 @@ fu! SetCoryAutoCommands()
     au Filetype changelog,Makefile setlocal noet
     au Filetype javascript setlocal smartindent
     au Filetype rst call EnableReST()
-    au Filetype javascript call EnableJsLint()
+    au Filetype javascript call EnableJSHint()
     au FileType javascript setl fen
     augroup END
 endfu
@@ -100,7 +100,7 @@ fu! SetCoryCommands()
     command! RunMakeBM call DoRunAnyBuffer("makebm.js", "javascript")
 
     command! PyFlake call DoErrorCheck('pyflakes')
-    " command! Rhino call DoErrorCheck('rhino')
+    command! JSHint call DoErrorCheck('make -C `hg root` jshint ARG=')
 
     command! VersionCory echo 'Cory''s vim scripts v2010.10'
 
@@ -597,9 +597,9 @@ fu! DoRunAnyBuffer(interpreter, syntax)
 endfu
 
 " js static checking with :make
-fu! EnableJsLint()
-    setlocal makeprg=rhino\ -f\ ~/wc/Personal/fulljslint.js\ ~/wc/Personal/rhino.js\ %:p
-    setlocal errorformat=%l:%c:%m
+fu! EnableJSHint()
+    setlocal makeprg=make\ -s\ -C\ `hg\ root`\ jshintvim\ ARG=%:p
+    setlocal errorformat=%f:\ line\ %l\\,\ col\ %c\\,\ %m
 endfu
 
 fu! EnableReST()
@@ -609,7 +609,7 @@ endfu
 
 fu! DoErrorCheck(interpreter)
     let l:tmp = tempname()
-    exe 'sil !' . a:interpreter . ' %:p > ' . l:tmp
+    exe 'sil !' . a:interpreter . '%:p > ' . l:tmp
     exe 'cfile ' . l:tmp
     call delete(l:tmp)
 endfu
