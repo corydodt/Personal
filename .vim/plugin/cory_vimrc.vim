@@ -102,7 +102,7 @@ fu! SetCoryCommands()
     command! PyFlake call DoErrorCheck('pyflakes')
     command! JSHint call DoErrorCheck('make -C `hg root` jshint ARG=')
 
-    command! VersionCory echo 'Cory''s vim scripts v2010.10'
+    command! VersionCory echo 'Cory''s vim scripts v2013.06'
 
     command! -range InsertLineNums call InsertLineNumbers(<line1>,<line2>)
 
@@ -345,6 +345,30 @@ iab htmlbp
 \<CR>?{Press
 \<CR>v/}
 \<CR>h
+
+
+iabbrev wsbp 
+\<ESC>:setlocal nofoldenable
+\<CR>:set paste
+\<CR>i"""
+\<CR>Simplest Webserver
+\<CR>"""
+\<CR>
+\<CR>from twisted.web.static import File
+\<CR>from twisted.internet import defer
+\<CR>
+\<CR>from klein import resource, route
+\<CR>(resource) # for pyflakes
+\<CR>
+\<CR>
+\<CR>@route('/')
+\<CR>def index(request):
+\<CR>    """
+\<CR>    Return index.html as a static file
+\<CR>    """
+\<CR>    return File('.')
+\<ESC>:set ft=python
+\<CR>:set nopaste<CR>
 
 
 iabbrev surveybp 
@@ -609,7 +633,7 @@ endfu
 
 fu! DoErrorCheck(interpreter)
     let l:tmp = tempname()
-    exe 'sil !' . a:interpreter . '%:p > ' . l:tmp
+    exe 'sil !' . a:interpreter . ' %:p > ' . l:tmp
     exe 'cfile ' . l:tmp
     call delete(l:tmp)
 endfu
