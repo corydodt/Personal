@@ -102,7 +102,7 @@ fu! SetCoryCommands()
     command! PyFlake call DoErrorCheck('pyflakes')
     command! JSHint call DoErrorCheck('make -C `hg root` jshint ARG=')
 
-    command! VersionCory echo 'Cory''s vim scripts v2010.10'
+    command! VersionCory echo 'Cory''s vim scripts v2013.05'
 
     command! -range InsertLineNums call InsertLineNumbers(<line1>,<line2>)
 
