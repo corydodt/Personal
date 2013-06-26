@@ -1,41 +1,74 @@
 ==================
-Cory Dodt - Résumé
+Cory Dodt - Resume
 ==================
 
-Because this document appears online, I have removed mailing address and
-phone.  I live in Fresno, California and you can reach me at::
-
-    coryd odt at gm ail dot com
-
-(Remove spaces, fix dots etc.)
+:Contact: 2652 NW Thurman St | Portland, OR 97210 | (559) 455-8384 | corydodt@gmail.com
 
 Professional Objective
 ======================
 
-A full-time senior software engineering position or technical management
-position.  Also, if you have any openings for `Director of Fun`_, I'm
-interested.
+A full-time senior software engineering position or senior technical
+management position.  Also, if you have any openings for `Director of Fun`_,
+I'm interested.
 
 .. _Director of Fun: http://www.thesun.co.uk/sol/homepage/news/2601580/Train-nut-Sam-is-rail-museum-fun-chief.html
 
 Skills
 ======
 
-* Linux Web/RIA (Rich Internet Application) development: AJAX, CSS,
-  RDBMS-backed systems, all that jazz.
+* Web/RIA (Rich Internet Application) development: AJAX, CSS, RDBMS's, NoSQL
+  dbs, Angular/jQuery, all that jazz.
 * Programming Languages: Python, Javascript, Unix Shell, SQL, Java, C/C++,
   etc.
-* Management at a mid-to-high level: motivating and training employees,
-  inspiring cool products.
+* Senior management experience: motivating and training employees, designing
+  cool products, and inspiring great work.
 * Development process wonk: TDD, code reviews, fast cycle development, open
   source development.
 * Desktop application development on Linux, Windows, Mac: GTK, wxPython, and
   more.
 * Lots of others: TCP/IP networking, technical writing, UNIX systems security
   and systems administration, load testing, graphics software.
+* I can whip up some mean eggs-in-a-basket if the cook isn't working that day.
 
 Employment History
 ==================
+
+Director of Software Development
+--------------------------------
+*Decipher, Inc.*
+
+  Jan. 2007–June 2013
+
+Senior management reporting directly to the CEOs.  My job was to motivate and
+train a team of 20 developers to implement awesome software.  In the meantime,
+I also wrote some of the code myself. I prioritized, designed, cut scope,
+provided support and a friendly technical face on sales calls to customers,
+and guided the executives on new management techniques to get their products
+developed sooner and better, by employees who enjoy a balanced life.
+
+Achievements
+~~~~~~~~~~~~
+
+* Grew a team of three to a team of 20, adding top-notch full-stack
+  developers, test engineers, front-end developers, and other support
+  personnel.
+* Oversaw implementation of regression test automation, unit testing, code
+  reviews, and other best-practices dev policies.
+* Developed *Crosstabs*, a user-friendly replacement for Decipher's legacy 
+  reporting.
+* Developed *Builder*, a survey-building application.
+* Oversaw the design and development of hundreds of features added to the
+  product suite.
+* Recommended (in some cases personally implemented) software systems to
+  improve our development turnaround: QUnit testing, an Ubuntu package for
+  keeping developer workstations up to date, screenshot-based test
+  automation using a third party, Selenium automation.
+* Created a high-performance bulk email system supporting the flagship survey
+  engine application.
+* Helped craft policies to benefit the company as a whole, working directly
+  with the executives.
+* Man, lots of other stuff.  There's not enough room in a resume.
+
 
 Open Source Developer
 ---------------------
@@ -51,7 +84,7 @@ Achievements
 * PBP_: Language for automating web system tests.  (This idea was picked up
   and reworked as twill_, a popular testing system maintained by Titus Brown,
   who credits me.)
-* Chichimec_: Web framework in progress; everyone has to have one of those.
+* Chichimec_: Web framework in progress (everyone has to have one of those).
 * utidylib_: Python bindings for the libtidy HTML cleanup library.
 * Contributions to numerous projects, such as PyMeta_, txGenshi_, Twisted_,
   A-A-P_ (including packaging this software for Debian).
@@ -68,39 +101,6 @@ Achievements
 .. _A-A-P: http://www.a-a-p.org/
 
 
-Director of Software Development
---------------------------------
-*Decipher, Inc.*
-
-  Jan. 2007–
-
-Senior management reporting directly to the two CEOs.  My job is to
-motivate a growing team of 15+ developers to implement awesome software.  In
-the meantime, I also still write some of the code myself.  I prioritize,
-design, cut scope, provide support and a friendly technical face on sales
-calls to customers, and guide the executives on new management techniques that
-will get products developed sooner and better, by employees who enjoy a
-balanced life.
-
-Achievements
-~~~~~~~~~~~~
-
-* Grew a team of three to a team of 15, adding test engineers and regression
-  test automation, unit testing, code reviews, and other best-practices dev
-  policies.
-* Developed *builder*, our survey-building application.
-* Oversaw the design and development of hundreds of features added to the
-  product suite in the last three years.
-* Recommended and in some cases personally implemented software systems to
-  improve our development turnaround, such as HTMLUnit testing, an Ubuntu
-  package for keeping developer workstations up to date, screenshot-based test
-  automation using a third party.
-* Created a high-performance bulk email system supporting our flagship survey
-  engine application.
-* Helped craft policies that have enhanced the company as a whole, working
-  directly with the executives.
-* Man, lots of other stuff.  There's not enough room in a resume.
-
 Computer Programmer
 -------------------
 *California PASS Program*
@@ -113,20 +113,16 @@ creation systems.
 
 Achievements
 ~~~~~~~~~~~~
-* Developed a db-driven HTML education system "Cyber High": an included
-  Mozilla-based browser, reporting and management capabilities, an automatic
-  update system, customer data sync, student exams, a multi-platform
-  installer, and more--all in Python and Javascript on top of Nevow and
-  Twisted.
-* Ported Cyber High to multiple platforms: Windows, Linux and Mac OS X.
-* Set up and managed internal systems: Bugzilla, Subversion on Ubuntu Linux.
-* Acted as product manager for the course delivery system: oversaw other
-  full-time developers in their jobs related to building Cyber High and tools.
-* Designed and developed "Lexicon" end-user HTML course authoring software in
+* Developed a db-driven remote education system *Cyber High*: including a
+  builtin Mozilla-based browser, reporting and management, automatic updates,
+  customer data sync, student exams, a multi-platform installer (Win-Lin-Mac),
+  and more--all in Python and Javascript on top of Nevow and Twisted.
+* Set up and managed internal dev systems: Bugzilla and svn on Ubuntu Linux.
+* Designed and developed *Lexicon* end-user HTML course authoring software in
   Python, using Python-COM bindings.
-* Provided end-user training and documentation for course authoring tools
-* Directed QA contractors.
-* Directed contract developers.
+* Trained the end users of the course authoring tools
+* Directed QA contractors and contract developers and acted as PM on their
+  work.
 * Revamped 17,000-file HTML course corpus to use web standards, using custom
   Python scraping application.
 * Developed automatic packaging of course products using Aap and Buildbot.
@@ -139,33 +135,22 @@ Development Manager
 
   July 1997–January 2002
 
-As a Development Manager I had positions starting with an internship in
-Technology Certification, moving into a Development Manager role in
-PeopleTools Performance and ended up as a developer in the PeopleTools
-Application Server group.
+I started as an intern in Technology Certification before moving into a
+Development Manager role in PeopleTools Performance and finally to the
+PeopleTools Application Server group.
 
 Achievements
 ~~~~~~~~~~~~
 * (In PeopleTools Application Server): Designed and implemented the Search
   Index Designer and Administration system in PeopleCode
-* Acceptance testing of Verity software, a search engine product
-* Fixed defects in existing PeopleSoft Search C++ code
+* Fixed defects in existing PeopleSoft SMTP and Search C++ code
 * Designed and developed psalertd status monitor in Java
-* Designed and developed early prototype systems management integration code
-  in C++
-* Maintained and fixed defects in C++ SMTP code
 * (In PeopleTools Performance): Fixed numerous performance bugs in C++ code
 * Performed high-user-volume load tests and statistical analysis of test
   results for PeopleTools performance
-* Test documentation
-* Debugged packet-level networking problems using Optimal Application Expert
 * (In PeopleTools Technology Certification): Management of product
   certification for various OS/DBMS combos
-* Documented procedures and outcomes of certification
-* Developed Lotus Notes databases for recordkeeping
 * Developed internal testing tools using C++ and Visual Basic
-* (As a development intern) Certified many PeopleTools DBMS/OS platform
-  combinations
 
 Education
 =========
@@ -173,10 +158,5 @@ Education
 B.A. in Psychology: *University of California at Berkeley*
 
     December 1997
-
-Miscellany
-==========
-
-Updated 2010-06-28.
 
 .. vim:set ft=rst:
