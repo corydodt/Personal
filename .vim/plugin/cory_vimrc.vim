@@ -77,9 +77,6 @@ fu! SetCoryAutoCommands()
 endfu
 
 fu! SetCoryCommands()
-    command! SvnDiff call DoSvnDiff()
-    command! HgDiff2 call TurnOnHgDiff2()
-    command! HgDiff call DoHgDiff()
     command! Gather call DoGather()
     command! Abspath call Copyabspath()
 
@@ -106,7 +103,6 @@ fu! SetCoryCommands()
 
     command! -range InsertLineNums call InsertLineNumbers(<line1>,<line2>)
 
-    command! W call SudoSave()
     command! -nargs=1 Sav call SudoSaveAs(<f-args>)
 endfu
 
@@ -151,11 +147,13 @@ fu! SetCoryMappings()
     map <Leader>B :RunMakeBM<CR>
 
     " diffs
-    map <Leader>D :call ToggleHgDiff2()<CR>
+    map <Leader>D :call ToggleGitDiff()<CR>
 
 
     " make it easier to edit vimrc
     map <Leader>V :so ~/vimrc<CR>
+
+    map <Leader>W :call SudoSave()<CR>
 
     " Q enters ex-mode which is annoying. kill that.
     map Q <Nop>
@@ -219,15 +217,7 @@ fu! GetTableBorder(where)
     return join(tmp, ' ')
 endfu
 
-" Helpers for some VCS systems
-fu! DoSvnDiff()
-    let s:thispath = expand('%:t')
-    new
-    exe ':0r!svn diff "'.s:thispath.'" | dos2unix'
-    setlocal ft=diff
-endfu
-
-fu! TurnOnHgDiff2()
+fu! TurnOnDiff(cmd)
     if !exists("b:diffIsOn") || !b:diffIsOn
         pclose!
 
@@ -240,7 +230,7 @@ fu! TurnOnHgDiff2()
         let b:prevfoldnestmax = &foldnestmax
         let s:thispath = expand('%:t')
         exe 'sil below vnew DIFF-'.s:thispath
-        exe ':0r!hg cat "'.s:thispath.'"'
+        exe ':0r!' . a:cmd . ' "'.s:thispath.'"'
         " open all folds - workaround bug that catches last folded section
         " in the diff
         norm zR
@@ -255,7 +245,7 @@ fu! TurnOnHgDiff2()
     endif
 endfu
 
-fu! TurnOffHgDiff2()
+fu! TurnOffDiff()
     if exists("b:diffIsOn") && b:diffIsOn
         diffoff!
         pclose!
@@ -270,19 +260,20 @@ fu! TurnOffHgDiff2()
     endif
 endfu
 
-fu! ToggleHgDiff2()
+fu! ToggleHgDiff()
     if exists("b:diffIsOn") && b:diffIsOn
-        call TurnOffHgDiff2()
+        call TurnOffDiff()
     else
-        call TurnOnHgDiff2()
+        call TurnOnDiff('hg cat')
     endif
 endfu
 
-fu! DoHgDiff()
-    let s:thispath = expand('%:t')
-    new
-    exe ':0r!hg diff "'.s:thispath.'" | dos2unix'
-    setlocal ft=diff
+fu! ToggleGitDiff()
+    if exists("b:diffIsOn") && b:diffIsOn
+        call TurnOffDiff()
+    else
+        call TurnOnDiff('git ls-tree --full-name --name-only HEAD ' . expand('%:.') . ' | xargs -i git show HEAD:{}')
+    endif
 endfu
 
 fu! DoGather()
@@ -297,7 +288,7 @@ fu! SudoSaveAs(newName)
 endfu
 
 fu! SudoSave()
-    w !sudo tee % > /dev/null
+    sil w !SUDO_ASKPASS=/usr/bin/ssh-askpass sudo -A tee % > /dev/null
 endfu
 
 
@@ -680,5 +671,15 @@ fu! NumberedCellSize(currLine)
     return 0
 endfu
 
+command! Jsyntax call DoJsyntax()
+
+fu! DoJsyntax()
+    sil %y j
+    sil below new _js_
+    sil pu j
+    sil %s,^import ,//// &,g
+    sil exe '%!nodejs'
+    set nomodified
+endfu
 
 " vim:set foldmethod=indent:
