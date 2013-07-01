@@ -1,0 +1,11 @@
+[alias]
+	d = diff
+	di = diff
+	dif = diff
+	st = status
+	ci = commit
+[user]
+	email = corydodt@gmail.com
+	name = Cory Dodt
+[push]
+	default = simple
