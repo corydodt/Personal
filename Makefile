@@ -6,4 +6,8 @@ corydoctorow.min.js:
 shell:
 	cp -av .screenrc .zsh* .vim .sqliterc .hgrc .inputrc ~
 	mkdir -p ~/bin
-	cp screenpick ~/bin
+	cp xvim screenpick ~/bin
+	for pkg in screen vim-gnome python-pip zsh mercurial git; do \
+		sudo apt-get install $${pkg} || echo '** Installation failed: ' $${pkg}; \
+	done
+	ln -s ~/.vim/plugin/cory_vimrc.vim ~/vimrc
