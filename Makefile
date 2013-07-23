@@ -6,7 +6,7 @@ corydoctorow.min.js:
 PACKAGES =      screen vim-gtk exuberant-ctags python-pip zsh mercurial git fabric
 
 shell:
-	cp -av .screenrc .zsh* .vim .sqliterc .hgrc .inputrc ~
+	cp -av .screenrc .zsh* .vim .sqliterc .hgrc .gitconfig .inputrc ~
 	mkdir -p ~/bin
 	cp xvim screenpick ~/bin
 	@echo
@@ -17,5 +17,4 @@ shell:
 	 	sudo apt-get install $${pkg} || echo '** Installation failed: ' $${pkg}; \
 	 done
 	test -f ~/vimrc || ln -s ~/.vim/plugin/cory_vimrc.vim ~/vimrc
-	@echo Enter your password for chsh
 	getent passwd $$USER | grep /usr/bin/zsh || chsh -s /usr/bin/zsh
