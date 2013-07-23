@@ -3,11 +3,19 @@ corydoctorow.min.js:
 	@cat corydoctorow.js | perl -pnle 's/^\s+//'
 	@echo '});'
 
+PACKAGES =      screen vim-gtk exuberant-ctags python-pip zsh mercurial git fabric
+
 shell:
 	cp -av .screenrc .zsh* .vim .sqliterc .hgrc .inputrc ~
 	mkdir -p ~/bin
 	cp xvim screenpick ~/bin
-	for pkg in screen vim-gnome python-pip zsh mercurial git; do \
-		sudo apt-get install $${pkg} || echo '** Installation failed: ' $${pkg}; \
-	done
-	ln -s ~/.vim/plugin/cory_vimrc.vim ~/vimrc
+	@echo
+	@echo Installing packages: $(PACKAGES)
+	@echo
+	@for pkg in $(PACKAGES); do \
+		dpkg -l $$pkg | grep ^ii || \
+	 	sudo apt-get install $${pkg} || echo '** Installation failed: ' $${pkg}; \
+	 done
+	test -f ~/vimrc || ln -s ~/.vim/plugin/cory_vimrc.vim ~/vimrc
+	@echo Enter your password for chsh
+	getent passwd $$USER | grep /usr/bin/zsh || chsh -s /usr/bin/zsh
