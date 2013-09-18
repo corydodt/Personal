@@ -19,9 +19,11 @@ if [ "$PS1" ]; then
         dircolors -p | sed '/^DIR /d' > ~/.dircolors
         echo "DIR 01;36" >> ~/.dircolors
     fi
-    eval `dircolors -b ~/.dircolors`
+    if which dircolors > /dev/null 2>&1 && ! alias dircolors > /dev/null 2>&1; then
+        eval `dircolors -b ~/.dircolors`
+    fi
     
-    alias ls='ls -F --color'
+    alias ls > /dev/null 2>&1 || alias ls='ls -F'
     alias vim='vim -X'
     alias pvim='(tf=`tempfile -pvim-r_ -d/tmp`; cat > $tf && command gvim --remote-tab-silent-wait $tf; rm -f $tf) >/dev/null 2>&1 &'
     alias gvim='echo \*\* no gvim 1>&2 && false'
@@ -55,7 +57,6 @@ if [ "$PS1" ]; then
     #if [ -e ~/display_var ]; then
     #  export DISPLAY=`cat ~/display_var`
     #fi
-
 
     if ! echo $STY | cut -d. -f1 | xargs ps -p 2> /dev/null | grep -i screen > /dev/null 2>&1; then
         which screenpick && exec screenpick

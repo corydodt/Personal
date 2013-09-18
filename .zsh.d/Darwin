@@ -1,5 +1,6 @@
 if [ "$(uname)" = "Darwin" ]; then
     alias dircolors=gdircolors
     export PATH="$PATH":/opt/local/bin
-    alias ls='gls --color=auto -F'
+    alias ls='ls -F -G'
+    export PS1=`hostname -s`": %(4~,.../,)%3~%# "
 fi
