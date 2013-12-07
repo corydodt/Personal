@@ -14,7 +14,7 @@ shell:
 	@echo
 	@for pkg in $(PACKAGES); do \
 		dpkg -l $$pkg | grep ^ii || \
-	 	sudo apt-get install $${pkg} || echo '** Installation failed: ' $${pkg}; \
+	 	sudo apt-get install -y $${pkg} || echo '** Installation failed: ' $${pkg}; \
 	 done
 	test -f ~/vimrc || ln -s ~/.vim/plugin/cory_vimrc.vim ~/vimrc
 	getent passwd $$USER | grep /usr/bin/zsh || chsh -s /usr/bin/zsh
