@@ -4,6 +4,12 @@ fu! SetCoryOptions()
         let g:vtoverride = []
     endif
 
+    " " netrw
+    if index(g:vtoverride, "netrw") < 0
+        let g:netrw_liststyle= 3
+        let g:netrw_winsize= 30
+    endif
+
     " indenting
     if index(g:vtoverride, "indent") < 0
         set tw=78
@@ -85,9 +91,9 @@ fu! SetCoryCommands()
     " :Pp! twisted.internet  " replace the current buffer, even if modified
     " :Ppn py2exe.build_exe  " horiz-split and put file in new buffer
     " :Ppv py2exe.build_exe  " vert-split and put file in new buffer
-    command! -nargs=1 -bang Pp exe ':edit<bang> '.system('pp <args>')
-    command! -nargs=1 Ppn exe ':new '.system('pp <args>')
-    command! -nargs=1 Ppv exe ':vs '.system('pp <args>')
+    command! -nargs=1 -bang Pp exe ':edit<bang> '.system('. /usr/local/bin/activate.sh; cd .; pp <args>')
+    command! -nargs=1 Ppn exe ':new '.system('. /usr/local/bin/activate.sh; cd .; pp <args>')
+    command! -nargs=1 Ppv exe ':vs '.system('. /usr/local/bin/activate.sh; cd .; pp <args>')
 
     command! PrettyXML call DoPrettyXML(0)
     command! PrettyHTML call DoPrettyXML(1)
@@ -154,6 +160,8 @@ fu! SetCoryMappings()
     map <Leader>V :so ~/vimrc<CR>
 
     map <Leader>W :call SudoSave()<CR>
+
+    map <Leader><Tab> :call GoIDE()<CR>
 
     " Q enters ex-mode which is annoying. kill that.
     map Q <Nop>
@@ -680,6 +688,14 @@ fu! DoJsyntax()
     sil %s,^import ,//// &,g
     sil exe '%!nodejs'
     set nomodified
+endfu
+
+fu! GoIDE() 
+    if exists("$VIRTUAL_ENV")
+        exe ':30vnew ' . $VIRTUAL_ENV
+    else
+        exe ':30vnew .'
+    endif
 endfu
 
 " vim:set foldmethod=indent:
