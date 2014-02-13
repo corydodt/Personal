@@ -1,11 +1,18 @@
 [alias]
-	d = diff
-	di = diff
-	dif = diff
-	st = status
-	ci = commit
+    d = diff
+    di = diff
+    dif = diff
+    st = status
+    ci = commit
 [user]
-	email = corydodt@gmail.com
-	name = Cory Dodt
+    email = corydodt@gmail.com
+    name = Cory Dodt
 [push]
-	default = simple
+    default = simple
+[diff]
+    context = 2  # default 3
+[core]
+    editor = gvim --remote-wait
+	mergeoptions = --no-edit
+[apply]
+	whitespace = nowarn
