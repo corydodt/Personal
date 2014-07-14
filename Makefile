@@ -17,4 +17,4 @@ shell:
 	 	sudo apt-get install -y $${pkg} || echo '** Installation failed: ' $${pkg}; \
 	 done
 	test -f ~/vimrc || ln -s ~/.vim/plugin/cory_vimrc.vim ~/vimrc
-	getent passwd $$USER | grep /usr/bin/zsh || sudo chsh -s /usr/bin/zsh
+	getent passwd $$USER | grep /usr/bin/zsh || sudo chsh -s /usr/bin/zsh $$USER
