@@ -3,7 +3,7 @@ corydoctorow.min.js:
 	@cat corydoctorow.js | perl -pnle 's/^\s+//'
 	@echo '});'
 
-PACKAGES =      screen vim-gtk exuberant-ctags python-pip zsh mercurial git fabric
+PACKAGES =      screen vim-gtk exuberant-ctags python-pip zsh mercurial git fabric awscli
 
 shell:
 	cp -av .screenrc .zsh* .vim .sqliterc .hgrc .gitconfig .inputrc ~
