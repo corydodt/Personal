@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# copy basic nginx config files without enabling any Aorta instances
+
+set -e
+
+sudo apt-get install -y nginx
+sudo rsync -av Personal/nginx/ /etc/nginx/
+# sudo rsync -av Personal/ssl/ /etc/ssl/
+sudo service nginx restart

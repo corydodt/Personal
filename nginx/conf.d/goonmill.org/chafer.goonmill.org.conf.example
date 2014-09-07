@@ -1,0 +1,17 @@
+# vim:set ft=conf et ts=4 sw=4:
+server {
+    server_name chafer.goonmill.org;
+    # include conf.d/bright.md/80-to-443.conf.inc;
+}
+
+server {
+    server_name goonmill.org;
+    # include conf.d/goonmill.org/443.conf.inc;
+    # include conf.d/goonmill.org/STAR_goonmill_org.conf.inc;
+    location / {
+        proxy_pass http://localhost:8080/;
+        proxy_redirect http://demo.bright.md:8080/ /;
+        include conf.d/bright.md/proxy-common.conf.inc;
+    }
+
+}
