@@ -20,4 +20,17 @@ shell:
 	getent passwd $$USER | grep /usr/bin/zsh || sudo chsh -s /usr/bin/zsh $$USER
 
 server:
-	cd ~; ./Personal/setup-hostname; ./Personal/install-nginx
+	~/Personal/setup-hostname
+	~/Personal/install-nginx
+	sudo apt-get install postfix postfix-pcre
+
+mezzanine:
+	mkdir ~/Mezzanine.env; cd ~/Mezzanine.env; virtualenv .
+	cd ~/Mezzanine.env; . bin/activate; pip install mezzanine
+	sudo cp ~/Personal/init/mezzanine.conf /etc/init
+
+supperfeed:
+	sudo apt-get install mongodb-server
+	mkdir ~/SupperFeed.env; cd ~/SupperFeed.env; virtualenv .
+	cd ~/SupperFeed.env; . bin/activate; pip install git+ssh://git@github.com/corydodt/SupperFeed.git
+	sudo cp ~/Personal/init/supperfeed.conf /etc/init
