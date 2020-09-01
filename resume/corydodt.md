@@ -4,13 +4,12 @@
 
 ---
 
-| Professional Objective |
-|------------------------|
-| A full-time senior software engineering position. |
+Professional Objective
+----------------------
+A full-time senior DevOps position
 
-| Skills |
-|--------|
-
+Skills
+------
 * Web application development in or out of the cloud
 * Programming Languages: Python, Javascript, Unix Shell, Java, C/C++,
   etc.
@@ -22,22 +21,23 @@
   and systems administration, load testing.
 * A good cook in a variety of culinary traditions.
 
-| Employment History |
-|--------------------|
+Employment History
+------------------
 
 
 ### Vice President of Engineering (& other titles)
 
-*Bright.md` `*
+*Bright.md*
 
   Jan. 2014-Aug. 2020
 
 First employee, reporting directly to the founders. Built the original product from scratch, made all technical hiring decisions for 4 years and set development policy and helped ground the ethical foundation of the company itself. Oversaw the growth of the company from zero-product to thousands of patients seen per month.
 
 * Built _SmartExam_, the flagship product
+* Built internal development support infrastructure, including Travis CI, containerization of software, automated API tests, more
 * Established, across the board, standards and practices for how software is developed at Bright.
 * Hired the team that made SmartExam scale up to double-digit customers and tens of thousands of patients.
-* As IC (starting 2018), implemented tons of QA automation and CD processes, as well as additional customer-facing features and integrations.
+* As IC (starting 2018), implemented additional QA automation and CD processes, as well as additional customer-facing features and integrations
 
 ---
 ### Director of Software Development
@@ -156,7 +156,7 @@ PeopleTools Application Server group.
 
 ---
 
-| Education |
-|-----------|
+Education
+---------
 
 B.A. in Psychology (1997): *University of California at Berkeley*
