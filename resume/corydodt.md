@@ -6,7 +6,7 @@
 
 Professional Objective
 ----------------------
-A full-time senior DevOps position
+A full-time senior software development position as an individual contributor, including ops or application dev
 
 Skills
 ------
@@ -25,24 +25,20 @@ Employment History
 ------------------
 
 
-### Vice President of Engineering (& other titles)
-
-*Bright.md*
+### Vice President of Engineering (& other titles) | *Bright.md*
 
   Jan. 2014-Aug. 2020
 
 First employee, reporting directly to the founders. Built the original product from scratch, made all technical hiring decisions for 4 years and set development policy and helped ground the ethical foundation of the company itself. Oversaw the growth of the company from zero-product to thousands of patients seen per month.
 
-* Built _SmartExam_, the flagship product
-* Built internal development support infrastructure, including Travis CI, containerization of software, automated API tests, more
-* Established, across the board, standards and practices for how software is developed at Bright.
+* Built _SmartExam_, the flagship product (primary language Python)
+* Built internal development support infrastructure, including Travis CI, containerization of software, automated API tests, more (Ops work including Python and JS software)
+* Established the standards and practices for how software is developed at Bright.
 * Hired the team that made SmartExam scale up to double-digit customers and tens of thousands of patients.
-* As IC (starting 2018), implemented additional QA automation and CD processes, as well as additional customer-facing features and integrations
+* Implemented QA automation and CD processes, as well as new customer-facing features and integrations (Python, JS)
 
 ---
-### Director of Software Development
-
-*Decipher, Inc.*
+### Director of Software Development | *Decipher, Inc.*
 
   Jan. 2007-June 2013
 
@@ -57,27 +53,25 @@ developed sooner and better, by employees who enjoy a balanced life.
   developers, test engineers, front-end developers, and other support
   personnel.
 * Oversaw implementation of regression test automation, unit testing, code
-  reviews, and other best-practices dev policies.
+  reviews, and other best-practices dev policies. (Ops work and Python)
 * Developed *Crosstabs*, a user-friendly replacement for Decipher's legacy
-  reporting.
-* Developed *Builder*, a survey-building application.
+  reporting. (Python)
+* Developed *Builder*, a survey-building application. (Python)
 * Oversaw the design and development of hundreds of features added to the
   product suite.
 * Recommended (in some cases personally implemented) software systems to
   improve our development turnaround: QUnit testing, an Ubuntu package for
   keeping developer workstations up to date, screenshot-based test
-  automation using a third party, Selenium automation.
+  automation using a third party, Selenium automation. (Python, JS)
 * Created a high-performance bulk email system supporting the flagship survey
-  engine application.
+  engine application. (Python)
 * Helped craft policies to benefit the company as a whole, working directly
   with the executives.
 * Man, lots of other stuff.  There's not enough room in a resume.
 
 ---
 
-### Open Source Developer
-
-*Freelance*
+### Open Source Developer | *Freelance*
 
 This is stuff I do for enjoyment, or because it fills a need.  Nevertheless,
 it is developed with a professional approach.
@@ -101,9 +95,7 @@ who credits me.)
 
 ---
 
-### Computer Programmer
-
-*California PASS Program*
+### Computer Programmer | *California PASS Program*
 
   May 2002–Jan. 2007
 
@@ -131,9 +123,7 @@ creation systems.
 
 ---
 
-### Development Manager
-
-*PeopleSoft, Inc.*
+### Development Manager | *PeopleSoft, Inc.*
 
   July 1997–January 2002
 
