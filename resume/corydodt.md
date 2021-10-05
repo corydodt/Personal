@@ -17,14 +17,32 @@ Skills
   cool products; and inspiring great work.
 * Development process wonk: TDD, code reviews, fast cycle development, open
   source development, continuous deployment.
-* Lots of others: test automation and CI, TCP/IP networking, technical writing, UNIX systems security
-  and systems administration, load testing.
+* Lots of others: test automation and CI, deployment automation, TCP/IP
+  networking, technical writing, UNIX systems security and systems administration, load testing.
 * A good cook in a variety of culinary traditions.
 
 Employment History
 ------------------
 
 
+### Senior Engineer | *OmniVector Solutions*
+
+  Nov. 2020-Apr. 2021
+
+Senior engineer specializing in backend Python service development and packaging and automation
+
+* Modernized the codebase of _Jobbergate_ (Python) and completed numerous
+  bugfixes; performed multiple production release deployments
+* Built _licensemanager2_ from scratch, using FastAPI, PostgreSQL, AWS API Gateway
+* Automated the deployment of numerous OSL projects from scratch using Terraform,
+  AWS Lambda, and Docker-focused build tools
+* Developed _jawthorizer_, a plug-in JWT Authorizer kit for AWS API Gateway
+* Introduced test automation standards to the company's development toolkit,
+  using pytest, bats, and GitHub Actions
+* Ran trainings for internal developers on software development best practices and
+  test automation
+
+---
 ### Vice President of Engineering (& other titles) | *Bright.md*
 
   Jan. 2014-Aug. 2020
