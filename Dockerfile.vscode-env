@@ -33,9 +33,10 @@ RUN apt-get update \
     && apt-get install -y \
         build-essential \
         curl \
+        docker.io \
         git \
-	iputils-ping \
-	iputils-tracepath \
+        gosu \
+        iputils-ping \
         man-db \
         net-tools \
         openvpn \
@@ -76,19 +77,16 @@ set editing-mode vi\n'\
 RUN groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME -s /bin/bash \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && usermod -a -G docker $USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
-USER $USERNAME
-
 # autostart ssh
-RUN printf '\
-#!/bin/bash\n\
+RUN printf '#!/usr/bin/bash -x\n\
 service ssh restart\n\
 exec "$@"\n'\
-    >> /root/entrypoint.sh
+    >> /entrypoint.sh
 
-ENTRYPOINT ["sh", "/root/entrypoint.sh"]
-
+ENTRYPOINT ["sh", "/entrypoint.sh"]
 
 # powershell example
 # ==================
@@ -96,17 +94,16 @@ ENTRYPOINT ["sh", "/root/entrypoint.sh"]
 # cd \\wsl$\Ubuntu-18.04\home\cory\src\Personal
 # $user="cdodt"
 #
-# $buildtag="9"
+# $buildtag="10"
 # docker build -f Dockerfile.vscode-env `
 #   --build-arg USERNAME=$user `
-#   --tag vscode-env:$buildtag .
+#   --tag localhost:5000/vscode-env:$buildtag .
 #
 # $name="aero-dev-$(get-date -format yyyyMMddHHmm)"
 # docker run -d `
 #    --name=$name `
 #    --hostname=$name `
-#    --user=$user `
-#    --mount "type=volume,src=cdodt,dst=/home/cdodt" `
+#    --mount "type=volume,src=cdodt,dst=/home/$user" `
 #    --device /dev/net/tun `
 #    --cap-add=NET_ADMIN `
 #    --restart=unless-stopped `
@@ -114,4 +111,3 @@ ENTRYPOINT ["sh", "/root/entrypoint.sh"]
 #    -t `
 #    vscode-env:$buildtag `
 #      bash
-
