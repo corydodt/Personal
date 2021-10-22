@@ -1,5 +1,12 @@
 FROM ubuntu:20.04
 
+# Container features:
+# - `cdodt` user installed with sudo
+# - ssh service running
+# - development software (python, terraform, go) preinstalled, with tools to install more
+# - openvpn and net tools preinstalled
+
+
 ARG USERNAME=cdodt
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
@@ -27,13 +34,17 @@ RUN apt-get update \
         build-essential \
         curl \
         git \
+	iputils-ping \
+	iputils-tracepath \
         man-db \
+        net-tools \
         openvpn \
         python3 \
         python3-pip \
         python3-virtualenvwrapper \
         rsync \
         software-properties-common \
+        ssh \
         sudo \
         unzip \
         vim \
@@ -69,6 +80,15 @@ RUN groupadd --gid $USER_GID $USERNAME \
 
 USER $USERNAME
 
+# autostart ssh
+RUN printf '\
+#!/bin/bash\n\
+service ssh restart\n\
+exec "$@"\n'\
+    >> /root/entrypoint.sh
+
+ENTRYPOINT ["sh", "/root/entrypoint.sh"]
+
 
 # powershell example
 # ==================
@@ -90,6 +110,7 @@ USER $USERNAME
 #    --device /dev/net/tun `
 #    --cap-add=NET_ADMIN `
 #    --restart=unless-stopped `
+#    -p 192.168.0.36:2222:22 `
 #    -t `
 #    vscode-env:$buildtag `
 #      bash
