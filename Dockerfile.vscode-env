@@ -52,12 +52,15 @@ RUN apt-get update \
         wget \
         zip \
     && ln -s /usr/bin/tar /usr/local/bin/gtar \
+    && sudo systemctl enable ssh \
     && wget 'https://releases.hashicorp.com/terraform/1.0.8/terraform_1.0.8_linux_amd64.zip' \
     && unzip -d /usr/local/bin/ terraform_*_linux_amd64.zip \
     && rm -v terraform_*_linux_amd64.zip \
     && wget 'https://golang.org/dl/go1.17.1.linux-amd64.tar.gz' \
     && rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17*.tar.gz \
     && rm -v go1.17*.tar.gz
+
+# sudo systemctl enable ssh docker openvpn@client
 
 # global shell/terminal config
 RUN printf '\
@@ -80,13 +83,7 @@ RUN groupadd --gid $USER_GID $USERNAME \
     && usermod -a -G docker $USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
-# autostart ssh
-RUN printf '#!/usr/bin/bash -x\n\
-service ssh restart\n\
-exec "$@"\n'\
-    >> /entrypoint.sh
-
-ENTRYPOINT ["sh", "/entrypoint.sh"]
+ENTRYPOINT ["/sbin/init"]
 
 # powershell example
 # ==================
