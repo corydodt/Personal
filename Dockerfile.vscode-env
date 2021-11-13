@@ -1,5 +1,9 @@
 FROM ubuntu:20.04
 
+# THIS IS MEANT TO BE INVOKED WITH PODMAN (better support for /sbin/init)
+# THIS IS MEANT TO BE INVOKED WITH PODMAN (better support for /sbin/init)
+# THIS IS MEANT TO BE INVOKED WITH PODMAN (better support for /sbin/init)
+
 # Container features:
 # - `cdodt` user installed with sudo
 # - ssh service running
@@ -31,17 +35,19 @@ deb '$UBUNTU_MIRROR' focal-security multiverse\n'\
 RUN apt-get update \
     && apt-get install -y --no-install-recommends tzdata \
     && apt-get install -y \
+        awscli \
         build-essential \
         curl \
-        docker.io \
         git \
         gosu \
         iputils-ping \
+        jq \
         man-db \
         net-tools \
         openvpn \
         python3 \
         python3-pip \
+        python3-venv \
         python3-virtualenvwrapper \
         rsync \
         software-properties-common \
@@ -52,29 +58,37 @@ RUN apt-get update \
         wget \
         zip \
     && ln -s /usr/bin/tar /usr/local/bin/gtar \
-    && sudo systemctl enable ssh \
+    && sudo systemctl enable ssh openvpn@client \
     && wget 'https://releases.hashicorp.com/terraform/1.0.8/terraform_1.0.8_linux_amd64.zip' \
     && unzip -d /usr/local/bin/ terraform_*_linux_amd64.zip \
     && rm -v terraform_*_linux_amd64.zip \
-    && wget 'https://golang.org/dl/go1.17.1.linux-amd64.tar.gz' \
+    && wget 'https://golang.org/dl/go1.17.3.linux-amd64.tar.gz' \
     && rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17*.tar.gz \
     && rm -v go1.17*.tar.gz
-
-# sudo systemctl enable ssh docker openvpn@client
+    ## TODO: install packer
+    ## TODO: unminimize
 
 # global shell/terminal config
 RUN printf '\
 GOPATH=$HOME/go\n\
 PATH=$PATH:/usr/local/go/bin:$GOPATH/bin\n'\
-    >> /etc/profile.d/10-gopath.sh \
+        >> /etc/profile.d/10-gopath.sh \
     && printf '\
 . /usr/share/virtualenvwrapper/virtualenvwrapper.sh\n'\
-    >> /etc/profile.d/20-virtualenvwrapper.sh \
+        >> /etc/profile.d/20-virtualenvwrapper.sh \
     && printf '\
 set bell-style visible\n\
 set keymap vi\n\
 set editing-mode vi\n'\
-    >> /etc/skel/.inputrc
+        >> /etc/skel/.inputrc \
+    && printf '\
+if [[ -f ~/.ssh-agent.env ]]; then\n\
+    { . ~/.ssh-agent.env; ssh-add -l || ssh-agent >~/.ssh-agent.env; } >/dev/null\n\
+else\n\
+    ssh-agent >~/.ssh-agent.env\n\
+fi\n\
+. ~/.ssh-agent.env >/dev/null\n'\
+        >> /etc/profile.d/30-ssh-agent.sh
 
 # Create the user
 RUN groupadd --gid $USER_GID $USERNAME \
@@ -104,7 +118,7 @@ ENTRYPOINT ["/sbin/init"]
 #    --device /dev/net/tun `
 #    --cap-add=NET_ADMIN `
 #    --restart=unless-stopped `
-#    -p 192.168.0.36:2222:22 `
+#    -p 192.168.0.36:69422:22 `
 #    -t `
 #    vscode-env:$buildtag `
 #      bash
