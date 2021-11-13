@@ -57,7 +57,6 @@ RUN apt-get update \
         vim \
         wget \
         zip \
-    && ln -s /usr/bin/tar /usr/local/bin/gtar \
     && sudo systemctl enable ssh openvpn@client \
     && wget 'https://releases.hashicorp.com/terraform/1.0.8/terraform_1.0.8_linux_amd64.zip' \
     && unzip -d /usr/local/bin/ terraform_*_linux_amd64.zip \
