@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+phone=5594558384
+key=915dd3522a1383fd42ff41e77d3c45b65a8f4bf0BMKk1yLz632rIZ6d5WjdPBKSo
+
+sms() {
+    res="$1"
+    shift
+    echo "# ---------------------------------------------------------------------------" 1>&2
+    msg="$res >>>>>>>>> $@"
+    echo "# MESSAGE: $msg" 1>&2
+    printf "# %s\n" $(curl -s -X POST 'https://textbelt.com/text' \
+        --data-urlencode phone="$phone" \
+        --data-urlencode message="$msg" \
+        -d key="$key") 1>&2
+}
+
+
+if "$@"; then
+    sms "success (0)" "$@"
+else
+    sms "fail ($?)" "$@"
+fi
