@@ -1,11 +1,35 @@
 #!/bin/bash
 
+# Run a command; when done, send an SMS message to a preconfigured phone# using textbelt.
+#
+# The text message will indicate success or failure and contain an id:
+# day-of-week|hostname|username|2-random-emoji
+#
+# The emoji are randomly chosen each time you use smsme so that you can tell your
+# texts apart. Just before running your command, smsme prints out the message id
+# so you can find it later (in case you have many of these running at the same time).
+# 
+# You must purchase a textbelt api key to use `smsme`.
+
+
 set -euo pipefail
 IFS=$'\n\t'
 
 phone=
 key=
 endpoint="https://textbelt.com/text"
+emoji=(👻 👾 🤖 😼 💫 👒 🎩 🐶 🦎 🐚 🌸 🌲 🍋 🥝 🥑 🥐 🍿 🥄 ⛺ 🚂 🚲 🌈 🏆 🎵 💡 ✏ 🖍 📌 🛡 ♻)
+good='✅'
+bad='❌'
+
+# build a string we can use to identify this command
+format_marker() {
+    # choose 2 random emoji
+    local emokey="${emoji[$(( RANDOM % ${#emoji[@]} ))]}""${emoji[$(( RANDOM % ${#emoji[@]} ))]}" 
+    local weekday
+    weekday="$(date +%a | tr "[:upper:]" "[:lower:]")"
+    printf "%s|%s|%s|%s" "$weekday" "$HOSTNAME" "$USER" "$emokey"
+}
 
 # prompt for key/phone and create a config file
 first-run() {
@@ -53,7 +77,7 @@ test_sms() {
     printf "Testing your key> "
     data="$(do_request "${key}_test" "$phone" "testing")"
     rc=$?
-    printf "$data\n\n"
+    printf "%s\n\n" "$data"
     return $rc
 }
 
@@ -92,8 +116,11 @@ if [[ "$#" -lt 1 ]]; then
 fi
 
 # run the command; the text that gets sent depends on whether it succeeds (rc=0)
+marker="$(format_marker)"
+echo "# your text id when done: $marker" 1>&2
+echo "# ---------------------------------------------------------------------------" 1>&2
 if "$@"; then
-    sms "success (0)" "$@"
+    sms "success $good (0)" "$marker"
 else
-    sms "fail ($?)" "$@"
+    sms "fail $bad ($?)" "$marker"
 fi
