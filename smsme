@@ -3,22 +3,95 @@
 set -euo pipefail
 IFS=$'\n\t'
 
-phone=5594558384
-key=915dd3522a1383fd42ff41e77d3c45b65a8f4bf0BMKk1yLz632rIZ6d5WjdPBKSo
+phone=
+key=
+endpoint="https://textbelt.com/text"
 
-sms() {
-    res="$1"
-    shift
-    echo "# ---------------------------------------------------------------------------" 1>&2
-    msg="$res >>>>>>>>> $@"
-    echo "# MESSAGE: $msg" 1>&2
-    printf "# %s\n" $(curl -s -X POST 'https://textbelt.com/text' \
-        --data-urlencode phone="$phone" \
-        --data-urlencode message="$msg" \
-        -d key="$key") 1>&2
+# prompt for key/phone and create a config file
+first-run() {
+    echo $'~'"/.smsme.env does not exist, so, I assume this is the first time we're running."
+    echo
+    echo "I will create a config file with the following information."
+    echo
+    read -rp "  Phone# to page: " phone
+    read -rp "  Textbelt API Key: " key
+
+    # empty=quit
+    if [[ -z "$phone" || -z "$key" ]]; then
+        echo "* canceled." 1>&2
+        exit 1
+    fi 
+
+    # clean up the phone number
+    phone=$(tr -dC "[:digit:]" <<< "$phone")
+
+    # don't clean up the API key; you're always going to paste
+    # that and if it's wrong, the following test will fail.
+
+    if ! test_sms; then
+        echo "* Bad key?" 1>&2
+        exit 1
+    else
+        echo "Good key :-)"
+    fi
+
+    cat > ~/.smsme.env <<< "phone=$phone"$'\n'"key=$key"$'\n'
 }
 
+# request an sms message be sent and print results
+sms() {
+    local res="$1"
+    shift
+    echo "# ---------------------------------------------------------------------------" 1>&2
+    local msg="$res >>>>>>>>> $*"
+    echo "# MESSAGE: $msg" 1>&2
+    printf "# %s\n" "$(do_request "$key" "$phone" "$msg")" 1>&2
+}
 
+# send a message to the API without consuming an API token; checks that our key works
+test_sms() {
+    printf "Testing your key> "
+    data="$(do_request "${key}_test" "$phone" "testing")"
+    rc=$?
+    printf "$data\n\n"
+    return $rc
+}
+
+# send the HTTP request to textbelt
+do_request() {
+    local lkey="$1"
+    local lphone="$2"
+    local msg="$3"
+
+    data=$(curl -s -X POST "$endpoint" \
+        --data-urlencode phone="$lphone" \
+        --data-urlencode message="$msg" \
+        -d key="$lkey")
+    echo "$data"
+
+    rc=$?
+    if [[ $rc != 0 ]]; then
+        return $rc
+    fi
+
+    [[ "$(jq -r .success <<< "$data")" == "true" ]]
+}
+
+# if the config file is missing, prompt for it
+if [[ ! -e ~/.smsme.env ]]; then
+    first-run
+fi
+
+# shellcheck disable=SC1090
+. ~/.smsme.env
+
+# need at least 1 arg following the command
+if [[ "$#" -lt 1 ]]; then
+    echo "Use: smsme <command args...>" 1>&2
+    exit 1
+fi
+
+# run the command; the text that gets sent depends on whether it succeeds (rc=0)
 if "$@"; then
     sms "success (0)" "$@"
 else
