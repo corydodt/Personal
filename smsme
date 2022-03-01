@@ -59,7 +59,7 @@ first-run() {
         echo "Good key :-)"
     fi
 
-    cat > ~/.smsme.env <<< "phone=$phone"$'\n'"key=$key"$'\n'
+    printf "phone=%s\nkey=%s\n" "$phone" "$key" > ~/.smsme.env
 }
 
 # request an sms message be sent and print results
