@@ -139,4 +139,5 @@ echo podman run -d --name=$name --hostname=$name \\\n\
     -t $label bash\n\
 ' > /usr/local/bin/print-podman-command; chmod +x /usr/local/bin/print-podman-command; \
 echo; /usr/local/bin/print-podman-command "$NAME_PREFIX_1" "$SSHPORT_1" "$USERNAME" "$HOSTIP" "$LABEL"; \
-echo; /usr/local/bin/print-podman-command "$NAME_PREFIX_2" "$SSHPORT_2" "$USERNAME" "$HOSTIP" "$LABEL"; echo
+echo; /usr/local/bin/print-podman-command "$NAME_PREFIX_2" "$SSHPORT_2" "$USERNAME" "$HOSTIP" "$LABEL"; \
+echo "**** You might need to run `sudo loginctl enable-linger $USER`"
