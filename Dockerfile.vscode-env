@@ -15,8 +15,9 @@ ARG USERNAME=cdodt
 ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 ARG UBUNTU_MIRROR=http://mirrors.accretive-networks.net/ubuntu/
-ARG LABEL=vscode-env:16
+ARG LABEL=vscode-env:14
 ARG HOSTIP=192.168.0.36
+ARG HOSTIP_FAST=10.69.69.2
 
 ARG SSHPORT_1=2269
 ARG NAME_PREFIX_1=decibelduck-dev
@@ -25,7 +26,7 @@ ARG SSHPORT_2=2222
 ARG NAME_PREFIX_2=aero-dev
 
 # Building:
-# LABEL=vscode-env:16
+# LABEL=vscode-env:14
 # podman build --build-arg LABEL=$LABEL --tag $LABEL .
 
 # tweak install environment for non-interactivity and speed
@@ -126,18 +127,19 @@ set -euo pipefail; IFS=$'\\n\\t' \n\
 add_datetime() { echo "$1"-$(date +%%Y%%m%%d%%H%%M); } \n\
 name_pfx="$1" \n\
 ssh_port="$2" \n\
-username="$3" \n\
-hostip="$4" \n\
-label="$5" \n\
+username="%s" \n\
+hostip="%s" \n\
+hostip_fast="%s" \n\
+label="%s" \n\
 name=$(add_datetime $name_pfx) \n\
 \n\
-echo podman run -d --name=$name --hostname=$name \\\n\
+echo podman run -dit --name=$name --hostname=$name \\\n\
     --mount "type=volume,src=cdodt,dst=/home/$username" \\\n\
     --device /dev/net/tun --cap-add=NET_ADMIN \\\n\
     -p $hostip:$ssh_port:22 \\\n\
     --restart=always \\\n\
     -t $label bash\n\
-' > /usr/local/bin/print-podman-command; chmod +x /usr/local/bin/print-podman-command; \
-echo; /usr/local/bin/print-podman-command "$NAME_PREFIX_1" "$SSHPORT_1" "$USERNAME" "$HOSTIP" "$LABEL"; \
-echo; /usr/local/bin/print-podman-command "$NAME_PREFIX_2" "$SSHPORT_2" "$USERNAME" "$HOSTIP" "$LABEL"; \
-echo "**** You might need to run `sudo loginctl enable-linger $USER`"
+' "$USERNAME" "$HOSTIP" "$HOSTIP_FAST" "$LABEL" > /usr/local/bin/print-podman-command; \
+chmod +x /usr/local/bin/print-podman-command; \
+echo; /usr/local/bin/print-podman-command "$NAME_PREFIX_1" "$SSHPORT_1"; \
+echo; /usr/local/bin/print-podman-command "$NAME_PREFIX_2" "$SSHPORT_2"; echo
