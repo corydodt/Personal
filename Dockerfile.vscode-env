@@ -137,6 +137,7 @@ echo podman run -dit --name=$name --hostname=$name \\\n\
     --mount "type=volume,src=cdodt,dst=/home/$username" \\\n\
     --device /dev/net/tun --cap-add=NET_ADMIN \\\n\
     -p $hostip:$ssh_port:22 \\\n\
+    -p $hostip_fast:$ssh_port:22 \\\n\
     --restart=always \\\n\
     -t $label bash\n\
 ' "$USERNAME" "$HOSTIP" "$HOSTIP_FAST" "$LABEL" > /usr/local/bin/print-podman-command; \
