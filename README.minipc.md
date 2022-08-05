@@ -57,7 +57,23 @@ podman run \
     bash
 ```
 
+### ON THE SERVER
+```
+systemctl --user enable --now podman.socket
+```
+
+### ON THE CLIENT
+```
+podman system connection add --identity ~/.ssh/blah..pem minipc 10.69.69.2
+podman -r info
+podman -r ps
+...
+```
+
+
 ## other packages
 - install:
     - lsof
     - python39{,-devel}
+
+- `systemctl enable-linger cdodt`
