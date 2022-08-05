@@ -1,5 +1,0 @@
-# redirect /goonmill to goonmill.goonmill.org
-# vi:set ft=nginx:
-location /goonmill/ {
-    rewrite /goonmill/(.*) http://goonmill.goonmill.org/app/ws/0.12345/ permanent;
-}

@@ -1,6 +1,0 @@
-# vim:set ft=nginx:
-server {
-    server_name wiki.goonmill.org;
-    location / { proxy_pass         http://127.0.0.1:20080/; }
-    include /etc/nginx/conf.d/reverse_proxy;
-}

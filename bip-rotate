@@ -1,8 +1,0 @@
-/home/cdodt/.bip/bip/*.log {
-        daily
-        missingok
-        copytruncate
-        rotate 3650
-        compress
-}
-

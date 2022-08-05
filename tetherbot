@@ -1,9 +1,0 @@
-#!/bin/bash
-
-which adb >/dev/null 2>&1 || { echo "* Need adb installed" 1>&2 && exit 1; }
-
-adb forward tcp:1080 tcp:1080 || { echo "* Problem starting adb forward" 1>&2 && exit 1; }
-
-pgrep -lf adb
-netstat -tlpn | grep 1080
-

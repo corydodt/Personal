@@ -1,8 +1,0 @@
-#!/bin/bash
-rstCSS=~/Dropbox/Source/Cory/Personal/rst.css
-
-if [ -e $rstCSS ]; then
-    RSTOPTS='--stylesheet-path='$rstCSS
-fi
-rst2html $RSTOPTS $1 $1.html   
-

@@ -1,6 +1,0 @@
-# settings for the rackspace backup client
-
-backup:
-    us:
-        username: corydodt1
-        apikey: 'oooooooooooooooooooooooooooooooo'

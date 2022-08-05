@@ -1,3 +1,0 @@
-/(.*)@spam.{{ pillar.domain }}/ corydodt+${1}_spams@gmail.com
-/(.*)@s.{{ pillar.domain }}/ corydodt+${1}_spams@gmail.com
-/(.*)@ss.{{ pillar.domain }}/ corydodt+${1}_spams@gmail.com

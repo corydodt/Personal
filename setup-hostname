@@ -1,9 +1,0 @@
-#!/bin/bash
-#
-# create the upstart job that sets the hostname
-#
-
-set -e
-sudo cp -v Personal/init/goonmill-hostname.conf /etc/init
-sudo initctl start goonmill-hostname
-

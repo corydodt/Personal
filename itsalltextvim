@@ -1,3 +1,0 @@
-#!/bin/bash
-
-gvim --remote-tab-silent-wait "$@"
