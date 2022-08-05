@@ -26,8 +26,7 @@ ARG SSHPORT_2=2222
 ARG NAME_PREFIX_2=aero-dev
 
 # Building:
-# LABEL=vscode-env:17
-# podman build --build-arg LABEL=$LABEL --tag $LABEL .
+# LABEL=vscode-env:19; podman build --build-arg LABEL=$LABEL --tag $LABEL . -f Dockerfile.vscode-env
 
 RUN printf '\
 #!/usr/bin/env bash\n\
@@ -42,12 +41,14 @@ RUN $DNF -y install epel-release
 RUN $DNF -y install \
         git \
         jq \
+        findutils \
         lsyncd \
         man-db \
         net-tools \
         rsync \
         openssh \
         openssh-server \
+        procps \
         sudo \
         unzip \
         vim \
