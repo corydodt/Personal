@@ -42,6 +42,7 @@ RUN $DNF -y install \
         git \
         jq \
         findutils \
+        lsof \
         lsyncd \
         man-db \
         net-tools \
