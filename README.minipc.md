@@ -57,7 +57,7 @@ make -C vscode-env aero-up
 
 ### IN THE CONTAINER
 ```
-podman system connection add --identity ~/.ssh/blah..pem minipc 10.69.69.2
+podman system connection add --identity ~/.ssh/cory-aws-personal.pem minipc 10.69.69.2
 podman -r info
 podman -r ps
 ...

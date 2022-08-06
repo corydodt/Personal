@@ -25,17 +25,19 @@ aero-up:
 		-dit --name=aero-dev --hostname=aero-dev \
 		--mount type=volume,src=cdodt,dst=/home/cdodt \
 		--device /dev/net/tun --cap-add=NET_ADMIN \
-		-p $(WIFI_IP):$(AERO_PORT):22 -p $(FAST_IP):$(AERO_PORT):22
+		-p $(WIFI_IP):$(AERO_PORT):22 -p $(FAST_IP):$(AERO_PORT):22 \
 		--restart=always \
 		vscode-env:latest \
 		bash
+	sleep 3; podman ps -a
 
 decibelduck-up:
 	podman run \
 		-dit --name=decibelduck-dev --hostname=decibelduck-dev \
 		--mount type=volume,src=cdodt,dst=/home/cdodt \
 		--device /dev/net/tun --cap-add=NET_ADMIN \
-		-p $(WIFI_IP):$(DECIBELDUCK_PORT):22 -p $(FAST_IP):$(DECIBELDUCK_PORT):22
+		-p $(WIFI_IP):$(DECIBELDUCK_PORT):22 -p $(FAST_IP):$(DECIBELDUCK_PORT):22 \
 		--restart=always \
 		vscode-env:latest \
 		bash
+	sleep 3; podman ps -a
