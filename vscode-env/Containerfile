@@ -16,29 +16,17 @@ ARG USER_UID=1000
 ARG USER_GID=$USER_UID
 # ARG ROCKY_MIRROR=http://dl.rockylinux.org/pub/rocky/
 ARG LABEL=vscode-env:xxx
-ARG HOSTIP=192.168.0.36
-ARG HOSTIP_FAST=10.69.69.2
 
-ARG SSHPORT_1=2269
-ARG NAME_PREFIX_1=decibelduck-dev
-
-ARG SSHPORT_2=2222
-ARG NAME_PREFIX_2=aero-dev
 
 # Building:
-# LABEL=vscode-env:20; podman build --build-arg LABEL=$LABEL --tag $LABEL . -f Dockerfile.vscode-env
+# LABEL=vscode-env:22; podman build --build-arg LABEL=$LABEL --tag $LABEL .
 
-RUN printf '\
-#!/usr/bin/env bash\n\
-set -euo pipefail\n\
-dnf "$@" && dnf -y clean all && rm -rf /var/cache\n\
-\n' >> /tmp/dnfclean && chmod +x /tmp/dnfclean
-ENV DNF=/tmp/dnfclean
-
-RUN $DNF -y install epel-release
+RUN --mount=type=cache,target=/var/cache/dnf \
+    dnf -y install epel-release
 
 # install dev tools
-RUN $DNF -y install \
+RUN --mount=type=cache,target=/var/cache/dnf \
+    dnf -y install \
         git \
         jq \
         findutils \
@@ -68,7 +56,8 @@ gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg\n\
        https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg\n\
 \n' >> /etc/yum.repos.d/google-cloud-sdk.repo
 
-RUN $DNF -y install \
+RUN --mount=type=cache,target=/var/cache/dnf \
+    dnf -y install \
         awscli \
         google-cloud-cli \
         npm \
@@ -81,7 +70,8 @@ RUN $DNF -y install \
 
 RUN echo "installing go" \
     && wget 'https://golang.org/dl/go1.18.linux-amd64.tar.gz' \
-    && rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18*.tar.gz && rm -v go1.18*.tar.gz
+    && rm -rf /usr/local/go && tar -C /usr/local -xzf go1.18*.tar.gz \
+    && rm -v go1.18*.tar.gz
 
 # oops, this runs as root, running it as the shell user is complicated
 # RUN echo "installing python module poetry" \
@@ -89,7 +79,8 @@ RUN echo "installing go" \
 
 RUN echo "installing terraform" \
     && wget 'https://releases.hashicorp.com/terraform/1.1.7/terraform_1.1.7_linux_amd64.zip' \
-    && unzip -d /usr/local/bin/ terraform_*_linux_amd64.zip && rm -v terraform_*_linux_amd64.zip
+    && unzip -d /usr/local/bin/ terraform_*_linux_amd64.zip \
+    && rm -v terraform_*_linux_amd64.zip
 
 RUN echo "turning on network services ssh, openvpn" \
     && sudo systemctl enable sshd openvpn-client@.service
@@ -114,32 +105,9 @@ fi\n\
         >> /etc/profile.d/30-ssh-agent.sh
 
 # Create the user
-RUN groupadd --gid $USER_GID $USERNAME \
+RUN echo $USER_GID - $USERNAME; groupadd --gid $USER_GID $USERNAME \
     && useradd --uid $USER_UID --gid $USER_GID -m $USERNAME -s /bin/bash \
     && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
     && chmod 0440 /etc/sudoers.d/$USERNAME
 
 ENTRYPOINT ["/sbin/init"]
-
-RUN printf '#!/usr/bin/env bash \n\
-set -euo pipefail; IFS=$'\\n\\t' \n\
-add_datetime() { echo "$1"-$(date +%%Y%%m%%d%%H%%M); } \n\
-name_pfx="$1" \n\
-ssh_port="$2" \n\
-username="%s" \n\
-hostip="%s" \n\
-hostip_fast="%s" \n\
-label="%s" \n\
-name=$(add_datetime $name_pfx) \n\
-\n\
-echo podman run -dit --name=$name --hostname=$name \\\n\
-    --mount "type=volume,src=cdodt,dst=/home/$username" \\\n\
-    --device /dev/net/tun --cap-add=NET_ADMIN \\\n\
-    -p $hostip:$ssh_port:22 \\\n\
-    -p $hostip_fast:$ssh_port:22 \\\n\
-    --restart=always \\\n\
-    -t $label bash\n\
-' "$USERNAME" "$HOSTIP" "$HOSTIP_FAST" "$LABEL" > /usr/local/bin/print-podman-command; \
-chmod +x /usr/local/bin/print-podman-command; \
-echo; /usr/local/bin/print-podman-command "$NAME_PREFIX_1" "$SSHPORT_1"; \
-echo; /usr/local/bin/print-podman-command "$NAME_PREFIX_2" "$SSHPORT_2"; echo

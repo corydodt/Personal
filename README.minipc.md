@@ -24,27 +24,36 @@
         - `print connection` to show settings
         - set connection.interface-name to the <wifi-device> 
         - set connection.autoconnect yes
+        - `sudo systemctl restart NetworkManager`
         - reboot again if still not connected
 
 ## ssh
-- manually scp .ssh directory from a workstation that has one. make sure permissions are correct and
-    authorized_keys exists
+- manually scp .ssh directory from a workstation that has one. make sure
+    permissions are correct and authorized_keys exists
 
 ## firewall
 - disable firewalld, which blocks connections via podman into our containers:
     `sudo systemctl disable firewalld && sudo systemctl stop firewalld`
 
 ## containers
-- git clone Personal.git
-- read Dockerfile.vscode-env for build instructions
-    - after building, copy the startup command line (beginning `podman run...`)
-- scp cdodt.tar.gz
 
+### ON THE SERVER
+```
+systemctl --user enable --now podman.socket
+pip3 install --user podman-compose
+```
+
+- `git clone Personal.git`
+- `cd Personal; make -C vscode-env`
+    - after building, copy the startup command line (beginning `podman run...`)
+
+- scp cdodt.tar.gz onto the server
 ```
 podman volume create cdodt
 gzip -dc cdodt.tar.gz | podman volume import cdodt -
 ```
 
+- run the container according to the printed CL
 ```
 # example, edit this
 podman run \
@@ -53,16 +62,11 @@ podman run \
     --device /dev/net/tun --cap-add=NET_ADMIN \
     -p 192.168.0.36:2222:22 -p 10.69.69.2:2222:22 \
     --restart=always \
-    -t vscode-env:19 \
+    -t vscode-env:20 \
     bash
 ```
 
-### ON THE SERVER
-```
-systemctl --user enable --now podman.socket
-```
-
-### ON THE CLIENT
+### IN THE CONTAINER
 ```
 podman system connection add --identity ~/.ssh/blah..pem minipc 10.69.69.2
 podman -r info
@@ -70,10 +74,16 @@ podman -r ps
 ...
 ```
 
-
 ## other packages
 - install:
     - lsof
     - python39{,-devel}
 
 - `systemctl enable-linger cdodt`
+
+## openvpn support
+
+- selinux prevents guest containers from accessing /dev/net/tun. disable selinux:
+    - edit /etc/selinux/config
+    - set `SELINUX=disabled` 
+    - reboot
