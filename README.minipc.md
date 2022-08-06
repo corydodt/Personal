@@ -39,13 +39,10 @@
 
 ### ON THE SERVER
 ```
-systemctl --user enable --now podman.socket
-pip3 install --user podman-compose
+sudo systemctl --user enable --now podman.socket
+git clone .../Personal.git
+cd Personal; make -C vscode-env
 ```
-
-- `git clone Personal.git`
-- `cd Personal; make -C vscode-env`
-    - after building, copy the startup command line (beginning `podman run...`)
 
 - scp cdodt.tar.gz onto the server
 ```
@@ -53,17 +50,9 @@ podman volume create cdodt
 gzip -dc cdodt.tar.gz | podman volume import cdodt -
 ```
 
-- run the container according to the printed CL
+- run the container:
 ```
-# example, edit this
-podman run \
-    -dit --name=aero-dev-202208051634 --hostname=aero-dev-202208051634 \
-    --mount type=volume,src=cdodt,dst=/home/cdodt \
-    --device /dev/net/tun --cap-add=NET_ADMIN \
-    -p 192.168.0.36:2222:22 -p 10.69.69.2:2222:22 \
-    --restart=always \
-    -t vscode-env:20 \
-    bash
+make -C vscode-env aero-up
 ```
 
 ### IN THE CONTAINER
