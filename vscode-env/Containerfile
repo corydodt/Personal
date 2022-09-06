@@ -27,18 +27,20 @@ RUN --mount=type=cache,target=/var/cache/dnf \
 # install dev tools
 RUN --mount=type=cache,target=/var/cache/dnf \
     dnf -y install \
+        diffutils \
+        findutils \
         git \
         jq \
-        findutils \
         lsof \
         lsyncd \
         man-db \
         net-tools \
-        rsync \
         openssh \
         openssh-server \
+        patch \
         podman \
         procps \
+        rsync \
         sudo \
         unzip \
         vim \
@@ -60,6 +62,8 @@ RUN --mount=type=cache,target=/var/cache/dnf \
     dnf -y install \
         awscli \
         google-cloud-cli \
+        gcc \
+        make \
         npm \
         openvpn \
         postgresql \
