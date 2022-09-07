@@ -7,8 +7,9 @@ FROM rockylinux:8.6
 # Container features:
 # - `cdodt` user installed with sudo
 # - ssh service running
-# - development software (python, terraform, node, go) preinstalled, with tools to install more
+# - development software (git, python, terraform, node, go) preinstalled, with tools to install more
 # - openvpn and net tools preinstalled
+# - uses CAP_ADD sys_admin and /dev/fuse so fuse filesystems can be mounted
 
 
 ARG USERNAME=cdodt
@@ -47,6 +48,12 @@ RUN --mount=type=cache,target=/var/cache/dnf \
         wget \
         zip
 
+# github repo for the gh command line
+RUN --mount=type=cache,target=/var/cache/dnf \
+    dnf -y install 'dnf-command(config-manager)' && \
+    dnf config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+
+# TODO: find an official ".repo" file for the google-cloud-sdk repo
 RUN printf '\
 [google-cloud-cli]\n\
 name=Google Cloud CLI\n\
@@ -63,6 +70,7 @@ RUN --mount=type=cache,target=/var/cache/dnf \
         awscli \
         google-cloud-cli \
         gcc \
+        gh \
         make \
         npm \
         openvpn \
