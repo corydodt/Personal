@@ -22,7 +22,7 @@
     - `nmcli c` should show both connections bound to a device (not blank) 
     - if necessary edit the wifi connection with `nmcli c edit umbonia`:
         - `print connection` to show settings
-        - set connection.interface-name to the <wifi-device> 
+        - set connection.interface-name to the {wifi-device}
         - set connection.autoconnect yes
         - `sudo systemctl restart NetworkManager`
         - reboot again if still not connected
@@ -66,13 +66,15 @@ podman -r ps
 ## other packages
 - install:
     - lsof
+    - chrony
     - python39{,-devel}
 
 - `systemctl enable-linger cdodt`
+- `systemctl enable --now chronyd`
 
-## openvpn support
-
-- selinux prevents guest containers from accessing /dev/net/tun. disable selinux:
-    - edit /etc/selinux/config
-    - set `SELINUX=disabled` 
-    - reboot
+[//]: # ## openvpn support
+[//]: # ...
+[//]: # - selinux prevents guest containers from accessing /dev/net/tun. disable selinux:
+[//]: #     - edit /etc/selinux/config
+[//]: #     - set `SELINUX=disabled` 
+[//]: #     - reboot

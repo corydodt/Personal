@@ -28,6 +28,7 @@ RUN --mount=type=cache,target=/var/cache/dnf \
 # install dev tools
 RUN --mount=type=cache,target=/var/cache/dnf \
     dnf -y install \
+        chrony \
         diffutils \
         findutils \
         git \
