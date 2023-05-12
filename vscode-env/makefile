@@ -4,7 +4,7 @@ VERSION 		 = 22
 USER_UID		 = 1000
 USER_GID		 = $(USER_UID)
 
-WIFI_IP 		 = 192.168.0.36
+WIFI_IP 		 = 10.0.0.50
 FAST_IP 		 = 10.69.69.2
 AERO_PORT 		 = 2222
 DECIBELDUCK_PORT = 2269
@@ -25,19 +25,21 @@ aero-up:
 		-dit --name=aero-dev --hostname=aero-dev \
 		--mount type=volume,src=cdodt,dst=/home/cdodt \
 		--device /dev/net/tun --cap-add=NET_ADMIN \
+		--device /dev/fuse --cap-add SYS_ADMIN \
 		-p $(WIFI_IP):$(AERO_PORT):22 -p $(FAST_IP):$(AERO_PORT):22 \
 		--restart=always \
 		vscode-env:latest \
 		bash
-	sleep 3; podman ps -a
+	sleep 3; podman ps -a | egrep --color '.*\baero-dev\b.*|$$'
 
 decibelduck-up:
 	podman run \
 		-dit --name=decibelduck-dev --hostname=decibelduck-dev \
 		--mount type=volume,src=cdodt,dst=/home/cdodt \
 		--device /dev/net/tun --cap-add=NET_ADMIN \
+		--device /dev/fuse --cap-add SYS_ADMIN \
 		-p $(WIFI_IP):$(DECIBELDUCK_PORT):22 -p $(FAST_IP):$(DECIBELDUCK_PORT):22 \
 		--restart=always \
 		vscode-env:latest \
 		bash
-	sleep 3; podman ps -a
+	sleep 3; podman ps -a | egrep --color '.*\bdecibelduck-dev\b.*|$$'

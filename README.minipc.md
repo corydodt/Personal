@@ -3,7 +3,7 @@
 - install from usb media - server is fine, be sure to include container runtimes
 - choices during install:
     - ethernet: set up 10.69.69.2 with no gateway and check "never default route", and select 'enable' toggle button
-    - wifi: setup umbonia with WPA2 password, and select 'enable' toggle button
+    - wifi: setup phymateus with WPA2 password, and select 'enable' toggle button
         - n.b.: the installer DOES NOT INSTALL NetworkManager-wifi so we need to take special steps to enable wifi
         - it does remember the settings you used here, though
 
