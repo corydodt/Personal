@@ -3,7 +3,7 @@
 - install from usb media - server is fine, be sure to include container runtimes
 - choices during install:
     - ethernet: set up 10.69.69.2 with no gateway and check "never default route", and select 'enable' toggle button
-    - wifi: setup phymateus with WPA2 password, and select 'enable' toggle button
+    - wifi: setup Cicindela with WPA2 password, and select 'enable' toggle button
         - n.b.: the installer DOES NOT INSTALL NetworkManager-wifi so we need to take special steps to enable wifi
         - it does remember the settings you used here, though
 
@@ -20,7 +20,7 @@
 - copy over with scp, install these with `rpm -iU *.rpm`
     - reboot, so NetworkManager picks up the wifi
     - `nmcli c` should show both connections bound to a device (not blank) 
-    - if necessary edit the wifi connection with `nmcli c edit umbonia`:
+    - if necessary edit the wifi connection with `nmcli c edit "Cicindela chinensis"`:
         - `print connection` to show settings
         - set connection.interface-name to the {wifi-device}
         - set connection.autoconnect yes
