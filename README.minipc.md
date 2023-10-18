@@ -71,10 +71,3 @@ podman -r ps
 
 - `systemctl enable-linger cdodt`
 - `systemctl enable --now chronyd`
-
-[//]: # ## openvpn support
-[//]: # ...
-[//]: # - selinux prevents guest containers from accessing /dev/net/tun. disable selinux:
-[//]: #     - edit /etc/selinux/config
-[//]: #     - set `SELINUX=disabled` 
-[//]: #     - reboot
