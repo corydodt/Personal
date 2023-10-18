@@ -1,6 +1,6 @@
 # Runbook
 
-Installing minisforum server from proxmox + bookworm
+### Installing minisforum server from proxmox + bookworm
 
 - Install proxmox ve 8 (amd64) from usb drive
     - mashing the delete key will get you into bios
@@ -11,6 +11,7 @@ Installing minisforum server from proxmox + bookworm
 ### post-boot textmode font fix (optional)
 - dpk-reconfigure -plow console-setup
     - choose UTF-8, latin 1-5, TerminusBold, 32x16
+
 
 ## NETWORKING
 
@@ -101,6 +102,7 @@ Installing minisforum server from proxmox + bookworm
 ```
 apt install git \
     dig \
+    whois \
     =====
 ```
 
@@ -125,6 +127,7 @@ git config --global user.name "Cory Dodt"
 git config --global user.email "corydodt@fastmail.com"
 ```
 
+
 ## STORAGE
 
 - Attach external sdd via usb-c cable
@@ -145,6 +148,7 @@ git config --global user.email "corydodt@fastmail.com"
     - Server View > Datacenter > (server name) > Disks > ZFS
     - [Create: ZFS], enter a name and choose /dev/sda1, then Create
 
+
 ## CREATE A VM
 
 - Download some VM disk images, e.g.
@@ -154,3 +158,6 @@ git config --global user.email "corydodt@fastmail.com"
     - Make sure to uncompress if the image is compressed.
 
     - Follow steps in runbook-hass.md
+
+
+## TLS CERTIFICATE
