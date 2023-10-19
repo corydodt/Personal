@@ -9,6 +9,7 @@
     - at reboot, mash delete to get into bios, swap drive order again and remove usb
 
 ### post-boot textmode font fix (optional)
+
 - dpk-reconfigure -plow console-setup
     - choose UTF-8, latin 1-5, TerminusBold, 32x16
 
@@ -86,6 +87,8 @@
 
 - Run `ifup vmbr0`
 
+#### XXX currently wifi does not start at boot ???
+
 
 ## CLEAN UP REPOSITORIES
 
@@ -102,8 +105,7 @@
 ```
 apt install git \
     dig \
-    whois \
-    =====
+    whois
 ```
 
 ### Secure SSH access
@@ -133,7 +135,7 @@ git config --global user.email "corydodt@fastmail.com"
 - Attach external sdd via usb-c cable
 - Run `lsblk` and make sure you know which device is the sd drive
 
-    #### Using /dev/sda for the external drive
+    **Using /dev/sda for the external drive**
 
 - Run:
     ```
@@ -144,20 +146,21 @@ git config --global user.email "corydodt@fastmail.com"
     parted -a opt /dev/sda mkpart zfs 0% 100%
     ```
 
-- in proxmox gui, go to:
+- in Proxmox VE gui, go to:
     - Server View > Datacenter > (server name) > Disks > ZFS
-    - [Create: ZFS], enter a name and choose /dev/sda1, then Create
+    - [Create: ZFS], enter a name e.g. **vm-disks** and choose /dev/sda1, then [Create]
 
 
-## CREATE A VM
+## CREATE HOME ASSISTANT VM
 
-- Download some VM disk images, e.g.
-    - https://dl.rockylinux.org/pub/rocky/9/images/x86_64/Rocky-9-GenericCloud-Base.latest.x86_64.qcow2
-    - https://github.com/home-assistant/operating-system/releases/download/11.0haos_ova-11.0.qcow2.xz
+- Follow steps in runbook-hass.md
 
-    - Make sure to uncompress if the image is compressed.
 
-    - Follow steps in runbook-hass.md
+## CREATE MEDIA CENTER VM
+
+- ???
 
 
 ## TLS CERTIFICATE
+
+- ???
