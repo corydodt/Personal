@@ -130,8 +130,8 @@ You can get the LAN IP of the new HASS VM one of two ways:
 
 **IP is currently 10.0.0.28**
 
-In the router, Advanced settings, DHCP Reservations, reserve an 
-IP for HASS permanently.
+In the router, Advanced settings, DHCP Reservations, reserve an IP for HASS
+permanently.
 
 
 ## ACCESS THE WEB INTERFACE
