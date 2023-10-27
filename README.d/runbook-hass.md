@@ -45,6 +45,11 @@ In the Proxmox VE management gui:
 7. Confirm > Finish. Don't check "start after created", we will start it later
 
 
+## MAKE IT AUTOSTART
+
+Datacenter > pve > 100 (hass) > Options > Start at Boot > [Start at Boot] > [OK]
+
+
 ## CREATE DISK FROM PVE COMMAND LINE
 
 To attach the HAOS image as a disk of the VM,
@@ -146,6 +151,9 @@ From the welcome page, just follow the prompts to
 
 
 ## DYNAMIC DNS + LETSENCRYPT
+
+FIXME
+
 
 - add the dynu addon
     - settings > add-ons > [+ add-on store] > ... menu > repositories > https://github.com/koying/ha-addons
