@@ -49,7 +49,7 @@ In the Proxmox VE management gui:
 Datacenter > pve > 101 (mediacenter) > Options > Start at Boot > [Start at Boot] > [OK]
 
 
-## Enable QEMU Guest Agent
+## ENABLE QEMU GUEST AGENT
 
 - Datacenter > pve > 101 (mediacenter) > Options > QEMU Guest Agent > [Use QEMU Guest Agent] 
 - (Optional: Run guest-trim)

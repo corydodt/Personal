@@ -50,6 +50,15 @@ In the Proxmox VE management gui:
 Datacenter > pve > 100 (hass) > Options > Start at Boot > [Start at Boot] > [OK]
 
 
+## ENABLE QEMU GUEST AGENT
+
+- Datacenter > pve > 100 (hass) > Options > QEMU Guest Agent > [Use QEMU Guest Agent]
+- (Optional: Run guest-trim)
+- [OK]
+
+
+
+
 ## CREATE DISK FROM PVE COMMAND LINE
 
 To attach the HAOS image as a disk of the VM,
@@ -118,7 +127,6 @@ You can speed up boot a bit:
 3. [Add] > USB Device > Use USB Vendor/Device ID > Choose `Zooz` Device from the dropdown. [Add].
 
 **Note: mapping this device from the datacenter and choosing a mapped device DOES NOT work, HASS will see the stick but not be able to initialize the z-wave addon.** Make sure you follow the above procedure, mapping it by Device ID from the VM itself.
-
 
 ## START THE VM
 
