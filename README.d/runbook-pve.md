@@ -161,6 +161,47 @@ git config --global user.email "corydodt@fastmail.com"
 - ???
 
 
-## TLS CERTIFICATE
+## TLS CERTIFICATE AND DNS
 
-- ???
+### Register an account with dynu.com
+
+- sign up for free account **corydodt** at dynu.com
+
+### (1-time, already complete) At namecheap...
+
+- in carrotwithchickenlegs.com, set up custom DNS, with these dns servers:
+    - ns1.dynu.com
+    - ns2.dynu.com
+
+#### This takes 24-48 hours to migrate
+
+
+### Set up DNS at dynu.com
+
+- Dynu control panel > DDNS services > [+Add] 
+    - carrotwithchickenlegs.ddnsfree.com
+    - pve.carrotwithchickenlegs.com
+        - set ip `10.0.0.26`
+    - hass.carrotwithchickenlegs.com
+        - set ip `10.0.0.28`
+    - mediacenter.carrotwithchickenlegs.com
+        - set ip `10.0.0.24`
+
+- Dynu control panel > API credentials > Oauth2 > click binoculars to view and copy client id and secret
+
+
+### Set PVE to retrieve a certificate for *.carrotwithchickenlegs.com
+
+1. Datacenter > ACME > Accounts > [Add]
+
+    - name default *Note: this must be named default*
+    - **email yellow.tree5340@fastmail.com**
+    - [Accept TOS]
+    - [Register]
+
+    **Account URL is xxx https://acme-v02.api.letsencrypt.org/acme/acct/1369591986**
+
+2. Challenge Plugins > [Add]
+    - plugin id `dynu`
+    - DNS API select [dynu]
+    - API data: paste the Dynu API key from the previous section
