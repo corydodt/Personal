@@ -158,27 +158,56 @@ git config --global user.email "corydodt@fastmail.com"
 
 ## CREATE MEDIA CENTER VM
 
-- ???
+- Follow steps in runbook-mediacenter.md
 
 
 ## TLS CERTIFICATE AND DNS
 
 ### (1-time, already complete) At namecheap...
 
-- in carrotwithchickenlegs.com, set up custom DNS, with these dns servers:
-    - ns1.dynu.com
-    - ns2.dynu.com
+- Domain List > carrotwithchickenlegs.com > [Manage] > Nameservers > select [Namecheap Basic DNS]
 
-#### This takes 24-48 hours to migrate
+- carrotwithchickenlegs.com > Advanced DNS
+    - (nothing to do here right now, but you will visit this panel again for each VM)
 
 
 ### Set PVE to retrieve a certificate for *.carrotwithchickenlegs.com
 
 Because we are using a wildcard certificate this will not use the builtin GUI.
 
-##### Notes
+- Using root@10.0.0.97 (via ssh), install acme.sh
+    - `curl https://get.acme.sh | sh -s email=yellow.tree5340@fastmail.com`
+    - Note: this updates .bashrc and also installs an entry in root's crontab,
+    check with `crontab -l`
 
-- set up a cron job to run acme.sh periodically and replace the cert
-    - `acme.sh --issue -d '*'.carrotwithchickenlegs.com --dns dns_namecheap`
-    - `--staging` or `--force` might be used to test
-    - /root/.acme.sh/account.conf contains NAMECHEAP_* and ACCOUNT_EMAIL api details
+- Create a Namecheap API key
+    - https://namecheap.com
+    - Profile > Tools > Business & Dev Tools > Namecheap API access
+    - You will need to turn on (already done)
+    - [Manage]
+    - API Key > Create or [Reset] API key
+    - Whitelisted IPs > [Edit], add your home IP
+
+- Issue a staging cert as a test, and to store namecheap keys in `~/.acme.sh/account.conf`
+    ```
+    # Documentation at https://github.com/acmesh-official/acme.sh/wiki/dnsapi#dns_namecheap
+    export NAMECHEAP_API_KEY='(fetch from namecheap > Profile > Tools .... API Key)'
+    export NAMECHEAP_USERNAME='corydodt'
+    export NAMECHEAP_SOURCEIP='97.120.122.73'
+
+    # `--force` might also be used to test
+    acme.sh --staging --issue -d '*'.carrotwithchickenlegs.com --dns dns_namecheap
+    ```
+
+- When staging is confirmed, issue a production cert
+    ```
+    acme.sh --issue -d '*'.carrotwithchickenlegs.com --dns dns_namecheap
+    ```
+
+- Tell proxmox to use the generated cert
+    ```
+    cd ~/.acme.sh/'*.carrotwithchickenlegs.com_ecc'
+    pvenode cert set fullchain.cer \*.carrotwithchickenlegs.com.key  -restart -force
+    ```
+
+
