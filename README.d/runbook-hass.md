@@ -158,17 +158,50 @@ From the welcome page, just follow the prompts to
 - [Finish], accepting whatever devices HASS found
 
 
-## DYNAMIC DNS + LETSENCRYPT
+## ENABLE SSH
 
-FIXME
+- Settings > Add-Ons > [+ Add-On Store], Choose "Terminal & SSH"
+- Once installed, > Configuration, paste a pubkey into Authorized Keys
+- Login will be as `root` with an authorized ssh key
 
 
-- add the dynu addon
-    - settings > add-ons > [+ add-on store] > ... menu > repositories > https://github.com/koying/ha-addons
-    - search for dynu
-- sign up for free account **corydodt** at dynu.com
-- add ddns management records:
-    - carrotwithchickenlegs.ddnsfree.com
-    - carrotwithchickenlegs.com
+## LETSENCRYPT TLS + NAMECHEAP DNS
 
-    - use advanced dynu config options
+### Set up Nginx to handle SSL
+
+- Settings > Add-Ons > [+ Add-On Store], add "NGINX Home Assistant SSL proxy"
+
+- After installation,
+    - Configuration > Options, set domain to `hass.carrotwithchickenlegs.com`, [Save]
+    - Configuration > Network, confirm port 443 is exposed by the add-on, [Save] (restart here)
+
+- Connect via ssh and use vim to edit files.  Add to `~/config/configuration.yaml`:
+    ```
+    http:
+        use_x_forwarded_for: true
+        trusted_proxies:
+            - 172.30.33.0/24
+    ```
+
+### Provide the hass IP to DNS
+
+- https://ap.www.namecheap.com/Domains/DomainControlPanel/carrotwithchickenlegs.com/advancedns
+    - add RR for `A hass 10.0.0.68`
+    - wait a few minutes for TTL
+
+
+##### Notes **FIXME**
+- delivering cert
+    - pve node will periodically run acme.sh to refresh the cert
+    - if it changed, it will use ssh to copy the cert to `/ssl/fullchain.pem` and `/ssl/privkey.pem`
+
+- restarting hass
+    - ref https://community.home-assistant.io/t/how-to-manually-set-ssl-certificates/287471/3
+    - get API key (LLA-TOKEN) from 1password then
+        ```
+        curl -X \
+            POST -H "Authorization: Bearer *LLA-TOKEN*"
+            -H "Content-Type: application/json"
+            https://hass.carrotwithchickenlegs.com:8123/api/services/homeassistant/restart
+        ```
+
