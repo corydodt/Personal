@@ -201,7 +201,7 @@ Because we are using a wildcard certificate this will not use the builtin GUI.
 
 - When staging is confirmed, issue a production cert
     ```
-    acme.sh --issue -d '*'.carrotwithchickenlegs.com --dns dns_namecheap
+    acme.sh --issue -d '*'.carrotwithchickenlegs.com --dns dns_namecheap --reloadcmd /root/acmd-reloadcmd.sh
     ```
 
 - Tell proxmox to use the generated cert
@@ -211,3 +211,8 @@ Because we are using a wildcard certificate this will not use the builtin GUI.
     ```
 
 
+## LIST OF SECRETS STORED
+
+- *.carrotwithchickenlegs.com.key, x4 places (/root/.acme.sh + /etc/pve/nodes/pve + hass node + mediacenter node)
+- namecheap dns api key /root/.acme.sh/account.conf
+- /root/.ssh/cory-aws-personal.pem
