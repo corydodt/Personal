@@ -111,9 +111,61 @@ From 101 (mediacenter), click [> Start]
 
 The easiest way to get the LAN IP of the new Rocky VM is from the router, find the latest IP address assigned by DHCP. Make this assignment permanent.
 
-**IP is currently 10.0.0.24**
+**IP is currently 10.0.0.69**
+
+
+## NAMECHEAP A RECORD
+
+- Add a Namecheap RR to the carrotwithchickenlegs.com zone, A 10.0.0.69 -> mediacenter
 
 
 ## ACCESS THE INSTANCE VIA SSH
 
-SSH with `rocky@10.0.0.24` and the pubkey provided to cloud-init above.
+SSH with `rocky@mediacenter.carrotwithchickenlegs.com` and the pubkey provided to cloud-init above.
+
+- ```
+  sudo dnf install -y vim podman systemd-container
+  ```
+
+## JELLYFIN
+
+```
+sudo useradd jellyfin
+sudo loginctl enable-linger jellyfin
+podman pull jellyfin/jellyfin
+sudo mkdir -P /opt/jellyfin/{cache,config} /opt/media
+sudo chown -R jellyfin /opt/jellyfin /opt/media
+```
+
+```
+sudo machinectl shell jellyfin@
+```
+
+~jellyfin/.config/containers/systemd/jellyfin.container
+```
+[Container]
+Image=docker.io/jellyfin/jellyfin:latest
+Label=io.containers.autoupdate=registry
+PublishPort=8096:8096/tcp
+# UserNS=keep-id
+Volume=/opt/jellyfin/config:/config:Z
+Volume=/opt/jellyfin/cache:/cache:Z
+Volume=/opt/media:/media:Z
+
+[Service]
+# Inform systemd of additional exit status
+SuccessExitStatus=0 143
+
+[Install]
+# Start by default on boot
+WantedBy=default.target
+```
+
+```
+systemctl --user daemon-reload
+systemctl --user start jellyfin
+systemctl --user enable --now podman-auto-update.timer
+```
+
+
+http://mediacenter.carrotwithchickenlegs.com:8096
