@@ -199,9 +199,12 @@ Because we are using a wildcard certificate this will not use the builtin GUI.
     acme.sh --staging --issue -d '*'.carrotwithchickenlegs.com --dns dns_namecheap
     ```
 
+- Install https://github.com/corydodt/pve.carrotwithchickenlegs.com/blob/main/acme-reloadcmd.sh to
+  /root/acme-reloadcmd.sh
+
 - When staging is confirmed, issue a production cert
     ```
-    acme.sh --issue -d '*'.carrotwithchickenlegs.com --dns dns_namecheap --reloadcmd /root/acmd-reloadcmd.sh
+    acme.sh --issue -d '*'.carrotwithchickenlegs.com --dns dns_namecheap --reloadcmd /root/acme-reloadcmd.sh
     ```
 
 - Tell proxmox to use the generated cert
@@ -213,6 +216,6 @@ Because we are using a wildcard certificate this will not use the builtin GUI.
 
 ## LIST OF SECRETS STORED
 
-- *.carrotwithchickenlegs.com.key, x4 places (/root/.acme.sh + /etc/pve/nodes/pve + hass node + mediacenter node)
+- *.carrotwithchickenlegs.com.key, x4 places (/root/.acme.sh + /etc/pve/nodes/pve + hass vm + mediacenter vm)
 - namecheap dns api key /root/.acme.sh/account.conf
 - /root/.ssh/cory-aws-personal.pem
