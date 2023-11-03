@@ -161,6 +161,16 @@ git config --global user.email "corydodt@fastmail.com"
 - Follow steps in runbook-mediacenter.md
 
 
+## CREATE HAPROXY VM
+
+- ??? TODO
+
+
+## CREATE IMMICH VM
+
+- ??? TODO
+
+
 ## TLS CERTIFICATE AND DNS
 
 ### (1-time, already complete) At namecheap...
