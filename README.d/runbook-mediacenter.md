@@ -114,7 +114,7 @@ The easiest way to get the LAN IP of the new Rocky VM is from the router, find t
 **IP is currently 10.0.0.69**
 
 
-## NAMECHEAP A RECORD
+## NAMECHEAP DNS A RECORD
 
 - Add a Namecheap RR to the carrotwithchickenlegs.com zone, A 10.0.0.69 -> mediacenter
 
@@ -124,7 +124,12 @@ The easiest way to get the LAN IP of the new Rocky VM is from the router, find t
 SSH with `rocky@mediacenter.carrotwithchickenlegs.com` and the pubkey provided to cloud-init above.
 
 - ```
-  sudo dnf install -y vim podman systemd-container
+  sudo dnf install -y vim podman systemd-container git
+  mkdir src
+  cd src
+  # fixme - set up ~/.ssh/cory-aws-personal.pem
+  git clone git@github.com:corydodt/pve.carrotwithchickenlegs.com.git
+  git clone git@github.com:corydodt/Personal.git
   ```
 
 ## JELLYFIN
@@ -135,37 +140,35 @@ sudo loginctl enable-linger jellyfin
 podman pull jellyfin/jellyfin
 sudo mkdir -P /opt/jellyfin/{cache,config} /opt/media
 sudo chown -R jellyfin /opt/jellyfin /opt/media
-```
-
-```
 sudo machinectl shell jellyfin@
 ```
 
-~jellyfin/.config/containers/systemd/jellyfin.container
-```
-[Container]
-Image=docker.io/jellyfin/jellyfin:latest
-Label=io.containers.autoupdate=registry
-PublishPort=8096:8096/tcp
-# UserNS=keep-id
-Volume=/opt/jellyfin/config:/config:Z
-Volume=/opt/jellyfin/cache:/cache:Z
-Volume=/opt/media:/media:Z
 
-[Service]
-# Inform systemd of additional exit status
-SuccessExitStatus=0 143
+- ~jellyfin/.config/containers/systemd/jellyfin.container
+    ```
+    [Container]
+    Image=docker.io/jellyfin/jellyfin:latest
+    Label=io.containers.autoupdate=registry
+    PublishPort=8096:8096/tcp
+    # UserNS=keep-id
+    Volume=/opt/jellyfin/config:/config:Z
+    Volume=/opt/jellyfin/cache:/cache:Z
+    Volume=/opt/media:/media:Z
 
-[Install]
-# Start by default on boot
-WantedBy=default.target
-```
+    [Service]
+    # Inform systemd of additional exit status
+    SuccessExitStatus=0 143
 
-```
-systemctl --user daemon-reload
-systemctl --user start jellyfin
-systemctl --user enable --now podman-auto-update.timer
-```
+    [Install]
+    # Start by default on boot
+    WantedBy=default.target
+    ```
+
+    ```
+    systemctl --user daemon-reload
+    systemctl --user start jellyfin
+    systemctl --user enable --now podman-auto-update.timer
+    ```
 
 
 http://mediacenter.carrotwithchickenlegs.com:8096
