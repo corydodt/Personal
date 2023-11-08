@@ -118,15 +118,20 @@ You can speed up boot a bit:
 - Options > Boot Order. Uncheck everything except `scsi0` and [OK].
 
 
-## PASS THROUGH ZOOZ CONTROLLER STICK
+## PASS THROUGH CONTROLLER STICKS
 
 1. Plug in the Zooz 800 z-wave controller stick to the physical server.
 
-2. Datacenter > pve > 100 (hass) > Hardware.
+2. Plug in the Sonoff controller stick to the physical server.
 
-3. [Add] > USB Device > Use USB Vendor/Device ID > Choose `Zooz` Device from the dropdown. [Add].
+3. Datacenter > pve > 100 (hass) > Hardware.
 
-**Note: mapping this device from the datacenter and choosing a mapped device DOES NOT work, HASS will see the stick but not be able to initialize the z-wave addon.** Make sure you follow the above procedure, mapping it by Device ID from the VM itself.
+4. Add USB devices:
+
+    a. [Add] > USB Device > Use USB Vendor/Device ID > Choose `Zooz` Device from the dropdown. [Add].
+    b. [Add] > USB Device > Use USB Vendor/Device ID > Choose `Sonoff` Device from the dropdown. [Add].
+
+**Note: mapping devices from the datacenter and choosing a mapped device DOES NOT work, HASS will see the stick but not be able to initialize the addon.** Make sure you follow the above procedure, mapping it by Device ID from the VM itself.
 
 ## START THE VM
 
