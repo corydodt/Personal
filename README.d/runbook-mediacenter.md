@@ -172,3 +172,22 @@ sudo machinectl shell jellyfin@
 
 
 http://mediacenter.carrotwithchickenlegs.com:8096
+
+
+## WIREGUARD
+
+```
+sudo dnf install wireguard-tools
+```
+
+
+## SYNCTHING
+
+
+
+```
+podman run -p 8384:8384 -p 22000:22000/tcp -p 22000:22000/udp -p 21027:21027/udp \
+    -v /wherever/st-sync:/var/syncthing \
+    --hostname=my-syncthing \
+    syncthing/syncthing:latest
+```
