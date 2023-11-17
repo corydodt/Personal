@@ -229,3 +229,4 @@ Because we are using a wildcard certificate this will not use the builtin GUI.
 - *.carrotwithchickenlegs.com.key, x4 places (/root/.acme.sh + /etc/pve/nodes/pve + hass vm + mediacenter vm)
 - namecheap dns api key /root/.acme.sh/account.conf
 - /root/.ssh/cory-aws-personal.pem
+- wireguard preshared key, private key, server public key
