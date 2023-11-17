@@ -170,20 +170,42 @@ sudo machinectl shell jellyfin@
     systemctl --user enable --now podman-auto-update.timer
     ```
 
-
 http://mediacenter.carrotwithchickenlegs.com:8096
 
 
 ## WIREGUARD
 
+Ensure the wireguard app is installed and started on gigadrive. Also install ubuntu-ssh.
+
+From gigadrive ssh, obtain /storage/app/wireguard/peer1/peer1.conf.
+
+Install secrets into podman that can be used by the container
 ```
-sudo dnf install wireguard-tools
+# get these from peer1.conf
+printf xxxxxxxxxxxxx | podman secret create wireguard-preshared-key -
+printf xxxxxxxxxxxxx | podman secret create wireguard-private-key -
+printf xxxxxxxxxxxxx | podman secret create wireguard-public-key -
+```
+
+
+Set up a container to autostart at boot:
+```
+# (tweak the .container file as necessary from peer1.conf, for endpoint ip & port, local addresses )
+sudo install -o root -m 644 \
+    ~/src/pve.carrotwithchickenlegs.com/gluetun-gigadrive.container \
+    /usr/share/containers/systemd/
+sudo systemctl daemon-reload; sudo systemctl start gluetun-gigadrive
+
+# did it start?
+systemctl status gluetun-gigadrive
+# (should see healthy! in the log)
+
+# best way to check:
+sudo podman exec -it systemd-gluetun-gigadrive ping 10.13.13.1
 ```
 
 
 ## SYNCTHING
-
-
 
 ```
 podman run -p 8384:8384 -p 22000:22000/tcp -p 22000:22000/udp -p 21027:21027/udp \
