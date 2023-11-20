@@ -134,48 +134,38 @@ SSH with `rocky@mediacenter.carrotwithchickenlegs.com` and the pubkey provided t
 
 ## JELLYFIN
 
-```
-sudo useradd jellyfin
-sudo loginctl enable-linger jellyfin
-podman pull jellyfin/jellyfin
-sudo mkdir -P /opt/jellyfin/{cache,config} /opt/media
-sudo chown -R jellyfin /opt/jellyfin /opt/media
-sudo machinectl shell jellyfin@
-```
-
-
-- ~jellyfin/.config/containers/systemd/jellyfin.container
-    ```
-    [Container]
-    Image=docker.io/jellyfin/jellyfin:latest
-    Label=io.containers.autoupdate=registry
-    PublishPort=8096:8096/tcp
-    # UserNS=keep-id
-    Volume=/opt/jellyfin/config:/config:Z
-    Volume=/opt/jellyfin/cache:/cache:Z
-    Volume=/opt/media:/media:Z
-
-    [Service]
-    # Inform systemd of additional exit status
-    SuccessExitStatus=0 143
-
-    [Install]
-    # Start by default on boot
-    WantedBy=default.target
-    ```
+1. Prep:
 
     ```
+    sudo useradd jellyfin
+    sudo loginctl enable-linger jellyfin
+    podman pull jellyfin/jellyfin
+    sudo mkdir -P /opt/jellyfin/{cache,config} /opt/media
+    sudo chown -R jellyfin /opt/jellyfin /opt/media
+    ```
+
+2. Install container file:
+
+    ```
+    sudo machinectl shell jellyfin@
+
+    install -m 644 \
+        -D \
+        ~/src/pve.carrotwithchickenlegs.com/jellyfin.container \
+        ~jellyfin/.config/containers/systemd/jellyfin.container
     systemctl --user daemon-reload
     systemctl --user start jellyfin
     systemctl --user enable --now podman-auto-update.timer
     ```
 
-http://mediacenter.carrotwithchickenlegs.com:8096
+3. Visit: http://mediacenter.carrotwithchickenlegs.com:8096
 
 
-## WIREGUARD
+## GLUETUN (WIREGUARD)
 
-Ensure the wireguard app is installed and started on gigadrive. Also install ubuntu-ssh.
+Ensure these apps are installed and started on gigadrive:
+- wireguard 
+- ubuntu-ssh
 
 From gigadrive ssh, obtain /storage/app/wireguard/peer1/peer1.conf.
 
@@ -207,9 +197,12 @@ sudo podman exec -it systemd-gluetun-gigadrive ping 10.13.13.1
 
 ## SYNCTHING
 
-```
-podman run -p 8384:8384 -p 22000:22000/tcp -p 22000:22000/udp -p 21027:21027/udp \
-    -v /wherever/st-sync:/var/syncthing \
-    --hostname=my-syncthing \
-    syncthing/syncthing:latest
-```
+Install and run container:
+    ```
+    install -m 644 \
+        -D \
+        ~/src/pve.carrotwithchickenlegs.com/syncthing.container \
+        ~/.config/containers/systemd/syncthing.container
+    systemctl --user daemon-reload
+    systemctl --user start syncthing
+    ```
