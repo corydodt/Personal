@@ -124,7 +124,7 @@ The easiest way to get the LAN IP of the new Rocky VM is from the router, find t
 SSH with `rocky@mediacenter.carrotwithchickenlegs.com` and the pubkey provided to cloud-init above.
 
 - ```
-  sudo dnf install -y vim podman systemd-container git
+  sudo dnf install -y vim podman systemd-container git make
   mkdir src
   cd src
   # fixme - set up ~/.ssh/cory-aws-personal.pem
@@ -151,14 +151,18 @@ SSH with `rocky@mediacenter.carrotwithchickenlegs.com` and the pubkey provided t
 
     install -m 644 \
         -D \
-        ~/src/pve.carrotwithchickenlegs.com/jellyfin.container \
+        ~rocky/src/pve.carrotwithchickenlegs.com/jellyfin.container \
         ~jellyfin/.config/containers/systemd/jellyfin.container
     systemctl --user daemon-reload
-    systemctl --user start jellyfin
+    systemctl --user start jellyfin || journalctl -xe --no-pager | grep quadlet
+    ```
+
+3. Set up automatic updates
+    ```
     systemctl --user enable --now podman-auto-update.timer
     ```
 
-3. Visit: http://mediacenter.carrotwithchickenlegs.com:8096
+4. Visit: http://mediacenter.carrotwithchickenlegs.com:8096
 
 
 ## GLUETUN (WIREGUARD)
@@ -199,6 +203,7 @@ sudo podman exec -it systemd-gluetun-gigadrive ping 10.13.13.1
 
 Install and run container:
     ```
+    sudo loginctl enable-linger rocky
     install -m 644 \
         -D \
         ~/src/pve.carrotwithchickenlegs.com/syncthing.container \
@@ -206,3 +211,21 @@ Install and run container:
     systemctl --user daemon-reload
     systemctl --user start syncthing
     ```
+
+
+## PORTAINER
+
+systemctl enable --now podman.socket
+
+podman run -d \
+    -p 8000:8000 \
+    -p 9443:9443 \
+    --name portainer \
+    --restart=always \
+    --privileged \
+    -v /run/podman/podman.sock:/var/run/docker.sock:Z \
+    -v /storage/portainer_data:/data \
+    docker.io/portainer/portainer-ce:latest
+
+Set up admin at https://localhost:9443 (do this quickly, it times out)
+
