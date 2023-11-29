@@ -1,0 +1,12 @@
+# TODO
+
+- [x] test restart syncthing
+- [ ] radarr, sonarr, prowlarr
+- [ ] update acme-reload.sh for portainer apps
+- [x] portainer https
+- [ ] pve https/revproxy
+- [ ] parameterize templates with env vars(?)
+- [ ] nginx - auto(?) soft reload on adding new app
+- [ ] backup configs regularly 
+- [ ] finish runbooks
+- [ ] pass through igpu to mediacenter? https://pve.carrotwithchickenlegs.com:8006/pve-docs/chapter-qm.html#qm_pci_passthrough_vm_config
