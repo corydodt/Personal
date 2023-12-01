@@ -1,7 +1,7 @@
 # TODO
 
 - [x] test restart syncthing
-- [ ] radarr, sonarr, prowlarr
+- [x] radarr, sonarr, prowlarr
 - [ ] update acme-reload.sh for portainer apps
 - [x] portainer https
 - [ ] pve https/revproxy
