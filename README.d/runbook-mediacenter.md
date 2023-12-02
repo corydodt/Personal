@@ -229,3 +229,6 @@ podman run -d \
 
 Set up admin at https://localhost:9443 (do this quickly, it times out)
 
+### XXX systemd conf
+
+sudo cp src/pve.carrotwithchickenlegs.com/portainer/portainer.conf /etc/systemd/system/portainer.service

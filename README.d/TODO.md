@@ -3,6 +3,8 @@
 - [x] test restart syncthing
 - [x] radarr, sonarr, prowlarr
 - [ ] test a reboot of mediacenter
+  - [ ] set portainer to autostart
+  - [ ] set containers managed by portainer to autostart
 - [ ] update acme-reload.sh for portainer apps
 - [x] portainer https
 - [ ] pve https/revproxy
