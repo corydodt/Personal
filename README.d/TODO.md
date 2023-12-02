@@ -10,5 +10,6 @@
 - [ ] nginx - auto(?) soft reload on adding new app (or get traefik working)
 - [ ] backup configs regularly 
   - [x] make a first backup of /opt
+  - [ ] automate snapshot of hass into backups folder
 - [ ] finish runbooks
 - [ ] pass through igpu to mediacenter? https://pve.carrotwithchickenlegs.com:8006/pve-docs/chapter-qm.html#qm_pci_passthrough_vm_config
