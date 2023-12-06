@@ -91,6 +91,13 @@ To swap the VM's placeholder storage for the new disk image:
     8. [Disk Action] > Resize. Enter `3000` GiB, [Resize disk]
 
 
+## BOOT FROM SCSI
+
+1. Datacenter > pve > 101 (mediacenter)
+
+2. Options > Boot Order > [Edit]. Check [scsi0] and uncheck the others. [OK]
+
+
 ## PREPARE CLOUD-INIT TO MAKE LOGIN POSSIBLE
 
 You must use the cloud-init system to provide a way to access the system.

@@ -94,7 +94,7 @@
 
 - in proxmox gui: 
     - Server View > Datacenter > (server hostname) > Updates > Repositories
-    - [Add], choose non-subscription
+    - [Add], choose No-Subscription
     - disable ceph repo and enterprise repo
 
 
