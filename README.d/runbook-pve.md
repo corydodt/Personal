@@ -81,7 +81,7 @@
 - _Now_ uncomment vmbr0 in /etc/network/interfaces
 - Reserve the next IP in DHCP
 
-    **Currently 10.0.0.26 for the proxmox bridge over ethernet**
+    **Currently 10.0.0.97 for the proxmox bridge over ethernet**
 
 - Plug in an ethernet cable
 
