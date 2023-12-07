@@ -6,13 +6,12 @@
 
 Professional Objective
 ----------------------
-A full-time senior software development position as an individual contributor, including ops or application dev
+A full-time senior software development position as an individual contributor, including infrastructure or application dev
 
 Skills
 ------
-* Web application development in or out of the cloud
-* Programming Languages: Python, Javascript, Unix Shell, Java, C/C++,
-  etc.
+* Web application and API development in or out of the cloud
+* Programming Languages: Python, Javascript, Go, Rust, Unix Shell, C/C++, etc.
 * Senior management experience: hiring, motivating and training employees; designing
   cool products; and inspiring great work.
 * Development process wonk: TDD, code reviews, fast cycle development, open
@@ -23,6 +22,19 @@ Skills
 
 Employment History
 ------------------
+
+### Senior Cloud Engineer | *Aerospike, Inc.*
+
+  Sept. 2021-Current
+
+Senior engineer developing automated deployment, management services, and technology to communicate between the
+cloud frontend and the backend databases; also, team lead and manager.
+
+* Design and develop automation systems related to Aerospike Cloud managed customers (Python, Terraform, Ansible)
+* Design and develop architecture for Aerospike Cloud SaaS (DBaaS) (Go, Python, Terraform)
+* Lead and manage a team of engineers for the Dataplane Team, the automation layer that directly interacts with
+  cloud databases
+* On-call for the operations of live Aerospike Cloud customers, both as IC and as on-call manager.
 
 
 ### Senior Engineer | *OmniVector Solutions*

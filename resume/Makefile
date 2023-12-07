@@ -1,10 +1,9 @@
-all: corydodt.html corydodt.pdf
+.PHONY: corydodt.pdf
 
-corydodt.html: corydodt.txt resume.css
-	rst2html --stylesheet-path=resume.css corydodt.txt corydodt.html
+all: corydodt.pdf
 
-corydodt.pdf: corydodt.txt resume.css
-	rst2pdf -s resume.css corydodt.txt 
+corydodt.pdf:
+	$(error "Open corydodt.md in VS code and use Markdown PDF (yzane.markdown-pdf)")
 
 clean:
 	rm -f corydodt.html corydodt.pdf 
