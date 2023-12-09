@@ -139,40 +139,91 @@ SSH with `rocky@mediacenter.carrotwithchickenlegs.com` and the pubkey provided t
   git clone git@github.com:corydodt/Personal.git
   ```
 
+
+## PORTAINER
+
+```
+systemctl enable --now podman.socket
+cd ~/src/pve.carrotwithchickenlegs.com/portainer
+```
+
+Install the systemd service:
+
+```
+sudo install portainer.service /etc/systemd/system/portainer.service
+sudo systemctl enable --now portainer
+```
+
+Set up restartable containers to always restart:
+
+```
+sudo systemctl enable podman-restart
+```
+
+Install the portainer cli:
+
+```
+make install
+
+# if you don't have a keyring plugin for a secret manager installed, also do this:
+    make install-keyringrc
+
+keyring set portainer admin
+# (type the password for portainer admin from 1password)
+```
+
+Set up admin at https://localhost:9443 (do this quickly, it times out).
+
+XXX TODO: CREATE web-backends NETWORK
+
+
+## NGINX
+
+1. Prep:
+
+    ```
+    cd ~/src/pve.carrotwithchickenlegs.com/nginx
+    make install
+    ```
+
+2. Install in portainer:
+
+    ```
+    make template
+    make stack
+    ```
+
+
 ## JELLYFIN
 
 1. Prep:
 
     ```
-    sudo useradd jellyfin
-    sudo loginctl enable-linger jellyfin
-    podman pull jellyfin/jellyfin
-    sudo mkdir -P /opt/jellyfin/{cache,config} /opt/media
-    sudo chown -R jellyfin /opt/jellyfin /opt/media
+    sudo mkdir -P /opt/jellyfin/{cache,config}
+    sudo chown -R rocky.rocky /opt
     ```
 
-2. Install container file:
+2. Install service in portainer:
 
     ```
-    sudo machinectl shell jellyfin@
-
-    install -m 644 \
-        -D \
-        ~rocky/src/pve.carrotwithchickenlegs.com/jellyfin.container \
-        ~jellyfin/.config/containers/systemd/jellyfin.container
-    systemctl --user daemon-reload
-    systemctl --user start jellyfin || journalctl -xe --no-pager | grep quadlet
+    cd ~/src/pve.carrotwithchickenlegs.com/jellyfin
+    make template
+    make stack
     ```
 
-3. Set up automatic updates
-    ```
-    systemctl --user enable --now podman-auto-update.timer
-    ```
-
-4. Visit: http://mediacenter.carrotwithchickenlegs.com:8096
+3. Visit: http://mediacenter.carrotwithchickenlegs.com:8096
 
 
-## GLUETUN (WIREGUARD)
+## SYNCTHING
+
+```
+cd ~/src/carrotwithchickenlegs.com/syncthing
+make template
+make stack
+```
+
+
+## GLUETUN (WIREGUARD) (FIXME - PORTAINER)
 
 Ensure these apps are installed and started on gigadrive:
 - wireguard 
@@ -204,38 +255,3 @@ systemctl status gluetun-gigadrive
 # best way to check:
 sudo podman exec -it systemd-gluetun-gigadrive ping 10.13.13.1
 ```
-
-
-## SYNCTHING
-
-Install and run container:
-    ```
-    sudo loginctl enable-linger rocky
-    install -m 644 \
-        -D \
-        ~/src/pve.carrotwithchickenlegs.com/syncthing.container \
-        ~/.config/containers/systemd/syncthing.container
-    systemctl --user daemon-reload
-    systemctl --user start syncthing
-    ```
-
-
-## PORTAINER
-
-systemctl enable --now podman.socket
-
-podman run -d \
-    -p 8000:8000 \
-    -p 9443:9443 \
-    --name portainer \
-    --restart=always \
-    --privileged \
-    -v /run/podman/podman.sock:/var/run/docker.sock:Z \
-    -v /storage/portainer_data:/data \
-    docker.io/portainer/portainer-ce:latest
-
-Set up admin at https://localhost:9443 (do this quickly, it times out)
-
-### XXX systemd conf
-
-sudo cp src/pve.carrotwithchickenlegs.com/portainer/portainer.conf /etc/systemd/system/portainer.service
