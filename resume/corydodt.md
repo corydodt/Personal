@@ -1,6 +1,6 @@
 ## Cory Dodt - Résumé
 
-##### _Contact_ | 3936 N Michigan Ave | Portland, OR 97227 | (559) 455-8384 | corydodt@gmail.com
+##### _Contact_ | 4309 NE Jarrett St. | Portland, OR 97218 | (559) 455-8384 | corydodt@fastmail.com
 
 ---
 
