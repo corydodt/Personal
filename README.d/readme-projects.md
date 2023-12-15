@@ -3,8 +3,7 @@
 
 ## Outline
 
-- Install proxmox as `pve2` (it will be its own cluster separate from `pve`).
-- Create a new VM as `projects` using Rocky 9 GenericCloud. Use all the resources, as this will be the only VM.
+- Create a new VM as `projects` using Rocky 9 GenericCloud. 4GB 4CPU
     - Make sure it autostarts at boot
     - Enable QEMU guest agent
     - Create a cloudinit for `projects` using `rocky` user and `cory-aws-personal.pem` contents
