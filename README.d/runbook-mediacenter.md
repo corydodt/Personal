@@ -193,7 +193,13 @@ keyring set portainer admin
 
 Set up admin at https://localhost:9443 (do this quickly, it times out).
 
-XXX TODO: CREATE web-backends NETWORK
+
+## PODMAN NETWORK
+
+Create a network for the containers to communicate
+```
+sudo podman network create web-backends
+```
 
 
 ## NGINX
