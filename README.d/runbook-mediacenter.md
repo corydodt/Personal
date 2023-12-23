@@ -109,6 +109,13 @@ You must use the cloud-init system to provide a way to access the system.
 - Switch to the Cloud-Init section. SSH public key > paste your public key.
 
 
+## ATTACH FAST 2.5GBE NETWORK
+
+- Datacenter > pve > 101 (mediacenter) > Hardware
+
+- [Add] > Network Device. Bridge `vmbr1`, [Add]
+
+
 ## START THE VM
 
 From 101 (mediacenter), click [> Start]
@@ -130,11 +137,30 @@ The easiest way to get the LAN IP of the new Rocky VM is from the router, find t
 
 SSH with `rocky@mediacenter.carrotwithchickenlegs.com` and the pubkey provided to cloud-init above.
 
+### Podman setup
+```
+# install podman with other critical tools
+sudo dnf install -y vim podman systemd-container git make lsof tree python3-pip podman-docker cifs-utils
+
+# expose the socket interface to allow portainer to listen to container events
+sudo systemctl enable --now podman.socket
+
+# restartable containers can restart:
+sudo systemctl enable podman-restart
+```
+
 - ```
-  sudo dnf install -y vim podman systemd-container git make cifs-utils
+  git config --global user.name cory
+  git config --global user.email ...
+  git config --global push.rebase true
+  ```
+  
+- set up ~/.ssh/config and ~/.ssh/cory-aws-personal.pem
+
+- clone repos
+  ```
   mkdir src
   cd src
-  # fixme - set up ~/.ssh/cory-aws-personal.pem
   git clone git@github.com:corydodt/pve.carrotwithchickenlegs.com.git
   git clone git@github.com:corydodt/Personal.git
   ```
@@ -143,7 +169,6 @@ SSH with `rocky@mediacenter.carrotwithchickenlegs.com` and the pubkey provided t
 ## PORTAINER
 
 ```
-systemctl enable --now podman.socket
 cd ~/src/pve.carrotwithchickenlegs.com/portainer
 ```
 
@@ -152,12 +177,6 @@ Install the systemd service:
 ```
 sudo install portainer.service /etc/systemd/system/portainer.service
 sudo systemctl enable --now portainer
-```
-
-Set up restartable containers to always restart:
-
-```
-sudo systemctl enable podman-restart
 ```
 
 Install the portainer cli:
