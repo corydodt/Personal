@@ -131,7 +131,7 @@ The easiest way to get the LAN IP of the new Rocky VM is from the router, find t
 SSH with `rocky@mediacenter.carrotwithchickenlegs.com` and the pubkey provided to cloud-init above.
 
 - ```
-  sudo dnf install -y vim podman systemd-container git make
+  sudo dnf install -y vim podman systemd-container git make cifs-utils
   mkdir src
   cd src
   # fixme - set up ~/.ssh/cory-aws-personal.pem

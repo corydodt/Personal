@@ -17,11 +17,17 @@
         - 32 GB RAM
         - 1TB disk + 4TB external SSD
         - 16 i7 CPU cores
+    - network: 2 NICs in use
+      - enp2s0 bridged using vmbr0 = 10.0.0.97 LAN
+      - enp3s0 bridged using vmbr1 = 10.0.69.2 connected to 2.5Gbe on QNAP NAS
     - Proxmox VE (non-subscription)
+        - configured storage:
+          - local-thin LVM-THIN storage on 1TB disk
+          - CIFS storage `opt-qnap` from \\10.0.69.1\opt
         - VMs:
-            - hass.carrotwithchickenlegs.com
+            - hass.carrotwithchickenlegs.com (vmbr0 only)
                 - Home Assistant 11.0
-            - mediacenter.carrotwithchickenlegs.com
+            - mediacenter.carrotwithchickenlegs.com (vmbr0 + vmbr1)
                 - Rocky 9 / podman
                 - (?) gluetun
                 - Portainer
@@ -29,6 +35,9 @@
                     - syncthing
                     - duplicati
                     - sonarr, radarr, bazarr, jellyseerr, jellyfin, flaresolverr, prowlarr
+                - cifs mount /media as filesystem
+                - cifs mount /backups as filesystem
+                - /opt from pve storage `opt-qnap`
     - Certs:
         - *.carrotwithchickenlegs.com
             - ACME, dns-01 challenge
@@ -43,3 +52,19 @@
     - VMs:
       - aero-dev.carrotwithchickenlegs.com
         - Rocky 9
+
+
+## QNAP NAS
+  - 2 NICs in use
+    - NIC 1 = 10.0.69.1 + DHCP server, connected to 2.5Gbe port on pve NUC
+    - NIC 2 = 10.0.0.55 on LAN
+  - 4TB disk 1:
+    - (overhead ~5%)
+    - 2.66TB thin: media
+      - used as a filesystem
+    - 30GB thin: opt
+      - used as disk image storage by pve
+  - 4TB disk 2:
+    - (overhead ~25%)
+    - 200GB thin: backups
+      - used as a filesystem
