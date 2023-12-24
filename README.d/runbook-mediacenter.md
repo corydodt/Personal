@@ -110,12 +110,12 @@ From 101 (mediacenter), click [> Start]
 
 The easiest way to get the LAN IP of the new Rocky VM is from the router, find the latest IP address assigned by DHCP. Make this assignment permanent.
 
-**IP is currently 10.0.0.69**
+**IP is currently 10.0.0.54**
 
 
 ## NAMECHEAP DNS A RECORD
 
-- Add a Namecheap RR to the carrotwithchickenlegs.com zone, A 10.0.0.69 -> mediacenter
+- Add a Namecheap RR to the carrotwithchickenlegs.com zone, A 10.0.0.54 -> mediacenter
 
 
 ## ACCESS THE INSTANCE VIA SSH
@@ -153,38 +153,35 @@ sudo systemctl enable podman-restart
 
 ## PORTAINER
 
+1. Install the systemd service:
+
 ```
 cd ~/src/pve.carrotwithchickenlegs.com/portainer
-```
-
-Install the systemd service:
-
-```
 sudo install portainer.service /etc/systemd/system/portainer.service
 sudo systemctl enable --now portainer
 ```
 
-Install the portainer cli:
+2. Set up admin at https://localhost:9443 (do this quickly, it times out).
+
+3. Install the portainer cli:
 
 ```
 make install
 
 # if you don't have a keyring plugin for a secret manager installed, also do this:
-    make install-keyringrc
-
+make install-keyringrc
 keyring set portainer admin
 # (type the password for portainer admin from 1password)
 ```
-
-Set up admin at https://localhost:9443 (do this quickly, it times out).
 
 
 ## PODMAN NETWORK
 
 Create a network for the containers to communicate
 ```
-sudo podman network create web-backends
+sudo podman network create --subnet 10.89.33.0/24 web-backends
 ```
+
 
 ## MOUNT CIFS STORAGE FROM PROXMOX
 
@@ -212,7 +209,7 @@ sudo mount -a
 
 1. Edit /etc/fstab and add the following
 ```
-# note: we cannot use a hostname like qnap.fast.carrotwithchickenlegs.com here without existing wins name resolution
+# note: we cannot use a hostname like qnap.fast.carrotwithchickenlegs.com here without existing WINS name resolution
 //10.0.69.1/media   /media   cifs defaults,credentials=/root/creds.txt 0 0
 //10.0.69.1/backups /backups cifs defaults,credentials=/root/creds.txt 0 0
 ```
@@ -234,6 +231,8 @@ mount -a
 ## NGINX
 
 1. Prep:
+
+    Edit ~/src/pve.carrotwithchickenlegs.com/nginx/conf.d/https_proxy 
 
     ```
     cd ~/src/pve.carrotwithchickenlegs.com/nginx
