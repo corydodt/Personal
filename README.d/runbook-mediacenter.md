@@ -10,19 +10,6 @@ wget https://dl.rockylinux.org/pub/rocky/9/images/x86_64/Rocky-9-GenericCloud-Ba
 ```
 
 
-## CREATE A ZFS STORAGE CONTAINER
-
-In the Proxmox VE management gui:
-
-1. Datacenter > Storage > [Add] > ZFS
-
-2. Here, ID is the name, name it **media-center**
-
-3. ZFS Pool: "vm-disks"
-
-4. [Add]
-
-
 ## CREATE A PLACEHOLDER VM
 
 In the Proxmox VE management gui:
@@ -35,7 +22,7 @@ In the Proxmox VE management gui:
 
 3. OS > [Do not use any media]
 
-4. Disks > Storage > `media-center`. 32GB default is fine.
+4. Disks > Storage > `lvm-thin`. 32GB default is fine.
 
 5. CPU > use 1 socket, 4 cores
 
@@ -64,9 +51,9 @@ To attach the Rocky image as a disk of the VM,
 
     ```
     # - 101 is the VM ID from the previous section
-    # - media-center is the name of a storage container
+    # - lvm-thin is the name of a storage container
     # - the .qcow2 file is the disk image, and it must be uncompressed
-    qm disk import 101 Rocky-9-GenericCloud-Base.latest.x86_64.qcow2 media-center
+    qm disk import 101 Rocky-9-GenericCloud-Base.latest.x86_64.qcow2 lvm-thin
     ```
 
 To swap the VM's placeholder storage for the new disk image:
@@ -88,8 +75,6 @@ To swap the VM's placeholder storage for the new disk image:
     7. [Edit], check the settings, it should by default have SCSI 0 selected.
     Just click [Add]. This becomes **scsi0**.
 
-    8. [Disk Action] > Resize. Enter `3000` GiB, [Resize disk]
-
 
 ## BOOT FROM SCSI
 
@@ -104,7 +89,7 @@ You must use the cloud-init system to provide a way to access the system.
 
 - Datacenter > pve > 101 (mediacenter) > Hardware
 
-- [Add] > CloudInit drive. Storage `media-center`, [Add]
+- [Add] > CloudInit drive. Storage `lvm-thin`. [Add]
 
 - Switch to the Cloud-Init section. SSH public key > paste your public key.
 
@@ -201,6 +186,50 @@ Create a network for the containers to communicate
 sudo podman network create web-backends
 ```
 
+## MOUNT CIFS STORAGE FROM PROXMOX
+
+1. Datacenter > pve > 101 (mediacenter) > Hardware
+
+- [Add] > Hard Disk. Storage `opt-qnap`. Disk size 29GB. [Add].
+
+2. `lsblk` and confirm the new attached disk is `/dev/sdb`
+
+3. **Caution: This will erase the NAS-mounted storage.** `mkfs.ext4 /dev/sdb`
+
+4. Edit /etc/fstab and add:
+```
+/dev/sdb /opt ext4 defaults 0 0
+```
+
+5. Mount up
+```
+sudo systemctl daemon-reload
+sudo mount -a
+```
+
+
+## CIFS MOUNTS
+
+1. Edit /etc/fstab and add the following
+```
+# note: we cannot use a hostname like qnap.fast.carrotwithchickenlegs.com here without existing wins name resolution
+//10.0.69.1/media   /media   cifs defaults,credentials=/root/creds.txt 0 0
+//10.0.69.1/backups /backups cifs defaults,credentials=/root/creds.txt 0 0
+```
+
+2. Create `/root/creds.txt` with contents:
+```
+username=cdodt
+password=xxxxxx from 1password qnap
+```
+
+3. mount them
+```
+systemctl daemon-reload
+mkdir -p /backups /media
+mount -a
+```
+
 
 ## NGINX
 
@@ -224,7 +253,6 @@ sudo podman network create web-backends
 1. Prep:
 
     ```
-    sudo mkdir -P /opt/jellyfin/{cache,config}
     sudo chown -R rocky.rocky /opt
     ```
 
@@ -248,7 +276,7 @@ make stack
 ```
 
 
-## GLUETUN (WIREGUARD) (FIXME - PORTAINER)
+## GLUETUN (WIREGUARD)
 
 Ensure these apps are installed and started on gigadrive:
 - wireguard 
