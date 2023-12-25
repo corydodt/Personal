@@ -77,7 +77,7 @@ You must use the cloud-init system to provide a way to access the system.
 
 - Datacenter > pve > 101 (mediacenter) > Hardware
 
-- [Add] > CloudInit drive. Storage `lvm-thin`. [Add]
+- [Add] > CloudInit drive. Storage `local-lvm`. [Add]
 
 - Switch to the Cloud-Init section. SSH public key > paste your public key.
 

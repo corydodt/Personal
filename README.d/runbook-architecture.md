@@ -22,7 +22,7 @@
       - enp3s0 bridged using vmbr1 = 10.0.69.2 connected to 2.5Gbe on QNAP NAS
     - Proxmox VE (non-subscription)
         - configured storage:
-          - lvm-local LVM-THIN storage on 1TB disk
+          - local-lvm LVM-THIN storage on 1TB disk
           - CIFS storage `opt-qnap` from \\10.0.69.1\opt
         - VMs:
             - hass.carrotwithchickenlegs.com (vmbr0 only)
