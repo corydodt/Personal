@@ -108,11 +108,78 @@
 
 ## BAZARR
 
+- Settings > General (Backups)
+	- Folder `/config/backup`
+	- Retention `31` days
+
+- Settings > Languages (Languages Profiles) > `cory`
+	- (all defaults?)
+
+- Settings > Languages
+	- Languages Profiles: `cory` (EN)
+	- Default Settings: Series Profile `cory`, Movies Profile `cory`
+
+- Settings > Providers
+	- OpenSubtitles.com
+		- Username `boldluck`
+		- Password `xxxx`
+		- Use hash [true]
+
+- Settings > Radarr
+	- Address `radarr.carrotwithchickenlegs.com`
+	- Port `443`
+	- API Key `xxxx`
+	- SSL [true]
+
+- Settings > Sonarr
+	- Address `sonarr.carrotwithchickenlegs.com`
+	- Port `443`
+	- API Key `xxxx`
+	- SSL [true]
+
+- Settings > Subtitles
+	- Subtitle Folder [Alongside Media File]
+
 
 ## JELLYSEERR
 
+- Settings > Jellyfin
+	- Libraries: Shows, Movies, Specials, XD
+	- Internal URL `https://jellyfin.carrotwithchickenlegs.com`
+
+- Settings > Services > Radarr
+	- Server name `radarr`
+	- Hostname or IP address [https://] `radarr.carrotwithchickenlegs.com`
+	- Port `443`
+	- Use SSL [true]
+	- API key `xxxx`
+
+- Settings > Services > Sonarr
+	- Server name `sonarr`
+	- Hostname or IP address [https://] `sonarr.carrotwithchickenlegs.com`
+	- Port `443`
+	- Use SSL [true]
+	- API key `xxxx`
+	- Season Folders [true]
+
+- Settings > Users
+	- Enable Local Sign-in [true]
+	- Enable new Jellyfin sign-in [true]
+
 
 ## JELLYFIN
+
+- Settings (Administration) > Dashboard, Libraries
+	- Movies  `/media/Movies`
+	- Shows `/media/TV Shows`
+	- Specials `/media/Specials`
+	- XD `/media/XD`
+
+- Settings (User) > Settings > Subtitles
+	- Preferred subtitle language [English]
+	- Subtitle mode [Default]
+	- Text size [Normal]
+	- Vertical Position [-1]
 
 
 ## FLARESOLVERR
