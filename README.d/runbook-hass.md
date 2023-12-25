@@ -210,3 +210,16 @@ From the welcome page, just follow the prompts to
             https://hass.carrotwithchickenlegs.com:8123/api/services/homeassistant/restart
         ```
 
+
+## BACKUPS
+
+- Settings > Add-Ons > [+ Add-On Store], Dots(...) menu, Repositories. Add `https://github.com/thomasmauerer/hassio-addons`
+- Search for "Samba Backup" and Install
+- Once installed, > Configuration, set the following:
+    - Host 10.0.0.55 (we do not need the fast 2.5Gbe network for this)
+    - Share `backups` & Target directory `hass`
+    - Username `cdodt` & Password from 1password qnap nas
+    - Keep local 10 & Keep remote 10
+    - Trigger time 00:12
+    - [Save]
+    - > Info, [Start]

@@ -1,13 +1,6 @@
 # TODO
 
-- [ ] backup configs regularly 
-  - [x] make a first backup of /opt
-  - [x] duplicati
-    - [x] backup portainer, jellyfin, syncthing, flaresolverr, jellyseerr, sonarr
-    - [x] radarr
-    - [x] prowlarr
-    - [x] bazarr
-  - [ ] automate snapshot of hass into backups folder
+- [ ] fix sync of media, backups, downloads
 - [ ] update acme-reload.sh for portainer apps
 - [ ] finish runbooks
 
@@ -24,3 +17,12 @@
 - [x] test a reboot of mediacenter
   - [x] set portainer to autostart
   - [x] set containers managed by portainer to autostart
+
+- [x] backup configs regularly
+  - [x] make a first backup of /opt
+  - [x] duplicati
+    - [x] backup portainer, jellyfin, syncthing, flaresolverr, jellyseerr, sonarr
+    - [x] radarr
+    - [x] prowlarr
+    - [x] bazarr
+  - [x] automate snapshot of hass into backups folder
