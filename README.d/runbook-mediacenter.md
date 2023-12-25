@@ -22,7 +22,7 @@ In the Proxmox VE management gui:
 
 3. OS > [Do not use any media]
 
-4. Disks > Storage > `lvm-thin`. 32GB default is fine.
+4. Disks > Storage. Delete the default SCSI disk with the 🗑️ icon.
 
 5. CPU > use 1 socket, 4 cores
 
@@ -51,29 +51,10 @@ To attach the Rocky image as a disk of the VM,
 
     ```
     # - 101 is the VM ID from the previous section
-    # - lvm-thin is the name of a storage container
+    # - local-lvm is the name of a storage container
     # - the .qcow2 file is the disk image, and it must be uncompressed
-    qm disk import 101 Rocky-9-GenericCloud-Base.latest.x86_64.qcow2 lvm-thin
+    qm disk import 101 Rocky-9-GenericCloud-Base.latest.x86_64.qcow2 local-lvm
     ```
-
-To swap the VM's placeholder storage for the new disk image:
-
-- In Proxmox VE mgmt gui,
-
-    1. Datacenter > pve > 101 (mediacenter)
-    
-    2. If the VM is running, Shutdown > [Stop]
-
-    3. Go to Hardware panel. You should see two Hard Disks (scsi0 and Unused Disk 0).
-
-    4. Choose the empty placeholder disk, which will be `scsi0`. Click [Detach] > [Yes]. This becomes **Unused Disk 1**.
-
-    5. Choose the empty placeholder disk which is now Unused Disk 1. [Remove] > [Yes].
-
-    6. Choose the new disk image, which will be labeled Unused Disk 0.
-
-    7. [Edit], check the settings, it should by default have SCSI 0 selected.
-    Just click [Add]. This becomes **scsi0**.
 
 
 ## BOOT FROM SCSI
