@@ -1,6 +1,7 @@
 # TODO
 
 - [ ] fix sync of media, backups, downloads
+- [ ] run sabnzbd and deluge locally through a vpn like mullvad
 - [ ] update acme-reload.sh for portainer apps
 - [ ] finish runbooks
 
