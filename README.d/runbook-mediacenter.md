@@ -47,7 +47,7 @@ Datacenter > pve > 101 (mediacenter) > Options > Start at Boot > [Start at Boot]
 
 To attach the Rocky image as a disk of the VM,
 
-- ssh to root@pve.ip.address and then, in the pve shell:
+1. ssh to root@pve.ip.address and then, in the pve shell:
 
     ```
     # - 101 is the VM ID from the previous section
@@ -55,6 +55,13 @@ To attach the Rocky image as a disk of the VM,
     # - the .qcow2 file is the disk image, and it must be uncompressed
     qm disk import 101 Rocky-9-GenericCloud-Base.latest.x86_64.qcow2 local-lvm
     ```
+
+2. Proxmox Datacenter > pve > 101 (mediacenter) > Hardware
+
+3. Choose the new disk image in proxmox web, which will be labeled Unused Disk 0.
+
+4. [Edit], check the settings, it should by default have SCSI 0 selected.  Just
+click [Add]. This becomes **scsi0**.
 
 
 ## BOOT FROM SCSI
