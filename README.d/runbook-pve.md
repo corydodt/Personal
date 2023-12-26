@@ -222,11 +222,3 @@ Because we are using a wildcard certificate this will not use the builtin GUI.
     cd ~/.acme.sh/'*.carrotwithchickenlegs.com_ecc'
     pvenode cert set fullchain.cer \*.carrotwithchickenlegs.com.key  -restart -force
     ```
-
-
-## LIST OF SECRETS STORED
-
-- *.carrotwithchickenlegs.com.key, x4 places (/root/.acme.sh + /etc/pve/nodes/pve + hass vm + mediacenter vm)
-- namecheap dns api key /root/.acme.sh/account.conf
-- /root/.ssh/cory-aws-personal.pem
-- wireguard preshared key, private key, server public key

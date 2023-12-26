@@ -3,7 +3,7 @@
 ## Third-party services list
   - giga-rapid gigadrive seedbox $18.26/mo ($219.12/yr)
     - deluge
-    - syncthing
+    - resilio sync
     - (?) wireguard
     - sabnzbd
   - newsgroup.ninja (news-nl.newsgroup.ninja) $5.83/mo ($69.99/yr)
@@ -68,3 +68,17 @@
     - (overhead ~25%)
     - 200GB thin: backups
       - used as a filesystem
+
+## SECRETS IN THE NETWORK
+
+- *.carrotwithchickenlegs.com.key, x4 places (/root/.acme.sh + /etc/pve/nodes/pve + hass vm + mediacenter vm)
+- namecheap dns api key /root/.acme.sh/account.conf
+- cory-aws-personal.pem
+- wireguard preshared key, private key, server public key
+- opensubtitles.com u/p
+- abnzb.com API key
+- sabnzbd u/p + API key
+- newsgroup.ninja u/p 
+- deluge (giga-rapid) password
+- resilio sync share keys (backups, media) 
+- qnap nas u/p
