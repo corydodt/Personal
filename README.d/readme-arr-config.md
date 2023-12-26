@@ -4,7 +4,6 @@
 
 - Settings > Download Clients. Remote Path Mappings:
 	- deluge-xantxant.thor.mygiga.cloud: /home5/xantxant/storage/media/downloads/deluge -> /downloads/deluge
-	- sabnzbd-xantxant.thor.mygiga.cloud: /home5/xantxant/storage/media/downloads/sabnzbd -> /downloads/sabnzbd
 	- sabnzbd-xantxant.thor.mygiga.cloud: /storage/downloads/sabnzbd -> /downloads/sabnzbd
 
 - Settings > Download Clients > Deluge
@@ -32,7 +31,6 @@
 
 - Settings > Download Clients. Remote Path Mappings:
 	- deluge-xantxant.thor.mygiga.cloud: /home5/xantxant/storage/media/downloads/deluge -> /downloads/deluge
-	- sabnzbd-xantxant.thor.mygiga.cloud: /home5/xantxant/storage/media/downloads/sabnzbd -> /downloads/sabnzbd
 	- sabnzbd-xantxant.thor.mygiga.cloud: /storage/downloads/sabnzbd -> /downloads/sabnzbd
 
 - Settings > Download Clients > Deluge
