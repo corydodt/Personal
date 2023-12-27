@@ -1,11 +1,9 @@
 # TODO
 
-- [ ] fix sync of media, backups, downloads
 - [ ] run sabnzbd and deluge locally through a vpn like mullvad
 - [ ] update acme-reload.sh for portainer apps
 - [ ] finish runbooks
 
-- [ ] parameterize templates with env vars(?)
 - [ ] nginx - auto(?) soft reload on adding new app (or get traefik working)
 - [ ] pve https/revproxy
 - [ ] pass through igpu to mediacenter? https://pve.carrotwithchickenlegs.com:8006/pve-docs/chapter-qm.html#qm_pci_passthrough_vm_config
@@ -27,3 +25,5 @@
     - [x] prowlarr
     - [x] bazarr
   - [x] automate snapshot of hass into backups folder
+
+- [x] fix sync of media, backups, downloads
