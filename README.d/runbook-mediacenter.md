@@ -113,7 +113,7 @@ SSH with `rocky@mediacenter.carrotwithchickenlegs.com` and the pubkey provided t
 ### Podman setup
 ```
 # install podman with other critical tools
-sudo dnf install -y vim podman systemd-container git make lsof tree python3-pip podman-docker cifs-utils
+sudo dnf install -y vim podman systemd-container git make lsof tree python3-pip podman-docker cifs-utils bind-utils
 
 # expose the socket interface to allow portainer to listen to container events
 sudo systemctl enable --now podman.socket
