@@ -240,7 +240,7 @@ mount -a
 1. Prep:
 
     ```
-    sudo chown -R rocky.rocky /opt
+    sudo chown -R rocky.rocky /opt /media
     ```
 
 2. Install service in portainer:
@@ -254,10 +254,10 @@ mount -a
 3. Visit: http://mediacenter.carrotwithchickenlegs.com:8096
 
 
-## SYNCTHING
+## RESILIO SYNC
 
 ```
-cd ~/src/carrotwithchickenlegs.com/syncthing
+cd ~/src/carrotwithchickenlegs.com/resilio
 make template
 make stack
 ```
@@ -265,33 +265,14 @@ make stack
 
 ## GLUETUN (WIREGUARD)
 
-Ensure these apps are installed and started on gigadrive:
-- wireguard 
-- ubuntu-ssh
-
-From gigadrive ssh, obtain /storage/app/wireguard/peer1/peer1.conf.
-
 Install secrets into podman that can be used by the container
 ```
-# get these from peer1.conf
+# get these from protonvpn console
 printf xxxxxxxxxxxxx | podman secret create wireguard-preshared-key -
 printf xxxxxxxxxxxxx | podman secret create wireguard-private-key -
-printf xxxxxxxxxxxxx | podman secret create wireguard-public-key -
 ```
 
-
-Set up a container to autostart at boot:
 ```
-# (tweak the .container file as necessary from peer1.conf, for endpoint ip & port, local addresses )
-sudo install -o root -m 644 \
-    ~/src/pve.carrotwithchickenlegs.com/gluetun-gigadrive.container \
-    /usr/share/containers/systemd/
-sudo systemctl daemon-reload; sudo systemctl start gluetun-gigadrive
-
-# did it start?
-systemctl status gluetun-gigadrive
-# (should see healthy! in the log)
-
 # best way to check:
-sudo podman exec -it systemd-gluetun-gigadrive ping 10.13.13.1
+sudo podman exec -it gluetun ping 10.2.0.1
 ```
