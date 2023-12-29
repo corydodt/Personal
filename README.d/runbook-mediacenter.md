@@ -263,16 +263,27 @@ make stack
 ```
 
 
-## GLUETUN (WIREGUARD)
+## VPN DOWNLOAD CLIENTS (GLUETUN/WIREGUARD)
 
-Install secrets into podman that can be used by the container
-```
-# get these from protonvpn console
-printf xxxxxxxxxxxxx | podman secret create wireguard-preshared-key -
-printf xxxxxxxxxxxxx | podman secret create wireguard-private-key -
-```
+1. Install secrets into podman that can be used by the container
 
-```
-# best way to check:
-sudo podman exec -it gluetun ping 10.2.0.1
-```
+    ```
+    # get these from protonvpn console or 1password
+    printf xxxxxxxxxxxxx | podman secret create WIREGUARD_PUBLIC_KEY.env -
+    printf xxxxxxxxxxxxx | podman secret create WIREGUARD_PRIVATE_KEY.env -
+    ```
+
+2. Install the stack:
+
+    ```
+    cd ~/src/carrotwithchickenlegs.com/vpn-dl-clients
+    make template
+    FIXME -- no nginx yet
+    make stack
+    ```
+
+3. Test
+    ```
+    # best way to check:
+    sudo podman exec -it gluetun ping 10.2.0.1
+    ```
