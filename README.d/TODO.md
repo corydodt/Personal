@@ -5,7 +5,6 @@
 - [ ] clean out nginx and traefik, document caddy as replacement
 - [ ] finish runbooks
 
-- [ ] nginx - auto(?) soft reload on adding new app (or get traefik working)
 - [ ] pve https/revproxy
 - [ ] pass through igpu to mediacenter? https://pve.carrotwithchickenlegs.com:8006/pve-docs/chapter-qm.html#qm_pci_passthrough_vm_config
 
