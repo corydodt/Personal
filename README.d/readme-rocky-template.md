@@ -91,7 +91,7 @@ You must use the cloud-init system to provide a way to access the system.
 
 ## SSH Certs
 
-### Send public CA key carrotwithchickenlegs.com_CA.pub to all servers 
+### Install CA public key carrotwithchickenlegs.com_CA.pub
 
 Create `/etc/ssh/carrotwithchickenlegs.com_CA.key.pub`:
 
@@ -99,7 +99,7 @@ Create `/etc/ssh/carrotwithchickenlegs.com_CA.key.pub`:
 sudo tee /etc/ssh/carrotwithchickenlegs.com_CA.key.pub <<< "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDwwF90L10rxhihjwF4OYroF0K01eu71H+syBaeYpsDM3MpdZ3ZMYS4EabFwSWCLX3r8cLlDeCAT0vBPbOCoJsrF5Bg+0ym4Z1UVRVN/vNav10VXsV3Peoj95DC38vq8c9rHCBZO8bjYr4dxAonupYFTaoJ0oxzHlVTcB0JGCYF0S0AIEhfvInLPpzVQrc2B52qsaOfFgr2sp4F3kHBJ0RS1KnutizEDsoyn5ckBZzAjDHhPPDBhskqrqEgm268OnR7DR3KSGiI+MwBG9Lh7tn3Q4d3T3JDtc3K0Cs9u92YCbbzfSYhhz2J/U2xRDLGi6GGf0J4psImjIg9lCk81pGCysY4zuMFHR2YAgyRClX/RtOz/XmD9Msfzez0FQqHVYzrsLOn4agK1B3f1rwgSvhhzdO/JwRRosq0n27fV/d4nZqx+aBOJs7xOE1/W3Be6qNVWAqUN2O6oTTa1a2ViPhP04X7v7YWSSBsgoQ36/8YDnvY44SFsQXMNHgaWhzbpnDFXQSVj9UP9Kx7wJD20nf0cy72YQzwVqOG1eaNYTEIWD6NgGDMivNM5+jhyIrWfyd6u9j/yjaue2cdER8/GzsjmCc9xxm0xKlDphk867FiGLl5s5uNCyYjm4vQdMIElMfnP8niZPUIh6B6Z5OgrCsHyyebwNvVLl6A2oK7gnAePQ== rocky@mediacenter"
 ```
 
-### While you're on each remote server,
+### SSHD config for CA public key
 
 ```
 cat << EOF | sudo tee /etc/ssh/sshd_config.d/20-trusted-ca.conf
