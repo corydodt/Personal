@@ -1,5 +1,6 @@
 # TODO
 
+- [ ] ssh certificates
 - [ ] run sabnzbd and deluge locally through a vpn like mullvad
 - [ ] update acme-reload.sh for portainer apps
 - [ ] clean out nginx and traefik, document caddy as replacement
