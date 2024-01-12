@@ -3,7 +3,7 @@
 
 ## CLONE THE VM
 
-- Datacenter > Virtual Machine > 101 (rocky-template-202401a)
+- Datacenter > Virtual Machine > 103 (rocky-template-202401a)
 - More (top right menu) > Clone. Mode = Linked Clone, choose an id and a name, [Clone]
 
 
