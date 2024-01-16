@@ -131,7 +131,7 @@ ssh-keygen -s "./CA/${ORG}_CA.key" \
   "${UKEY}.key.pub"
 ```
 
-That's all, from now on, user01 can access all servers that has:
+That's all, from now on, `cdodt` can access all servers that have:
 
 ```
 /etc/ssh/carrotwithchickenlegs.com_CA.key.pub
@@ -158,6 +158,10 @@ sudo systemctl enable --now podman.socket
 
 # restartable containers can restart:
 sudo systemctl enable podman-restart
+
+# podman-compose
+sudo pip3 install podman-compose
+sudo ln -s /usr/local/bin/podman-compose /usr/bin/podman-compose 
 ```
 
 
