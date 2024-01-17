@@ -1,4 +1,4 @@
-# rocky template instance
+# Rocky template instance
 
 
 ## DOWNLOAD AND UNCOMPRESS
@@ -18,7 +18,9 @@ In the Proxmox VE management gui:
 
     - Note the VM ID on the next screen, e.g. `101`
 
-2. Name it 'mediacenter'
+2. Name it 'rocky-template-YYYYMM' and add `a` through `z` for sequence within
+   the month, e.g. `rocky-template-202401b` is the second ("b") rocky-template in Jan
+   2024
 
 3. OS > [Do not use any media]
 
@@ -108,16 +110,18 @@ To allow someone to access your servers:
 ```
 cd pve.carrotwithchickenlegs.com/CA
 make sign
+# this requires 1password cli; also `eval $(op signin)`; the CA private key is
+# fetched from 1password and remains on disk when done.
 ```
 
-That's all, from now on, `cdodt` can access all servers that have the
-ssh cert installed, with private key `${UKEY}.key` as usually:
+That's all, from now on, `cdodt` can access all servers that have the ssh cert
+installed, as usually:
 
 ```
-ssh -i /path/to/${UKEY}.key ${U}@someHost.carrotwithchickenlegs.com
+ssh -i ~/.ssh/some-private-key.pem rocky@something.carrotwithchickenlegs.com
 ```
 
-(signed public key also must be in the same directory: `/path/to/${UKEY}.key-cert.pub` )
+(signed public key also must be in the same directory: `~/.ssh/some-private-key.pem-cert.pub`)
 
 
 ## PODMAN AND UTILITY SETUP
@@ -146,3 +150,18 @@ sudo ln -s /usr/local/bin/podman-compose /usr/bin/podman-compose
   git config --global user.email 121705+corydodt@users.noreply.github.com
   git config --global push.rebase true
   ```
+
+
+## TO REFRESH THE TEMPLATE
+
+1. Clone the template (use "Linked Clone"). Name according to the original naming scheme, e.g. `rocky-template-202401b`
+
+2. Start the template.
+
+3. Connect via SSH. Make any changes you want.
+
+4. [Shutdown] the VM.
+
+5. More > Convert to Template, [Yes]
+
+6. (Optional) remove the previous template
