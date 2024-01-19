@@ -7,6 +7,13 @@
 - More (top right menu) > Clone. Mode = Linked Clone, choose an id and a name, [Clone]
 
 
+## RESIZE THE INITIAL DISK
+
+- 1xx (mediacenter) > Hardware.
+- Select Hard Disk (scsi0) and Disk Action > Resize.
+- Add 20GB (the total will be 30GB). [Resize disk]
+
+
 ## START THE VM
 
 From 1xx (mediacenter), click [> Start]
