@@ -204,9 +204,10 @@ Because we are using a wildcard certificate this will not use the builtin GUI.
     export NAMECHEAP_API_KEY='(fetch from namecheap > Profile > Tools .... API Key)'
     export NAMECHEAP_USERNAME='corydodt'
     export NAMECHEAP_SOURCEIP='97.120.122.73'
+    export PUSHBULLET_TOKEN='xxxx from 1password "pushbullet api"'
 
     # `--force` might also be used to test
-    acme.sh --staging --issue -d '*'.carrotwithchickenlegs.com --dns dns_namecheap
+    acme.sh --staging --issue -d '*'.carrotwithchickenlegs.com --dns dns_namecheap --set-notify --notify-hook pushbullet
     ```
 
 - Install https://github.com/corydodt/pve.carrotwithchickenlegs.com/blob/main/acme-reloadcmd.sh to
