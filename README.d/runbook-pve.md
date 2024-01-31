@@ -161,10 +161,6 @@ git config --global user.email "corydodt@fastmail.com"
 - Follow steps in runbook-mediacenter.md
 
 
-## CREATE HAPROXY VM
-
-- ??? TODO
-
 
 ## CREATE IMMICH VM
 
@@ -203,7 +199,7 @@ Because we are using a wildcard certificate this will not use the builtin GUI.
     # Documentation at https://github.com/acmesh-official/acme.sh/wiki/dnsapi#dns_namecheap
     export NAMECHEAP_API_KEY='(fetch from namecheap > Profile > Tools .... API Key)'
     export NAMECHEAP_USERNAME='corydodt'
-    export NAMECHEAP_SOURCEIP='97.120.122.73'
+    export NAMECHEAP_SOURCEIP='https://ifconfig.co/ip'
     export PUSHBULLET_TOKEN='xxxx from 1password "pushbullet api"'
 
     # `--force` might also be used to test
@@ -215,11 +211,5 @@ Because we are using a wildcard certificate this will not use the builtin GUI.
 
 - When staging is confirmed, issue a production cert
     ```
-    acme.sh --issue -d '*'.carrotwithchickenlegs.com --dns dns_namecheap --reloadcmd /root/acme-reloadcmd.sh
-    ```
-
-- Tell proxmox to use the generated cert
-    ```
-    cd ~/.acme.sh/'*.carrotwithchickenlegs.com_ecc'
-    pvenode cert set fullchain.cer \*.carrotwithchickenlegs.com.key  -restart -force
+    acme.sh --issue -d '*'.carrotwithchickenlegs.com --dns dns_namecheap --reloadcmd /root/acme-reloadcmd.sh --set-notify --notify-hook pushbullet
     ```

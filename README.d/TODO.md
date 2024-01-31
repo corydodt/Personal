@@ -1,5 +1,6 @@
 # TODO
 
+- [ ] pve vm startup: build in a delay to wait for qnap to start
 - [ ] fix ISP ip address whitelist for namecheap api access - keeps changing IP
   - auto-update? this also affects /root/.acme.sh/account.conf NAMECHEAP_SOURCEIP
 - [ ] ssh certificates
