@@ -150,6 +150,33 @@ git config --global user.email "corydodt@fastmail.com"
 
 ## STORAGE
 
+
+### Local storage
+
+- Top-left menu, ensure "Server View" is selected to prevent confusion.
+
+- Datacenter > Storage.  Ensure `local-lvm` exists as a storage pool.
+
+### CIFS shares
+
+*n.b.*  You must have configured the QNAP NAS before this step can be completed. see `runbook-qnap.md`
+
+- Add > SMB/CIFS.
+    - id = `opt-qnap`
+    - server = `10.0.69.1`
+    - username = `cdodt`
+    - password = [from 1password, "qnap qts nas"]
+    - share = `opt`
+    - [Add]
+
+- Add > SMB/CIFS as above. id = `opt-secrets`, share = `secrets`, [Add]
+
+
+### External SDD **FIXME**
+
+**FIXME** We are not currently using the external sdd for anything, ignore the rest of this section.
+
+
 - Attach external sdd via usb-c cable
 - Run `lsblk` and make sure you know which device is the sd drive
 
