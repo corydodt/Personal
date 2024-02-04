@@ -7,15 +7,14 @@
 
 ## create a warpspeed droplet
 
-- (sidebar) droplets > [create droplet]
+- (sidebar) manage > droplets > [create droplet]
 - region = san francisco
 - choose an image > marketplace > warpspeed
 - sizing: basic/regular/$6 tier
 - add ssh pubkey
 - [create droplet]
 
-- (sidebar) droplets > [warpspeedvpnxxxx..]
-- networking > reserved ip > [enable now] > [assign reserved ip]
+- (sidebar) manage > droplets > [warpspeedvpnxxxx..]
 - networking ... firewalls > [edit]
 	- [create firewall]
 	- along with default ssh, add http + https + custom 51820/udp
