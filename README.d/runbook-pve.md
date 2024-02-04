@@ -35,6 +35,8 @@
 
 - Install the above packages with dpkg -i
 
+### Wifi (optional - only during setup, use hardwired for production)
+
 - Temporarily set up /etc/network/interfaces like this:
 
     ```
@@ -78,16 +80,32 @@
 
 - Reboot to confirm it keeps these network settings
 
-- _Now_ uncomment vmbr0 in /etc/network/interfaces
+### Hardwired
+
+#### vmbr0 (standard 10.0.0.0/24 network - all devices and VMs)
+
+- Uncomment vmbr0 in /etc/network/interfaces
 - Reserve the next IP in DHCP
 
     **Currently 10.0.0.97 for the proxmox bridge over ethernet**
 
-- Plug in an ethernet cable
+- connect an ethernet cable to zyxel router from the correct port
 
 - Run `ifup vmbr0`
 
-#### XXX currently wifi does not start at boot ???
+#### vmbr1 (2.5Gb 10.0.69.0/24 network - for fast connections to qnap nas)
+
+- Copy vmbr0 stanza in /etc/network/interfaces
+- address = `10.0.0.69.2/32`   # qnap nas will be 10.0.69.1
+- bridge-ports = `enp3s0`
+- dns-nameserver (comment out, unnecessary)
+- add these:
+    ```
+    post-up ip route add 10.0.69.0/24 via 10.0.69.2
+    pre-down ip route del 10.0.69.0/24
+    ```
+- connect an ethernet cable to qnap nas from the correct port
+- run `ifup vmbr1`
 
 
 ## CLEAN UP REPOSITORIES
