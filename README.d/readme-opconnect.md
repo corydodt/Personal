@@ -18,11 +18,6 @@
 From 1xx (opconnect), click [> Start]
 
 
-## FIX THE HOSTNAME
-
-tbd
-
-
 ## MOUNT THE SECRETS DRIVE
 
 1. sudo mkdir -p /secrets/opconnect/data
