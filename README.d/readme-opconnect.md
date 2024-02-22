@@ -23,11 +23,11 @@ From 1xx (opconnect), click [> Start]
 1. sudo mkdir -p /secrets/opconnect/data
 2. Add to `/etc/fstab`:
 	```
-	UUID=22581c74-a8c6-4377-8871-df4dddf730d8 /secrets ext4 defaults 0 0
+	/dev/sdb  /secrets  ext4  defaults  0  0
 	```
 3. Mount the disk:
 	```
-	sudo systemctl daemon-reload`
+	sudo systemctl daemon-reload
 	sudo mount -a
 	```
 
