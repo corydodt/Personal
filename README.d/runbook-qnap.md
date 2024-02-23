@@ -10,6 +10,7 @@
 
 - control panel > (network & file services) win/mac/nfs/webdav
     - (microsoft networking) ensure [x] enable file service for microsoft networking
+    - [Advanced Settings] > ensure "Restrict Anonymous Users" is set to "Disabled. Anyone can view the shared folder list."
     - (optional) disable apple networking, nfs, webdav
     - [apply]
 
@@ -41,6 +42,11 @@
     - during creation, (configure) advanced settings > [x] create a shared folder = `opt`
 - secrets volume, 20GB
     - during creation, (configure) advanced settings > [x] create a shared folder = `secrets`
+
+- XXX clean up: zcripts-init volume, 20GB
+    - during creation, (configure) advanced settings > [x] create a shared folder = `zcripts-init`
+    - Control Panel > Privilege > Shared Folders > `zcripts-init` > [Edit Shared Folder Permission]
+    - Guest Access Right = Read only, [Apply]
 
 #### storage pool 2
 - create > new volume
