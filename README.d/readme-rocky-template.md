@@ -91,6 +91,18 @@ You must use the cloud-init system to provide a way to access the system.
 - [Add] > Network Device. Bridge `vmbr1`, [Add]
 
 
+## PREPARE ZCRIPTS-INIT
+
+```
+cd pve.carrotwithchickenlegs.com/base-vm
+make install
+sudo systemctl daemon-reload
+sudo systemctl start zcriptsinit.mount
+```
+
+Reboot.
+
+
 ## SSH Certs
 
 ### Install CA public key carrotwithchickenlegs.com_CA.pub
