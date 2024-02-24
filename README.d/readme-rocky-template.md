@@ -115,7 +115,8 @@ make install
 sudo systemctl restart sshd
 ```
 
-That's all you have to do on the servers's side. Everything else (user managing) you doing locally on your administrative computer (that shouldn't be exposed to the wild internet never).
+That's all you have to do on the servers's side. Everything else (user
+managing), you do on your local administrative computer.
 
 To allow someone to access your servers:
 
@@ -177,3 +178,57 @@ sudo ln -s /usr/local/bin/podman-compose /usr/bin/podman-compose
 5. More > Convert to Template, [Yes]
 
 6. (Optional) remove the previous template
+
+
+## PERFORMANCE TESTS WITH FIO
+
+```
+fio --name=job-w  --numjobs=2 --rw=write --size=2G --ioengine=libaio \
+  --iodepth=4 --bs=128k --direct=1 --filename=bench.file --output-format=normal,terse
+echo "-------------------------------------------------------------------------------------"; sleep 5
+fio --name=job-r  --numjobs=2 --rw=read --size=2G --ioengine=libaio \
+  --iodepth=4 --bs=128K --direct=1 --filename=bench.file --output-format=normal,terse
+```
+
+Note: fio is testing the performance of whatever filesystem contains the
+argument passed to `--filename`. We're using a file in the current working
+directory, so use `chdir` to start in a directory owned by the volume we want to
+test, or modify the --filename argument with an absolute path to elsewhere.
+
+
+### local - 2 processes
+
+Local disk is the fastest by far:
+
+```
+job-w: (groupid=0, jobs=2): err= 0: pid=22033: Sat Feb 24 18:40:22 2024  
+  write: IOPS=30.1k, BW=3765MiB/s (3948MB/s)(4096MiB/1088msec); 0 zone resets  
+job-r: (groupid=0, jobs=2): err= 0: pid=22075: Sat Feb 24 18:40:28 2024  
+  read: IOPS=29.3k, BW=3664MiB/s (3842MB/s)(4096MiB/1118msec)  
+```
+
+### cifs 2.5GBe - 2 processes
+
+Achieving a respectable 296MB/s over 2.5Gbe networking to the NAS. At 
+2368 megabits per second, we're essentially saturating the network.
+
+```
+job-w: (groupid=0, jobs=2): err= 0: pid=21791: Sat Feb 24 18:37:41 2024  
+  write: IOPS=2260, BW=283MiB/s (296MB/s)(4096MiB/14496msec); 0 zone resets  
+job-r: (groupid=0, jobs=2): err= 0: pid=21921: Sat Feb 24 18:38:01 2024  
+  read: IOPS=2260, BW=283MiB/s (296MB/s)(4096MiB/14499msec)  
+```
+
+### cifs 1.0GBe - 2 processes
+
+Still usable, but clearly slower 119MB/s over 1.0Gbe to the NAS. 952 megabits
+per second, so once again, we're sitting at the theoretical peak of the network.
+It seems evident that it's worth it to run a 2.5Gbe connection directly to the
+NAS.
+
+```
+job-w: (groupid=0, jobs=2): err= 0: pid=22277: Sat Feb 24 18:42:46 2024  
+  write: IOPS=904, BW=113MiB/s (119MB/s)(4096MiB/36236msec); 0 zone resets  
+job-r: (groupid=0, jobs=2): err= 0: pid=22516: Sat Feb 24 18:43:27 2024  
+  read: IOPS=904, BW=113MiB/s (119MB/s)(4096MiB/36241msec)  
+```
