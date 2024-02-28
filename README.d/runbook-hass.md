@@ -7,21 +7,10 @@ From the pve shell, via ssh,
 
 ```
 wget https://github.com/home-assistant/operating-system/releases/download/11.0/haos_ova-11.0.qcow2.xz
+
+# the image must be uncompressed. Proxmox will TRY to boot even from a compressed image, but it will fail
 xz -d haos_ova-11.0.qcow2.xz
 ```
-
-
-## CREATE A ZFS STORAGE CONTAINER
-
-In the Proxmox VE management gui:
-
-1. Datacenter > Storage > [Add] > ZFS
-
-2. Here, ID is the name, name it **home-assistant**
-
-3. ZFS Pool: "vm-disks"
-
-4. [Add]
 
 
 ## CREATE A PLACEHOLDER VM
@@ -57,19 +46,18 @@ Datacenter > pve > 100 (hass) > Options > Start at Boot > [Start at Boot] > [OK]
 - [OK]
 
 
-
-
 ## CREATE DISK FROM PVE COMMAND LINE
 
 To attach the HAOS image as a disk of the VM,
 
-- ssh to root@pve.ip.address and then, in the pve shell:
+- ssh to root@pve.carrotwithchickenlegs.com and then, in the pve shell:
 
     ```
+    qm disk import 100 haos_ova-11.0.qcow2 local-lvm
+
     # - 100 is the VM ID from the previous section
     # - home-assistant is the name of a storage container
     # - the .qcow2 file is the disk image, and it must be uncompressed
-    qm disk import 100 haos_ova-11.0.qcow2 home-assistant
     ```
 
 To swap the VM's placeholder storage for the new disk image:
@@ -133,6 +121,7 @@ You can speed up boot a bit:
 
 **Note: mapping devices from the datacenter and choosing a mapped device DOES NOT work, HASS will see the stick but not be able to initialize the addon.** Make sure you follow the above procedure, mapping it by Device ID from the VM itself.
 
+
 ## START THE VM
 
 From 100 (hass), click [> Start].
@@ -146,7 +135,7 @@ You can get the LAN IP of the new HASS VM one of two ways:
 
 2. From the router, find the latest IP address assigned.
 
-**IP is currently 10.0.0.28**
+**IP is currently 10.0.0.68**
 
 In the router, Advanced settings, DHCP Reservations, reserve an IP for HASS
 permanently.
@@ -154,7 +143,7 @@ permanently.
 
 ## ACCESS THE WEB INTERFACE
 
-Once HASS is running, go to http://10.0.0.28:8123/
+Once HASS is running, go to http://10.0.0.68:8123/
 
 From the welcome page, just follow the prompts to
 
