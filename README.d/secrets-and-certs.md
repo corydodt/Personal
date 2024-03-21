@@ -10,9 +10,8 @@
     args: -smbios type=11,value=io.systemd.credential:foo=bar
     ```
 
-    Where foo is a credential name and bar is the value.
-
-    This can be accessed from the VM when it boots. To test:
+    Where foo is a credential name and bar is the value.  This can be accessed
+    from the VM when it boots. To test:
 
     ```
     sudo systemd-creds --system cat foo
