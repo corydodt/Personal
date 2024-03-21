@@ -93,6 +93,10 @@ You must use the cloud-init system to provide a way to access the system.
 
 ## PREPARE ZCRIPTS-INIT
 
+This creates a systemd automount to connect the `zcripts-init` share to
+`/zcriptsinit`, and mounts it immediately.  This will make sure /zcriptsinit is
+available when a VM based on the template starts.
+
 ```
 cd pve.carrotwithchickenlegs.com/base-vm
 make install
