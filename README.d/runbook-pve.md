@@ -169,8 +169,6 @@ git config --global user.email "corydodt@fastmail.com"
     - share = `opt`
     - [Add]
 
-- Add > SMB/CIFS as above. id = `opt-secrets`, share = `secrets`, [Add]
-
 
 ### External SDD **FIXME**
 
@@ -205,6 +203,10 @@ git config --global user.email "corydodt@fastmail.com"
 
 - Follow steps in runbook-mediacenter.md
 
+
+## CREATE OPCONNECT VM
+
+- Follow steps in readme-opconnect.md
 
 
 ## CREATE IMMICH VM
