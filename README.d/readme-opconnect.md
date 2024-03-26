@@ -7,29 +7,9 @@
 - More (top right menu) > Clone. Mode = Linked Clone, choose an id and a name, [Clone]
 
 
-## ADD A SECRETS DRIVE
-
-- Virtual Machine > 1xx (opconnect) > Hardware > Add > Hard Disk.
-- Disk Size = 4GB, storage = secrets-qnap, [Add]
-
-
 ## START THE VM
 
 From 1xx (opconnect), click [> Start]
-
-
-## MOUNT THE SECRETS DRIVE
-
-1. sudo mkdir -p /secrets/opconnect/data
-2. Add to `/etc/fstab`:
-	```
-	/dev/sdb  /secrets  ext4  defaults  0  0
-	```
-3. Mount the disk:
-	```
-	sudo systemctl daemon-reload
-	sudo mount -a
-	```
 
 
 ## INSTALL 1password CLI
@@ -41,9 +21,23 @@ sudo dnf check-update -y 1password-cli && sudo dnf install 1password-cli
 ```
 
 
-## CONFIGURE 1password CLI
+## CONFIGURE 1password CONNECT SERVICE
 
 ```
 cd pve.carrotwithchickenlegs.com/opconnect
 make init
 ```
+
+
+## ON THE PROXMOX HOST, ADD CREDENTIALS TO SMBIOS
+
+Perform these steps on the Proxmox VE host machine:
+
+1. Retrieve (using croc or similar) the 1password-credentials.env file from the booted opconnect machine
+2. Edit /etc/pve/qemu-server/xxx.conf (xxx corresponding to the VM id of the opconnect machine)
+3. Add:
+	```
+	args: -smbios type=11,value=io.systemd.credential.binary:1password-credentials=$(base64 -w0 1password-credentials.env)
+	```
+
+4. Reboot the opconnect VM.
