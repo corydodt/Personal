@@ -19,25 +19,28 @@
 
     This setting is kept (passed forward to the clone) when it appears in a template and the template is cloned.
 
+    TODO: figure out how to back up /etc/pve/qemu-server/*.conf
 
-    TODO: figure out how to back up qemu conf files.
 
 - content of the credentials:
 
-    - most obvious would be to pass in creds.txt for a cifs mount. 
+    - We'll pass 1 of two things:
+        1. for the opconnect vm, pass OP_SESSION to allow us to start the opconnect service without putting the credentials onto the vm disk
+            ```
+            echo 'args: -smbios type=11,value=io.systemd.credential.binary:1password-credentials=$(base64 -w0 1password-credentials.env)
+            ```
 
-        ```
-        username=cdodt
-        password=asdlkfjasdlkfjh
-        ```
-
-        # use this output as the value 
-        echo 'args: -smbios type=11,value=io.systemd.credential.binary:cifs_creds='$(base64 < creds.txt)
+        2. For other VMs that need secrets, pass OP_CONNECT_TOKEN to allow us to use the 1password cli with our op connect service
 
 - A startup service acquires the creds using LoadCredential
 
     ```
-    sudo systemd-run -p LoadCredential=cifs_creds:cifs_creds -P --wait systemd-creds cat foo
+    ...
+    [Service]
+    LoadCredential=1password-credentials:1password-credentials
+    Environment=OP_ENVIRONMENT_FILE=%d/1password-credentials
+    ...
+    ExecStart=... --env-file=${OP_ENVIRONMENT_FILE}
     ```
 
 
@@ -58,18 +61,3 @@ First-time: manual setup. Uses:
 This process creates  ./1password-credntials.json and ./1password-credentials.env.
 
 Save these in 1password manually, then delete both.
-
-
-
-
-
-
-
-
-NEXT STEP:
-
-- FIXME: make install-service currently fails because `systemctl enable --now` fails because, when this credential is
-  created, it isn't yet part of the systemd system credentials that we can use. Maybe just remove `--now`?
-
-- pack 1password-credentials.env into the PVE .conf file for opconnect. pass that file via smbios into  --envfile for the 
-  opconnect services.
