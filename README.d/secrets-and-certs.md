@@ -22,23 +22,54 @@
 
     TODO: figure out how to back up qemu conf files.
 
+- content of the credentials:
 
-- A startup service acquires the creds using systemd conf syntax:
+    - most obvious would be to pass in creds.txt for a cifs mount. 
+
+        ```
+        username=cdodt
+        password=asdlkfjasdlkfjh
+        ```
+
+        # use this output as the value 
+        echo 'args: -smbios type=11,value=io.systemd.credential.binary:cifs_creds='$(base64 < creds.txt)
+
+- A startup service acquires the creds using LoadCredential
 
     ```
-    [Unit]
-    Description=Example Service
-
-    [Service]
-    ExecStart=/usr/bin/example-service -credential ${io.systemd.credential:EXAMPLE_CREDENTIAL}1
+    sudo systemd-run -p LoadCredential=cifs_creds:cifs_creds -P --wait systemd-creds cat foo
     ```
-
-The [Unit] and [Service] sections define a basic systemd unit file for a
-service. In the [Service] section, the ExecStart directive runs the
-example-service binary, passing the EXAMPLE_CREDENTIAL string retrieved from
-SMBIOS Type 11 as a command line argument.
 
 
 ## how to get certs into 1password at renew
 
 ...
+
+
+## how to get opconnect the secrets it needs to connect upstream
+
+First-time: manual setup. Uses:
+
+    1. 1password username/password/secret
+    2. cwcl1 token from 1password developer tools "carrotwithchickenlegs.com Access Token: cwcl1 (1password connect)"
+
+    Reference: https://my.1password.com/developer-tools/infrastructure-secrets/connect/ > "Active" tab
+
+This process creates  ./1password-credntials.json and ./1password-credentials.env.
+
+Save these in 1password manually, then delete both.
+
+
+
+
+
+
+
+
+NEXT STEP:
+
+- FIXME: make install-service currently fails because `systemctl enable --now` fails because, when this credential is
+  created, it isn't yet part of the systemd system credentials that we can use. Maybe just remove `--now`?
+
+- pack 1password-credentials.env into the PVE .conf file for opconnect. pass that file via smbios into  --envfile for the 
+  opconnect services.
