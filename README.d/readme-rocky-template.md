@@ -91,6 +91,19 @@ You must use the cloud-init system to provide a way to access the system.
 - [Add] > Network Device. Bridge `vmbr1`, [Add]
 
 
+## ADD 1password CONNECT TOKEN TO SMBIOS
+
+From the shell of the `pve` node of proxmox:
+
+1. From 1password, grab the token credential from "1password connect server/api token cwcl1"
+2. Edit /etc/pve/qemu-server/101.conf
+3. Add the line:
+  ```
+  args: -smbios type=11,value=io.systemd.credential:cwcl1-token=(paste in the token here)
+  ```
+4. Save.
+
+
 ## PREPARE ZCRIPTS-INIT
 
 This creates a systemd automount to connect the `zcripts-init` share to
@@ -147,6 +160,14 @@ ssh -i ~/.ssh/some-private-key.pem rocky@something.carrotwithchickenlegs.com
 ```
 # install podman with other critical tools
 sudo dnf install -y vim podman systemd-container git make lsof tree python3-pip podman-docker cifs-utils bind-utils
+
+# install 1password CLI
+sudo rpm --import https://downloads.1password.com/linux/keys/1password.asc
+sudo sh -c 'echo -e "[1password]\nname=1Password Stable Channel\nbaseurl=https://downloads.1password.com/linux/rpm/stable/\$basearch\nenabled=1\ngpgcheck=1\nrepo_gpgcheck=1\ngpgkey=\"https://downloads.1password.com/linux/keys/1password.asc\"" > /etc/yum.repos.d/1password.repo'
+sudo dnf check-update -y 1password-cli && sudo dnf install 1password-cli
+
+# install croc
+curl https://getcroc.schollz.com | bash
 
 # expose the socket interface to allow portainer to listen to container events
 sudo systemctl enable --now podman.socket
