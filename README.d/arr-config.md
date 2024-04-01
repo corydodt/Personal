@@ -142,15 +142,24 @@
 ## JELLYSEERR
 
 - Settings > Jellyfin
-	- Libraries: Shows, Movies, Specials, XD
-	- Internal URL `https://jellyfin.carrotwithchickenlegs.com`
+	- You MUST use `http://jellyfin:8096` (match with the actual jellyfin port)
+	  	- XXX The https URL does not work (DNS??)
+	- Libraries: Shows, Movies, Specials
 
 - Settings > Services > Radarr
 	- Server name `radarr`
 	- Hostname or IP address [https://] `radarr.carrotwithchickenlegs.com`
 	- Port `443`
 	- Use SSL [true]
-	- API key `xxxx`
+	- API key `xxxx` 
+		- found by visiting https://radarr.carrotwithchickenlegs.com/
+		- Settings > General > API Key, copy
+	- Click [Test] before continuing
+	- Quality: HD 720p/1080p
+	- root folder: /media/Movies
+	- Minimum avail: in cinemas
+	- Enable scan [true]
+	- Enable automatic search [true]
 
 - Settings > Services > Sonarr
 	- Server name `sonarr`
@@ -158,7 +167,14 @@
 	- Port `443`
 	- Use SSL [true]
 	- API key `xxxx`
+		- found by visiting https://sonarr.carrotwithchickenlegs.com/
+		- Settings > General > API Key, copy
+	- Click [Test] before continuing
+	- Quality: HD 720p/1080p
+	- root folder: /media/TV Shows
 	- Season Folders [true]
+	- Enable scan [true]
+	- Enable automatic search [true]
 
 - Settings > Users
 	- Enable Local Sign-in [true]
